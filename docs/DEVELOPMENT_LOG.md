@@ -459,3 +459,22 @@ Status: approved setup success user-reported; independent verification PENDING. 
 Rollback/cleanup: verification SELECT changes no database records/schema; no cleanup or rollback needed for this query. Do not delete the tables or revoke more permissions based on unexpected output without review. Previously committed setup requires separately approved targeted removal if reversal is needed; ordinary ROLLBACK cannot undo a successful prior commit.
 
 Repository action: append Entry 162 only to the existing PR branch using the fetched current log blob SHA, preserving all prior entries. Next step depends on the observed verification results.
+
+
+## Entry 163 — Empty-table postconditions match by user report; open Authentication
+
+Timestamp: 2026-10-16 11:56 EDT (15:56 UTC), America/New_York.
+
+Evidence/result: user reported "they match" in response to Entry 162's expected verification matrix. Record as user-confirmed query results, not a newly supplied CSV/screenshot or assistant-run database query: exactly three rows for bb_test_private_tasks, bb_test_household_members and bb_test_shared_tasks; each row_count 0, rls_enabled true, policy_count 0, client_access_blocked true, auth_users 0, public_table_count 3.
+
+Conclusion and limits: approved empty-table setup postconditions are verified by user report. Ordinary anon/authenticated roles have no effective table/column privileges under the exact checked operations at this point; service/admin privileges were not claimed absent. No records or Auth users were added. This is a closed administrative starting state, not a PASS for authenticated private/shared behavior. Future policy/grant setup will intentionally change some results under separate reviewed scope.
+
+Next single setup action: click Authentication, the padlock icon in the far-left Supabase sidebar, while keeping Burns Base Security Sandbox selected. Expected result: Authentication workspace, commonly a Users page/list; based on the preceding query, zero users are expected. Ask the user whether the Users list or another Authentication screen appears. Do not click Add user, Invite user, change provider settings or create an account yet.
+
+Reason / why this matters: the remaining behavior tests need three fictional ordinary sign-ins, A/B/C. A and B will later have approved fictional household membership and C will not. An unrelated-household negative fixture must also actually exist. Before any identity mutation, prepare exact fictional account labels, protected password handling, expected user-count changes and rollback/cleanup limits. No real person's email/invitation or production credential will be used. Authentication navigation is read-only and does not grant membership or access to the closed tables.
+
+Status: table setup complete/verified at user-report evidence level; Authentication navigation PENDING. User/fixture/membership creation, schema policy/grant activation, runtime secret setup, live UPDATE/DELETE/C isolation and cleanup remain unperformed or unverified. Original production, existing policies/memberships, personal records, stable v122, PR merge and deployment remain untouched by this work.
+
+How to reproduce / teach: compare the three verification rows with Entry 162's matrix; preserve any differences instead of assuming success. Explain that a database table and an Auth user are separate objects: opening Authentication does not add either a user or a household membership. Then click only the padlock icon and report the destination.
+
+Rollback: read-only navigation requires no database rollback. Do not remove the verified empty tables. Later Auth-account deletion is destructive and must have exact reviewed scope and explicit approval; do not promise that deleting a user is a reversible login reset. Repository action: append Entry 163 only on the existing PR branch using the fetched current log blob SHA, preserving history.
