@@ -65,3 +65,24 @@ Result: draft PR https://github.com/BurnsSquad/steven-os-mobile-test/pull/1 open
 Why this matters / teaching procedure: inspect a PR's actual changed-file list and base SHA; a branch name alone cannot prove the stable app was preserved. Connector publication provides a reviewable result despite the shell transport failure. Reproduce scope review using the GitHub compare view and rerun `node scripts/audit-html.mjs` on the branch. To roll back preparation, revert only added docs/scripts via a reviewed commit; there is no database rollback needed for this session.
 
 Remaining blocker: configure and identify an isolated Supabase project and protected fictional A/B/C accounts, then collect read-only database evidence before any mutations. DELETE semantics, destructive tests and cleanup require explicit review of concrete SQL/fixture scope after that preflight. No live test is marked PASS.
+
+
+## Entry 147 — Guided isolated-environment setup begins: organization identification
+
+Timestamp: 2026-10-16 10:53 EDT (14:53 UTC), America/New_York.
+
+User direction: PR #1 reviewed; do not merge or modify stable v122. Guide setup one action at a time, specify clicks/expected results/requested information, use protected secrets for credentials, and preserve the production database, memberships, policies and personal records. No database mutation is authorized by this setup instruction alone.
+
+Starting evidence: fetched the review branch development log at blob 9a128ede2328e79b3c2327f76111ed8aea9efd10; last entry is 146. Existing Supabase organization/project access has not been observed in this session. Earlier environment-readiness results are historical, not a fresh verification.
+
+Setup action 1 (instructions issued; user completion PENDING): open https://supabase.com/dashboard using the user's own browser/session. If needed, sign in privately. In the organization selector, choose the organization intended to contain the isolated test project and view its Projects list. Do not open or change Burns Base Project and do not create a project yet. Expected: project list with the selected organization name and a New project control, or a visible access/availability message. Request only the organization display name and whether New project is visible; no passwords, keys, tokens or personal records.
+
+Reason / why this matters: a Supabase organization groups projects and billing/access settings. We need the intended organization before preparing a separate project; a separate project keeps experimental tables/auth identities apart from production. Organization visibility does not prove project-creation permission or database authorization.
+
+Permissions and testing boundary: this action is navigation/read-only and requires dashboard access only. Future live work will require confirmation of a separate project, protected fictional A/B/C identities, read-only metadata and fixture preflight, and a reviewed mutation plan. Before any database mutations, explain exact requests/SQL, required grants/policies, expected authorized and denied outcomes, exact fixture cleanup and approval gates, and transaction versus post-commit recovery. Preserve existing DELETE denial until semantics and permission changes are explicitly approved. No real account creation, fixture setup, schema/policy change or cleanup is performed now.
+
+Actual result: instructions prepared; dashboard state, selected organization and New project availability remain UNVERIFIED pending the user's report. No live security test run; no database/application change. No SQL/shell command is needed for this user action. Repository action: append only this entry via GitHub update_file on the existing PR branch, preserving prior text and using the fetched blob SHA for concurrency safety.
+
+How to reproduce / teach it: follow the dashboard navigation above and report only non-secret UI context. If the interface differs or access is denied, stop navigation and describe the visible message without sharing credentials. Next action will be selected after that report; no later setup action is issued now.
+
+Rollback: navigation has no database effects, so no database rollback or cleanup is needed. Close the dashboard if necessary. Documentation rollback, if requested, is a targeted revert on the review branch; never reset index.html or browser storage.
