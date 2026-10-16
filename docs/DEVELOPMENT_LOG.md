@@ -171,3 +171,24 @@ Status: Americas accepted as the intended broad region; exact eventual location 
 Reproduction / teaching: leave Region at Americas; inspect the optional GitHub selector without opening or linking a repository. Report its visible non-secret label. Continue only after the form settings are understood. Before actual database mutations, explain exact scoped commands, permissions, expected results, cleanup and rollback and obtain required approval.
 
 Rollback: read-only form inspection has no persistent effect. No database cleanup or rollback applies. Repository action: append this entry only to the existing review branch using the fetched current log blob SHA, preserving all prior entries.
+
+
+## Entry 153 — Accidental project-form submission reported; verify destination
+
+Timestamp: 2026-10-16 11:09 EDT (15:09 UTC), America/New_York.
+
+Evidence: user reported accidentally pressing Enter, triggering New project, and arriving on another screen. User asked whether a GitHub repository can be added there. No new screenshot was attached to this message. Submission is user-reported; successful provisioning, actual project identity, resulting settings and GitHub connection state are not independently verified. Do not infer that the existing production project was changed, or that sandbox provisioning succeeded.
+
+Response/decision: no GitHub repository integration is needed for the remaining tests; leave it unconnected. Whether the current page offers that integration cannot be determined without seeing or identifying it. The GitHub connector and existing draft PR already support reviewed code/documentation changes, independently of optional Supabase deployment integration.
+
+Next single setup action: read the project name in the dashboard's top project selector/header without editing settings. Expected name: Burns Base Security Sandbox. Ask for only that displayed name, or the visible provisioning/error message if no project name is shown. No URL tokens, credentials or passwords requested. No screenshot required. Do not add a repository, execute SQL or delete/recreate any project.
+
+Reason / why this matters: pressing Enter can submit a web form even without clicking its submit button. After an unexpected navigation, verify the destination before taking further actions. A project label is the first check; a distinct project reference/URL and configured privileges still require later verification before database mutations.
+
+Status: previous pre-submission plan interrupted by reported accidental submission. No assistant-executed infrastructure/database mutation occurred. User-reported creation outcome is PENDING verification. No live RLS tests, schema/permission/membership changes, fixtures, cleanup, merge, deployment or stable-v122 edit performed by the assistant.
+
+Rollback/recovery: do not automatically delete or recreate a possibly provisioned project. First establish its exact identity and state. No table/data mutation by this session is known, so no data rollback is prescribed. Any future project deletion would require a concrete reviewed target and explicit approval. For this navigation-only verification, rollback is unnecessary.
+
+How to reproduce / teach it: after form submission, inspect the dashboard's project header and distinguish a provisioning message from a ready project. Avoid Enter in remaining form controls when it could submit. Next setup instruction will depend on the reported project name/state. Before later database mutations, explain exact scoped operations, permissions, expected results, cleanup and rollback and obtain required approval.
+
+Repository action: append only Entry 153 to the existing PR branch using the fetched current log blob SHA, preserving all prior entries.
