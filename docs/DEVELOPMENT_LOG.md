@@ -230,3 +230,33 @@ Status: project dashboard health, region, reference and lack of connected reposi
 Reproduction / teaching: use the sandbox Overview to identify the URL/reference, status and location. Click only SQL Editor, then stop. Before subsequent database mutations, explain exact scoped SQL/requests, required permissions, expected counts/results, cleanup gates and rollback. Do not treat the Healthy badge as a security test result.
 
 Rollback: read-only navigation has no database effects; no cleanup or database rollback is required. No project deletion/recreation prescribed. Repository action: append only Entry 155 on the existing PR branch using the fetched current log blob SHA and retain all prior entries.
+
+
+## Entry 156 — SQL Editor opened; first read-only public-table inventory issued
+
+Timestamp: 2026-10-16 11:17 EDT (15:17 UTC), America/New_York.
+
+Evidence/result: user answered "yes" to SQL Editor having opened. Navigation confirmed by user report; no SQL results received yet. Intended sandbox reference remains wozynsftofkjqwlflosv, last observed in Entry 155 screenshot.
+
+Next single setup action: with the sandbox project selected, run the following query alone in a new/empty SQL query. If a query already contains text, use a new query tab; do not run unknown existing SQL. Check the project selector identifies Burns Base Security Sandbox before clicking Run.
+
+Exact SQL (metadata SELECT only):
+
+```sql
+SELECT schemaname, tablename, rowsecurity AS rls_enabled
+FROM pg_catalog.pg_tables
+WHERE schemaname = 'public'
+ORDER BY tablename;
+```
+
+Purpose/permissions: this reads PostgreSQL's table catalog through the dashboard SQL Editor; it does not SELECT application records and has no INSERT, UPDATE, DELETE, DDL or grant/policy statements. Dashboard SQL access is sufficient; do not change database grants to make the query run. Supabase may save query history, but this statement itself does not mutate application data/schema.
+
+Expected result: a fresh sandbox may return zero rows, often shown as Success. No rows returned. If rows exist, report the table names and rls_enabled flags rather than assuming a clean database or deleting anything. If an error occurs, report its exact non-secret text and stop; an error is not a PASS. Ask for results text or a screenshot limited to this query/results without credentials.
+
+Why this matters: public is the schema (a namespace grouping tables) commonly exposed through the Data API. RLS is an additional row-access boundary once a table exists. Inventorying actual tables establishes a starting point instead of treating No migrations as proof of an empty database. This query does not inventory every schema, count records, establish effective grants, or prove authenticated-client enforcement. Zero rows here is only an empty public-table inventory.
+
+Status: query instructions issued; execution/results PENDING user report. No assistant database session or mutation. No table/fixture creation, SQL permission changes, policies, memberships, auth users, cleanup, merge, deployment or stable-v122 edit. Live security cases remain untested.
+
+How to reproduce / teach it: verify sandbox header, paste only this SELECT into an empty editor and click Run once. Compare actual result to expectations and preserve the reported outcome in the next log entry. Before later mutations, provide exact scope/permissions, test assertions, cleanup and rollback for review.
+
+Rollback: SELECT has no application data/schema changes to undo, so no database rollback/cleanup is needed. If unexpected tables appear, stop and investigate without deleting them. Repository action: append Entry 156 only to the existing PR branch using the fetched log blob SHA, preserving all prior entries.
