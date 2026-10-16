@@ -400,3 +400,62 @@ Error/rollback instructions: stop on any error, do not rerun or modify SQL, and 
 Why this matters / teaching: approval, execution and verification are separate stages. Copying the full transaction ensures the guard and postcondition checks run with the table creation. Running only a selected statement could omit protections. Existing unexpected tables/users trigger a deliberate stop rather than being overwritten.
 
 Actual result: execution instructions issued; database execution and outcome PENDING user report. Assistant has not connected to or mutated Supabase. No live RLS PASS, cleanup, personal data operation, production policy/membership change, merge or stable-v122 edit. Repository action: append only Entry 161 on the existing review branch with current blob SHA, preserving all history.
+
+
+## Entry 162 — Setup success reported; independent closed-table verification issued
+
+Timestamp: 2026-10-16 11:51 EDT (15:51 UTC), America/New_York.
+
+Evidence/result: user reported "success" after the approved Entry 161 setup operation. Treat this as reported execution success, not independently verified postconditions or live authenticated RLS proof. Expected change from approved operation: three empty sandbox test tables, RLS enabled, no policies or ordinary client grants. No rows, users or memberships were part of setup.
+
+Next single setup action: replace SQL Editor contents with the following read-only verification and click Run once with Burns Base Security Sandbox selected. Exact query:
+
+```sql
+WITH inventory AS (
+  SELECT 'bb_test_private_tasks' AS table_name, count(*) AS row_count
+  FROM public.bb_test_private_tasks
+  UNION ALL
+  SELECT 'bb_test_household_members', count(*)
+  FROM public.bb_test_household_members
+  UNION ALL
+  SELECT 'bb_test_shared_tasks', count(*)
+  FROM public.bb_test_shared_tasks
+)
+SELECT i.table_name,
+       i.row_count,
+       c.relrowsecurity AS rls_enabled,
+       (SELECT count(*) FROM pg_catalog.pg_policies p
+        WHERE p.schemaname = 'public'
+          AND p.tablename = i.table_name) AS policy_count,
+       NOT EXISTS (
+         SELECT 1
+         FROM (VALUES ('anon'), ('authenticated')) AS r(role_name)
+         CROSS JOIN (VALUES
+           ('SELECT'), ('INSERT'), ('UPDATE'), ('DELETE'),
+           ('TRUNCATE'), ('REFERENCES'), ('TRIGGER'), ('MAINTAIN')
+         ) AS v(privilege_name)
+         WHERE has_table_privilege(r.role_name, c.oid, v.privilege_name)
+            OR has_any_column_privilege(
+                 r.role_name, c.oid, 'SELECT,INSERT,UPDATE,REFERENCES'
+               )
+       ) AS client_access_blocked,
+       (SELECT count(*) FROM auth.users) AS auth_users,
+       (SELECT count(*) FROM pg_catalog.pg_tables
+        WHERE schemaname = 'public') AS public_table_count
+FROM inventory i
+JOIN pg_catalog.pg_class c
+  ON c.oid = to_regclass('public.' || i.table_name)
+ORDER BY i.table_name;
+```
+
+Required access: current dashboard postgres read access to table/catalog/Auth counts. No additional permissions or credentials requested. The query reads only test-table counts, catalog metadata and aggregate Auth count, not personal/Auth field values. Missing tables cause an error; do not create/repair anything automatically.
+
+Expected result: exactly three rows, one per named table; each row_count 0, rls_enabled true, policy_count 0, client_access_blocked true, auth_users 0, public_table_count 3. The client_access_blocked calculation checks effective table privileges for all eight PostgreSQL 17 operations plus any column SELECT/INSERT/UPDATE/REFERENCES privilege for both anon and authenticated. It does not claim service/admin access is blocked. Report actual rows/screenshot; if anything differs or errors, stop and preserve evidence.
+
+Why this matters / teaching: a success message tells us SQL completed but does not replace inspection of the resulting state. Counting rows verifies no fixtures were inserted. RLS enablement and absence of policies are distinct from effective role grants. Checking effective privileges catches inherited access that direct grant listings can miss. These are administrative metadata checks, not ordinary-user behavioral RLS tests.
+
+Status: approved setup success user-reported; independent verification PENDING. Auth identities, fixture/membership setup and policy/grant activation remain outside this completed approval and have not been performed in this session. No production database/policies/memberships, personal records, stable v122, merge or deployment touched. No live UPDATE/DELETE/third-account PASS claims.
+
+Rollback/cleanup: verification SELECT changes no database records/schema; no cleanup or rollback needed for this query. Do not delete the tables or revoke more permissions based on unexpected output without review. Previously committed setup requires separately approved targeted removal if reversal is needed; ordinary ROLLBACK cannot undo a successful prior commit.
+
+Repository action: append Entry 162 only to the existing PR branch using the fetched current log blob SHA, preserving all prior entries. Next step depends on the observed verification results.
