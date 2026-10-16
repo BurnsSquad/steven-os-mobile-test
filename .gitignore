@@ -1,0 +1,6 @@
+# Local intermediate work and security evidence are never staged automatically.
+work/
+.env
+.env.*
+!.env.example
+node_modules/
