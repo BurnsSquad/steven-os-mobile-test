@@ -965,3 +965,22 @@ Reason / teaching: use newly visible UI evidence to narrow the host configuratio
 Status: conversation menu ruled out; Custom control inspection PENDING. No runtime secret/network change, database mutation, Auth/membership/fixture/policy/grant change, ordinary-user HTTP test, DELETE attempt, cleanup, production/personal-data action, stable-v122 modification, merge or deployment. Last verified populated sandbox remains Entry 183; re-capture a fresh starting snapshot before testing.
 
 Rollback: UI inspection has no database changes and needs no rollback/cleanup. Close the panel if unrelated. Do not clear browser data, reset accounts/projects or share passwords/keys. Repository action: append only Entry 187 with current remote blob SHA and preserve prior entries.
+
+
+## Entry 188 — Custom control is approvals, not secrets; switch to private local execution setup
+
+Timestamp: 2026-10-16 13:47 EDT (17:47 UTC), America/New_York.
+
+Evidence: screenshot of the Custom gear panel explicitly says How should ChatGPT actions be approved? and offers Ask for approval, Approve for me and Full access. This is approval configuration, not environment-secret entry. Do not change any choice to try to unlock credentials or networking. Screenshot shows no usable protected-secret surface.
+
+Correction: acknowledged to user that the previous control guesses did not locate environment settings, with a brief apology. After cloud/no-panel, conversation-only menu and now approval-only menu, stop guessing additional toolbar paths. No evidence establishes whether protected configuration exists elsewhere; do not claim it is impossible.
+
+Alternative plan: use a private local test execution session on the user's Mac, with test passwords entered through hidden interactive prompts and kept only in the local test process/environment, not pasted into chat, shell commands/history or source files. This is a proposed private credential-entry alternative, not a claim that the hosted runtime now has secret bindings or network grants. Supporting launcher/staged test behavior must be prepared/reviewed before asking for credentials or running commands. Do not transfer personal credentials, reuse production configuration, or bypass the hosted runtime's proxy.
+
+Next single action: open macOS Terminal using Command+Space, type Terminal, press Return. Expected: a Terminal window with a shell prompt. Ask only whether it opened; no commands or passwords entered yet. This is grounded in the user's macOS Safari/Chrome screenshots and does not require installation, administrator privileges or changed approval settings.
+
+Reason / teaching: separate action-approval preferences from secret storage. The user should not grant Full access merely to enter passwords. A private local run can exercise real ordinary Supabase sign-ins while the assistant handles administrative before/after SQL evidence through the sandbox-only connector. This route remains subject to private input, exact destination, fresh snapshot, baseline protection and explicit destructive-operation approvals.
+
+Status: approval menu identified; no settings changed. Local Terminal availability PENDING. No password prompts/code executed, runtime configuration changed, new database mutation, ordinary-user UPDATE/DELETE/C test, cleanup, production operation, stable-v122 edit, merge or deployment. Sandbox remains the populated fictional baseline last verified in Entry 183; obtain a fresh snapshot immediately before actual testing.
+
+Rollback: opening Terminal changes no database or repository and requires no cleanup/rollback. Close the unused window if desired. No project/account reset or browser data clearing. Next step after Terminal opens is a non-secret runtime prerequisite check, then a reviewable local launcher if supported. Repository action: append Entry 188 only using current fetched log blob SHA and preserve history.
