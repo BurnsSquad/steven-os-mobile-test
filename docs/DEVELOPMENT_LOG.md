@@ -1038,3 +1038,20 @@ Why this matters / teaching: choose a supported major version and official distr
 Status: OS/architecture and official distribution availability verified; user download PENDING. No local package installed by the assistant, no protected credentials entered, no live security tests, new database changes, DELETE attempts, cleanup, production/personal-data action, stable-v122 edit, merge or deployment. Sandbox remains at the Entry 183 fictional baseline.
 
 Rollback: downloading the installer changes no database/runtime installation; cancel the download if necessary. Do not run guessed uninstall/delete commands or reset Supabase. Repository action: append Entry 191 only using fetched current blob SHA, preserving history.
+
+
+## Entry 192 — Node purpose explained; installation reported; verify executable
+
+Timestamp: 2026-10-16 13:56 EDT (17:56 UTC), America/New_York.
+
+Conversation context: user asked why downloading Node was necessary. Explained that Node executes the prepared ordinary-user security runner, whereas connected administrative SQL cannot replace real A/B/C sign-in tests. Local execution was chosen after protected hosted credential controls could not be located. Clarified installation is optional and that a separately authored browser-based runner would be another possible route, not an already available tested artifact. Acknowledged the purpose should have been explained before the download instruction.
+
+User now reports "okay its downloaded and installed". Treat this as installation completion by user report, not independently verified package version, signature or executable availability. No installer password, sandbox password, key or token received. The exact recommended package was node-v24.22.0.pkg from official nodejs.org, but actual installed version is still to be measured.
+
+Next single action: in Terminal, run node --version and press Return. Expected v24.22.0 if the recommended package installed and PATH resolves it, or another version/error that must be reported accurately. Request only that output. Do not reinstall or edit shell profiles if unavailable; investigate first. A new Terminal window may be needed later depending on actual output, not assumed now.
+
+Reason / teaching: distinguish software download, reported installation and verified runtime execution. This non-secret version check confirms prerequisites before any test program or password entry. Node itself does not synchronize personal records or change Supabase; only later explicitly scoped scripts can issue database requests.
+
+Status: local installation user-reported; actual Node version PENDING. No live security tests or private password prompts, database/policy/grant/membership/fixture changes, DELETE attempts, cleanup, production operation, stable-v122 modification, merge or deployment. A reviewed hidden-input launcher and UPDATE-only stage still need preparation before local credential use; preserve separate exact DELETE/cleanup approvals.
+
+Rollback: node --version only prints version and needs no cleanup/rollback. Do not uninstall software or reset Supabase as part of verification. Repository action: append Entry 192 only using fetched current log blob SHA, preserving prior history.
