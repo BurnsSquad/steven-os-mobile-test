@@ -137,3 +137,20 @@ Status: private password setup instruction issued; completion PENDING user repor
 Reproduction / teaching: generate a unique password privately, populate the database-password field, store it in the password manager with the sandbox label, and confirm completion without revealing the value. Stay on the unsubmitted creation form.
 
 Rollback: before project creation, clear or replace the form field if needed; remove an unused password-manager entry only at the user's discretion. No database rollback or cleanup is needed. Repository action: append only this entry to the existing review branch using the freshly fetched log blob SHA, preserving previous entries. Before later database mutations, explain exact permissions, scoped operations, expected outcomes, cleanup and rollback and obtain any required approval.
+
+
+## Entry 151 — Password saved privately; inspect specific-region control
+
+Timestamp: 2026-10-16 11:05 EDT (15:05 UTC), America/New_York.
+
+Evidence/result: user reported "Password entered and saved". Entry 150's private password setup is confirmed by user report only. No credential value was supplied to or inspected by the assistant; no protected runtime credential binding is established by this report. Project form remains unsubmitted as far as reported.
+
+Next single setup action: beneath Region on the new-project form, click Need a specific region? (visible in the earlier screenshot). Expected result: the form offers a specific-region selection control instead of, or in addition to, the broad Americas selection. Request only the region label/control shown after the click. Do not select a region or submit the project yet. If the link is no longer present, report that without changing other settings. Do not send a screenshot containing a visible password.
+
+Reason / why this matters: inspecting the current interface lets us choose an explicit test-project location without guessing labels or availability. The handoff describes the existing project as Ohio, but that is historical information; the sandbox will have its own project identity regardless of region. A region selection is not permission to connect to or modify the production project.
+
+Status: region-control inspection issued; result PENDING user report. No project provisioning, database mutation, SQL, test execution, account creation, permissions/policy/membership change, merge or stable-v122 edit performed. Existing production and personal records remain outside scope.
+
+Reproduction / teaching: on the unsubmitted project form, locate Region and click the specific-region link once. Observe and report the resulting label/control only. The exact next selection depends on the observed UI. Before later database mutations, present the reviewed operation scope, permissions, expected outcomes, exact cleanup and rollback procedures.
+
+Rollback: this is an unsubmitted form interaction; use any displayed broad-region control or cancel the form if necessary. No database cleanup/rollback applies. Repository action: append Entry 151 only on the existing PR branch using the fetched current log blob SHA; preserve all previous entries.
