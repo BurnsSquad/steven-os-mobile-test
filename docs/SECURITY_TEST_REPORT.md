@@ -82,3 +82,10 @@ Independent post-setup SQL snapshot captured 2026-10-16T17:33:47.60375+00:00 and
 Advisor finding: leaked-password protection disabled ([Supabase remediation](https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection)). No Auth settings changed. No password/hash/key/token read. The documented PostgreSQL setup SQL has now executed successfully; the ordinary-user runner has NOT executed against Supabase.
 
 Live phase progress: stages 1–3 completed for database access, independent starting-state audit and supported fictional account/policy/fixture setup; stage 4 initial administrator snapshot captured/validated. Protected A/B/C password bindings and runtime endpoint access still absent, so stage 5 ordinary authenticated UPDATE tests and later DELETE/C isolation/cleanup remain NOT RUN. Administrative evidence does not substitute for client RLS. Capture a fresh pre-run snapshot before tests; retain exact destructive approval gates. No cleanup or allowed shared DELETE tested.
+
+
+## Local launcher readiness — Entries 193–196
+
+User's Mac runtime is screenshot-verified Node v24.22.0 on macOS 14.3 / x86_64. Source commit 96aef24b67c698a4770c7bef02f54e1853eaf028 adds a hidden-TTY-input local launcher and separate UPDATE-only mode (27 assertions, no POST/DELETE tests), with stage-specific admin finalization that cannot enable cleanup. Full suite remains 38 assertions with exact DELETE-attempt approval still required.
+
+Twelve offline safety/simulation groups now pass, including hidden input/cancellation and pinned session URL constraints, UPDATE-only request exclusion and cleanup refusal. All 167 HTML scripts still parse; stable index hash unchanged. No passwords, service keys or tokens committed. A new just-in-time non-secret session snapshot is still needed before local testing; no session is published yet and no real ordinary-user test has executed. Download/source readiness does not change the live evidence boundary.
