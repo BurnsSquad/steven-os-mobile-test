@@ -154,3 +154,20 @@ Status: region-control inspection issued; result PENDING user report. No project
 Reproduction / teaching: on the unsubmitted project form, locate Region and click the specific-region link once. Observe and report the resulting label/control only. The exact next selection depends on the observed UI. Before later database mutations, present the reviewed operation scope, permissions, expected outcomes, exact cleanup and rollback procedures.
 
 Rollback: this is an unsubmitted form interaction; use any displayed broad-region control or cancel the form if necessary. No database cleanup/rollback applies. Repository action: append Entry 151 only on the existing PR branch using the fetched current log blob SHA; preserve all previous entries.
+
+
+## Entry 152 — Americas region reported; check optional GitHub integration
+
+Timestamp: 2026-10-16 11:07 EDT (15:07 UTC), America/New_York.
+
+Evidence/result: user responded "it said americas" after the specific-region inspection instruction. Only the Americas label is confirmed; a specific location or UI transition is not verified. Correction to the preceding guidance: selecting a specific region is not necessary for security isolation. Keep Americas rather than requiring more region navigation. Isolation will depend on a distinct project reference/URL, independent credentials and test-only data, not physical region.
+
+Next single setup action: inspect GitHub (optional) on the unsubmitted form. Leave it unselected. Expected label, from the earlier screenshot: Choose GitHub repository. Ask the user to report whether that label is present or a repository is selected; if a repository is selected, stop and report it before any creation or integration change. Do not click Create new project.
+
+Reason / why this matters: this optional integration can connect repository changes to database schema deployment, according to the form's explanatory text. It is unnecessary for the current manually reviewed setup. Keeping it unselected avoids adding a deployment path while database permissions and test infrastructure are still under review. This does not alter the existing GitHub connector or draft PR.
+
+Status: Americas accepted as the intended broad region; exact eventual location remains unknown. GitHub integration inspection PENDING. No project creation, database mutation, SQL, authentication setup, grants/policies/memberships, cleanup, merge, deployment or stable-v122 edit performed. No secrets requested or received.
+
+Reproduction / teaching: leave Region at Americas; inspect the optional GitHub selector without opening or linking a repository. Report its visible non-secret label. Continue only after the form settings are understood. Before actual database mutations, explain exact scoped commands, permissions, expected results, cleanup and rollback and obtain required approval.
+
+Rollback: read-only form inspection has no persistent effect. No database cleanup or rollback applies. Repository action: append this entry only to the existing review branch using the fetched current log blob SHA, preserving all prior entries.
