@@ -503,3 +503,22 @@ Expected/actual: expected discovery of a direct access path; actual available un
 Why this matters / teaching: tool capability, authorization, credentials and transport are separate requirements. A user can authorize work without the assistant possessing a usable connection. The right response is to establish scoped access and continue independent preparation, never fabricate execution or expose secrets. Keep evidence of historical screenshots/user reports separate from future independent tool results.
 
 Rollback: documentation changes can be reverted individually on the PR branch. No database rollback/cleanup applies because this turn performs no DB mutation. Connecting or later revoking a plugin does not undo committed database work. Original production database/policies/memberships, personal records, stable index, merge and deployment remain outside scope and untouched by this work. Append-only log update uses fetched current blob SHA.
+
+
+## Entry 165 — Supabase client-side page exception reported; identify failing screen
+
+Timestamp: 2026-10-16 12:11 EDT (16:11 UTC), America/New_York.
+
+User-reported error, preserved verbatim: "Application error: a client-side exception has occurred while loading supabase.com (see the browser console for more information)." No screenshot, console trace or exact failing dashboard/authorization path supplied. Do not request an entire URL that could contain OAuth codes/tokens.
+
+Interpretation: this reports a web application's client-side failure while loading a Supabase page. It does not prove database corruption, failed provisioning, lost records, a security-policy failure, or successful/failed plugin authorization. Root cause remains UNKNOWN; no browser console/network inspection is available through this session's tools. Do not label the issue a Supabase outage or blame Safari without evidence. Latest plugin connection state remains unconfirmed; an earlier suggestion is not a confirmed connection.
+
+Next single diagnostic request: ask whether the message appeared in (1) the existing Supabase dashboard or (2) the Supabase authorization page opened while connecting the plugin. If neither, ask for the page's purpose/title only. Do not request credentials, full authorization URLs, cookies, browser storage, network headers or a full console dump.
+
+Reason / why this matters: a dashboard rendering failure and an authorization callback failure require different recovery steps. First locate the failing UI before asking the user to reset login state or repeat authorization. The next recovery action will depend on that answer. Preserve the user's saved database password privately and the existing browser-local Steven OS data.
+
+Actions deliberately withheld: no clearing browser/site data or localStorage, no dashboard/project reset, no password rotation, no database/schema/policy change, no project/user deletion, no blind OAuth retries. No console instructions or reproduction involving secrets issued. No new plugin suggestion repeated.
+
+Status: diagnosis PENDING page identification; independent preparation remains in PR #1. Live account/fixture/policy setup and security testing remain blocked by unverified connection. No DB mutation this turn, no new security PASS, no change to stable v122, original production permissions/memberships or personal records. No merge/deployment.
+
+Rollback: diagnostic clarification has no state changes and needs no rollback or cleanup. A web-page error is not a reason to restore/delete database objects. Repository action: append Entry 165 only using current remote blob SHA and preserve prior history. Next log entry will distinguish the reported page and any recovery result.
