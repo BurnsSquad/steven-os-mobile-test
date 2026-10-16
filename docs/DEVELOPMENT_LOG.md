@@ -899,3 +899,22 @@ Next single user-assisted step: identify whether the chat's attached environment
 Snapshot freshness: this initial live snapshot is durable evidence of setup, but a fresh one within ten minutes must be captured immediately before any live runner execution. No end-user UPDATE/DELETE/C-isolation or cleanup PASS claimed. All original production data/policies/memberships, stable v122 and personal browser records remain untouched; PR unmerged, no dashboard/site deployment.
 
 Teaching/rollback: distinguish a successful migration, an independently validated admin snapshot and an authenticated-client test. Read-only snapshot/validation needs no database cleanup. Future exact DELETE attempts and cleanup retain explicit approval gates; shared DELETE stays disabled. The local snapshot is ignored and must not be blindly published; permanent log/report retain its source, time, digest, counts and policy/grant evidence.
+
+
+## Entry 184 — Guided protected-configuration setup: identify actual chat controls first
+
+Timestamp: 2026-10-16 13:39 EDT (17:39 UTC), America/New_York.
+
+User requests a walkthrough of the next steps. Maintain one setup action at a time and continue the security objective. Last independently verified sandbox remains the Entry 183 populated fictional baseline (Auth 3/private 2/memberships 2/shared 4/eight policies), not the earlier empty state. No need to recreate users or rerun setup.
+
+Current blocker: ordinary-user HTTP tests require privately supplied A/B/C passwords and an allowed sandbox network endpoint. Connected SQL access does not supply those passwords or prove ordinary-user behavior. Latest runtime observation has empty secret/runtime bindings and no sandbox endpoint allowance. Exact host UI for protected configuration has not been shown. Do not invent a Secrets tab, navigation path, or claim that generic Codex environment settings necessarily configure this attached ChatGPT environment.
+
+Next single diagnostic action: request a cropped screenshot of this current ChatGPT/Codex window's top toolbar, including any environment/settings controls. Exclude the browser address bar, chat content/personal sidebar titles, passwords, keys and other credentials. If no environment controls are visible, user may simply report that. No screenshot of Supabase API keys or password manager is needed.
+
+Expected result: visible actual host controls (or confirmation that none exist), allowing precise next clicks or selection of a supported alternative. This is clarification of missing UI information, not a new authorization request. It does not require or permit secret disclosure. No password entry instruction until the correct protected surface is identified.
+
+Why this matters / teaching: ChatGPT plugin authorization and runtime environment secrets are different access mechanisms. A settings panel in another product/session may not configure this runner. Confirm the actual surface before storing credentials; never use chat messages, repository contents, public URLs or screenshots as a secret store. Do not assume protected Auth passwords can be recovered from SQL.
+
+Status: walkthrough diagnostic issued; UI identification PENDING. No database/network configuration mutation, new policy/grant/membership/user/fixture changes, ordinary-user test, DELETE attempt, cleanup, production operation, stable-v122 modification, merge or deployment. Keep shared DELETE disabled and future exact destructive approvals intact. Fresh snapshot will be recaptured once sign-in execution is ready.
+
+Rollback: looking at/sharing a properly cropped non-secret toolbar has no database effects or cleanup requirement. Do not clear browser storage, reset projects or rotate credentials. Repository action: append Entry 184 only on the existing PR branch using fetched current blob SHA, preserving history.
