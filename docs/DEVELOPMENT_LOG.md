@@ -1021,3 +1021,20 @@ Reason / teaching: supported Node versions and macOS/CPU compatibility must be v
 Status: platform outputs PENDING. Local test launcher/staged UPDATE preparation still required before private credential entry or live tests. Existing sandbox/policies/fixtures remain unchanged; no new SQL, sign-in, UPDATE/DELETE/C-isolation run, cleanup, production/personal-data action, stable-v122 edit, merge or deployment. Hosted credentials/network remain unconfigured at last observation.
 
 Rollback: these platform checks only print version/architecture and require no rollback/cleanup. Do not clear browser storage or reset the sandbox to solve a local Node prerequisite. Repository action: append Entry 190 only using fetched current log blob SHA and preserve previous history.
+
+
+## Entry 191 — macOS/architecture observed; official Node 24 installer download selected
+
+Timestamp: 2026-10-16 approximately 13:53–13:55 EDT (17:53–17:55 UTC), America/New_York.
+
+Evidence: user Terminal screenshot returns macOS product version 14.3 and architecture x86_64. This is screenshot-verified platform output. Node remains unavailable in the current shell as previously observed. Do not repeat personal shell/host labels or assume a working runtime yet.
+
+Current-source verification: opened official https://nodejs.org/en/download and Node v24.x BUILDING.md at https://github.com/nodejs/node/blob/v24.x/BUILDING.md. The platform table lists macOS x64 >=13.5; macOS 14.3 meets that published minimum. The downloads page reports v24.22.0 LTS. Opened https://nodejs.org/dist/latest-v24.x/ and inspected the file list: node-v24.22.0.pkg is present, dated 14-Oct-2026. Selected that exact official installer URL: https://nodejs.org/dist/v24.22.0/node-v24.22.0.pkg . No third-party package manager, curl-to-shell installer, source compilation or sudo command chosen.
+
+Next single action: click the official installer download link and wait for the file to appear in Downloads. Expected filename node-v24.22.0.pkg. Do not open/install it yet; ask user to confirm download completion or report an error. This step downloads software only and needs no sandbox credentials or password entry. Installation and subsequent Node version verification remain separate pending steps.
+
+Why this matters / teaching: choose a supported major version and official distribution after checking the actual OS/CPU; keep exact version/source in the log for reproducibility. A downloaded package is not an installed runtime. Installer verification/execution will be guided next rather than assuming a successful install.
+
+Status: OS/architecture and official distribution availability verified; user download PENDING. No local package installed by the assistant, no protected credentials entered, no live security tests, new database changes, DELETE attempts, cleanup, production/personal-data action, stable-v122 edit, merge or deployment. Sandbox remains at the Entry 183 fictional baseline.
+
+Rollback: downloading the installer changes no database/runtime installation; cancel the download if necessary. Do not run guessed uninstall/delete commands or reset Supabase. Repository action: append Entry 191 only using fetched current blob SHA, preserving history.
