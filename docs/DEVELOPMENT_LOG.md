@@ -948,3 +948,20 @@ Reason / why this matters: the adjacent menu is a concrete visible navigation co
 Status: cloud-icon attempt completed without visible effect; adjacent-menu inspection PENDING. Protected credential bindings/network allowance still unconfigured as last observed. No database mutation, new user/membership/fixture/policy/grant, ordinary-user test, DELETE attempt, cleanup, production operation, personal-record change, stable-v122 edit, merge or deployment.
 
 Rollback/teaching: UI inspection has no database rollback/cleanup requirement; close the menu if needed. A nonresponsive control is a navigation observation, not a database failure. Do not clear browser/site data or reset the sandbox. Repository action: append Entry 186 only using fetched current blob SHA, preserving history.
+
+
+## Entry 187 — Conversation menu ruled out; inspect visible Custom composer control
+
+Timestamp: 2026-10-16 13:45 EDT (17:45 UTC), America/New_York.
+
+Evidence: user supplied a wider screenshot showing the opened menu with Rename, Share, Copy and Archive only. This is conversation management, not an environment/secret configuration surface. Correction: the earlier adjacent-menu guess did not locate the required settings; no relevant option was selected and no configuration changed. Do not use Archive/Share/Copy as a credential workflow.
+
+New visible control: a gear icon labeled Custom appears at the lower-left edge of the message composer, beside the plus button. It was not labeled in the earlier narrower screenshot. Its actual panel contents remain unknown; do not claim it definitely contains secrets or network controls.
+
+Next single inspection action: dismiss the conversation menu by clicking outside, then click the gear/Custom control beside the message box. These are navigation clicks for one control-inspection operation. Expected result: a configuration/options panel identifying what Custom controls. Request visible labels or screenshot with all secret values hidden; do not enter credentials or save changes yet. If it is unrelated to environment configuration, report that rather than continue guessing menu paths.
+
+Reason / teaching: use newly visible UI evidence to narrow the host configuration path, acknowledge failed navigation assumptions, and inspect actual labels before instructing secret storage. A screenshot of conversation-management actions is useful negative evidence; it does not mean protected configuration is impossible elsewhere.
+
+Status: conversation menu ruled out; Custom control inspection PENDING. No runtime secret/network change, database mutation, Auth/membership/fixture/policy/grant change, ordinary-user HTTP test, DELETE attempt, cleanup, production/personal-data action, stable-v122 modification, merge or deployment. Last verified populated sandbox remains Entry 183; re-capture a fresh starting snapshot before testing.
+
+Rollback: UI inspection has no database changes and needs no rollback/cleanup. Close the panel if unrelated. Do not clear browser data, reset accounts/projects or share passwords/keys. Repository action: append only Entry 187 with current remote blob SHA and preserve prior entries.
