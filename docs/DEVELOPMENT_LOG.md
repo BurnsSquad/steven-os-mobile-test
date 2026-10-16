@@ -1124,3 +1124,24 @@ Reason / teaching: Terminal must operate inside the actual extracted review sour
 Status: download reported; exact source folder/extraction PENDING. Do not open index.html, replace a project, run scripts or enter credentials yet. No local source test/hidden input, live sign-in/UPDATE/DELETE/C-isolation test, database mutation, cleanup, production/personal-record action, stable-v122 edit, merge or deployment. Prior snapshot from Entry 183 is too old for live preflight and will be freshly recaptured when testing is ready; no stale evidence reused.
 
 Rollback: locating/extracting a new source folder changes no database and needs no database rollback. If Finder reports an existing conflicting item, stop rather than replace/merge it. Keep downloaded source separate from user records. Repository action: append Entry 197 only with fetched current log blob SHA, preserve prior history. Next dependent step will use the confirmed folder path for offline-only checks.
+
+
+## Entry 198 — Exact extracted source folder confirmed; select and inspect it in Terminal
+
+Timestamp: 2026-10-16 15:37 EDT (19:37 UTC), America/New_York.
+
+User reports exact extracted folder name steven-os-mobile-test-96aef24b67c698a4770c7bef02f54e1853eaf028. It matches the supplied pinned archive commit. This confirms the name by user report, not a cryptographic hash/local file verification. Downloads location follows the guided extraction workflow and will be checked by the command; do not overwrite another folder if it differs.
+
+Next single setup action: in user's Terminal run:
+
+```sh
+cd "$HOME/Downloads/steven-os-mobile-test-96aef24b67c698a4770c7bef02f54e1853eaf028" && ls scripts/security
+```
+
+Expected: list of source modules including private-run.mjs, run.mjs and safety.test.mjs (also config/finalize/offline-transport/prepare-sql/provision-auth/verify-cleanup). If cd fails, && prevents the listing from running in the wrong directory; report the error rather than search personal folders or recreate/download source blindly. The HOME variable is only referenced to locate the existing user's Downloads; it is not reassigned.
+
+Purpose / teaching: Terminal's working directory determines which relative scripts will run. Verify the intended separate review-source folder and expected files before executing tests. ls reads directory names only; no Node script, network request, credential prompt or database mutation occurs.
+
+Status: folder name confirmed; path/file-list verification PENDING. Node remains screenshot-verified v24.22.0. No local test execution/private input, live sign-in/security test, new SQL/DELETE/cleanup, production/personal-data operation, stable-v122 change, merge or deployment. Last sandbox snapshot is historical and must be refreshed before actual client testing.
+
+Rollback: changing Terminal directory and listing names changes no files/database and needs no cleanup/rollback. Do not move/merge/replace existing personal folders or open index.html. Next step after successful listing is the prepared offline-only safety/integrity checks. Repository action: append Entry 198 only using fetched current log blob SHA and preserve historical entries.
