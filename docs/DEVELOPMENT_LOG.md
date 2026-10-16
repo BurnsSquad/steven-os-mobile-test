@@ -1168,3 +1168,20 @@ Teaching: verify the same source on the user's actual runtime before supplying p
 Error/rollback: if tests fail, stop and report exact non-secret output; do not run private-run or reset fixtures. Offline tests need no database rollback/cleanup. Synthetic temporary files are removed by their own test cleanup; no manual broad deletion instructed.
 
 Status: local path/module presence screenshot-verified; local twelve-group/HTML audit results PENDING. No private credential entry, fresh session, ordinary-user security test, UPDATE/DELETE request, database mutation, cleanup, production/personal-data action, stable-v122 edit, merge or deployment. Once local checks pass, obtain the public connection-key readiness and fresh independently validated snapshot before sign-in testing; retain exact destructive approval gates. Repository action: append Entry 199 only using current fetched blob SHA and preserve history.
+
+
+## Entry 200 — Local offline chain completes; locate existing sandbox public key
+
+Timestamp: 2026-10-16 15:47 EDT (19:47 UTC), America/New_York.
+
+Evidence: user Terminal screenshot shows the end of the safety-test output (skipped 0, todo 0, duration), followed by PASS stable index SHA-256 aecb177cdebe6eded90f5e5b9626e152fd677066b923e8b988ece2b83c6683f8; PASS syntax for all eleven HTML files; Parsed 167 scripts. No browser, authentication, network, or RLS tests executed. Prompt returned. The screenshot crops the test-count/pass/fail summary, so do not claim those numeric lines are independently visible. Because the instructed command used && and the audit ran, infer the safety process exited successfully. Twelve groups are the reviewed source's expected suite; local complete count is not separately shown. No live RLS proof.
+
+Read-only connection readiness: get_publishable_keys(project_id=wozynsftofkjqwlflosv) returns enabled legacy anon and enabled modern publishable key named default. Confirmed existing sb_publishable_ key, so no key creation/rotation needed. Did not print or commit actual key values or legacy JWT, request any privileged key, read secrets, or change settings.
+
+Next single user action: return to the exact sandbox dashboard in browser; click Settings gear > API Keys; locate the enabled public Publishable key beginning sb_publishable_ (default). Do not use the legacy anon JWT or Secrets/service_role section. Ask only Publishable key found, or visible labels if absent. No key/password screenshot or pasted value requested. Keep the page available for copying directly into the launcher's hidden prompt later, not into chat or shell commands.
+
+Reason / teaching: a public publishable key identifies the API project and is designed for ordinary clients; it does not replace A/B/C passwords or bypass RLS. Selecting the modern type satisfies the runner's guard and avoids accidentally supplying an administrative secret. The connector verified availability without requiring any production access.
+
+Status: local offline HTML/integrity audit directly screenshot-verified; safety successful exit inferred from chain execution. Public key exists independently via connector, user UI readiness PENDING. No private-input launcher, Auth login, UPDATE/DELETE/C-isolation test or cleanup run. Current live fixture state remains unremeasured since Entry 183; capture/revalidate fresh administrator snapshot immediately before launch. No new database mutation, key rotation, production/personal-data action, stable-v122 edit, merge/deployment.
+
+Rollback: reading/copying the public key for a later private prompt needs no database cleanup/rollback; do not regenerate keys or alter permissions. On unexpected UI, report labels rather than sharing values. Repository action: append Entry 200 only using current fetched log blob SHA and preserve history.
