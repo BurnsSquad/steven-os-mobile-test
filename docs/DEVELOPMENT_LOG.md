@@ -1094,3 +1094,18 @@ node scripts/audit-html.mjs PASS unchanged 167 inline scripts and stable hash. s
 Publication plan: add the reviewed launcher/stage/doc changes to the existing PR branch with expected-head lease, then verify changed paths and supply a pinned commit ZIP. Next single user action is source download only, not execution or secret entry. Expected ZIP/extracted folder contains reviewed test scripts in a separate folder; do not overwrite existing project records. Fresh session/snapshot and private key/password prompts come later, after offline checks. No fixture reset or user recreation needed.
 
 The old PR description still described missing Supabase tools/empty sandbox; update it to current live administrative setup evidence and explicit unrun client tests. Next entry records actual publication. Local source rollback is a targeted reviewed revert; no database rollback needed for this preparation.
+
+
+## Entry 196 — Local launcher published; pinned source download is next
+
+Timestamp: 2026-10-16 approximately 14:04 EDT (18:04 UTC), America/New_York.
+
+Published commit 96aef24b67c698a4770c7bef02f54e1853eaf028 (parent 96a7932b8a399f46464e1249dff180eb71574fe2) using a tree based on the existing branch and expected-head lease, force=false. GitHub update_ref reports success. Exact parent/child comparison shows one commit ahead, zero behind and seven intended paths: run.mjs, finalize.mjs, new private-run.mjs, safety.test.mjs, append-only log/runbook updates and new LOCAL_TEST_WALKTHROUGH.md. No HTML, baseline source app, Auth settings, work artifacts or credentials changed.
+
+Updated PR #1 description to the current state: connected SQL and applied/verified sandbox policy/fixture migration, local Node verified, twelve offline tests, staged 27/38 assertions, real client tests unrun and destructive gates intact. PR remains draft/open/unmerged; no deployment.
+
+Next single user action: download https://github.com/BurnsSquad/steven-os-mobile-test/archive/96aef24b67c698a4770c7bef02f54e1853eaf028.zip . This is a pinned reviewed source ZIP. Expected: a ZIP or browser-extracted folder in Downloads named for steven-os-mobile-test and that commit. No code execution or password entry yet; do not replace any existing project/personal file. Ask only whether downloaded. Source download does not imply acceptance/execution of future DELETE tests.
+
+Actual live boundary: no new SQL/HTTP Auth request, private input, ordinary-user UPDATE/DELETE/C-isolation test or cleanup this turn. No fresh session JSON published yet; prepare only after local offline checks and public-key readiness so it remains within the ten-minute guard. Current fixture state must be rechecked at that time. Production, stable v122 and personal records unchanged.
+
+Teaching/rollback: a pinned archive provides reproducible source without requiring Git installation or merging the PR. Downloading it cannot run tests or undo database setup. Close/cancel a failed download rather than rerun fixture setup. Source rollback is a reviewed commit revert, and local test evidence must be retained for diagnosis once runs begin. This entry records the publication/download boundary; later results must be logged separately.
