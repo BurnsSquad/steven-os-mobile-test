@@ -103,3 +103,20 @@ Status: instructions issued, checkbox change PENDING user confirmation. No SQL, 
 Reproduction / teaching: on this unsubmitted new-project form, locate Security and clear Automatically expose new tables; visually verify an empty checkbox before reporting completion. Do not infer creation from a completed form. Later project creation and table setup will be separately explained, with exact scope and permissions before execution.
 
 Rollback: this is an unsubmitted form setting; checking it again reverses the form edit, or Cancel discards the form. No database cleanup or rollback is applicable. Repository action: append only Entry 148 to the PR branch using the fetched current log blob SHA; retain all previous entries.
+
+
+## Entry 149 — Automatic exposure disabled; name the isolated project
+
+Timestamp: 2026-10-16 11:01 EDT (15:01 UTC), America/New_York.
+
+Evidence/result: user answered "yes" to whether Automatically expose new tables is now unchecked. Entry 148's checkbox action is confirmed by user report, not a fresh screenshot or API inspection. This is a setting on an unsubmitted project form; no created project or applied database default privileges have been verified.
+
+Next single setup action: click Project name and enter Burns Base Security Sandbox. Expected result: that exact name appears in the project-name field. Leave optional GitHub integration unselected and do not click Create new project. Ask only whether the name appears correctly. No password or key is needed for this action.
+
+Reason / why this matters: an unmistakable sandbox label helps users distinguish the future testing project from Burns Base Project before issuing SQL or client requests. A display name alone does not prove isolation; after creation we must verify a distinct project reference/URL and protected test configuration. No production database will be cloned or imported.
+
+Status: naming instruction issued; entry into the form PENDING user confirmation. Project creation, schema/auth setup, test fixtures and all live security tests remain unperformed or unverified. No database mutation, permission/policy change, membership change, cleanup, personal-data operation, merge or stable-v122 modification occurred.
+
+Reproduction / teaching: on the same new-project form, type the proposed sandbox name in Project name and visually check the spelling. Stop before submission. Before any later database mutations, present the exact isolated scope, SQL/requests, permissions, expected results, cleanup approval and rollback procedure.
+
+Rollback: edit or clear the project-name field, or cancel the unsubmitted form. No database rollback or cleanup is needed. Repository action: append only this sequential entry on the existing PR branch using the freshly fetched log blob SHA and preserving all previous content.
