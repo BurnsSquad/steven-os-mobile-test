@@ -1109,3 +1109,18 @@ Next single user action: download https://github.com/BurnsSquad/steven-os-mobile
 Actual live boundary: no new SQL/HTTP Auth request, private input, ordinary-user UPDATE/DELETE/C-isolation test or cleanup this turn. No fresh session JSON published yet; prepare only after local offline checks and public-key readiness so it remains within the ten-minute guard. Current fixture state must be rechecked at that time. Production, stable v122 and personal records unchanged.
 
 Teaching/rollback: a pinned archive provides reproducible source without requiring Git installation or merging the PR. Downloading it cannot run tests or undo database setup. Close/cancel a failed download rather than rerun fixture setup. Source rollback is a reviewed commit revert, and local test evidence must be retained for diagnosis once runs begin. This entry records the publication/download boundary; later results must be logged separately.
+
+
+## Entry 197 — Source download reported; locate/extract a separate local folder
+
+Timestamp: 2026-10-16 15:10 EDT (19:10 UTC), America/New_York.
+
+User reports downloaded in response to the pinned source ZIP link for commit 96aef24b67c698a4770c7bef02f54e1853eaf028. Treat completion as user report, not a verified local archive path/hash or executed test. No password/key supplied and no execution claimed.
+
+Next single setup operation: open Downloads in Finder and locate the steven-os-mobile-test archive/folder. If only the .zip archive is present, double-click it once to extract using macOS's standard archive handler. If already extracted, leave the folder as-is. Expected folder name begins steven-os-mobile-test- and normally includes pinned commit 96aef24b67c698a4770c7bef02f54e1853eaf028. Ask only for the exact resulting folder name, not a screenshot of unrelated personal Downloads files.
+
+Reason / teaching: Terminal must operate inside the actual extracted review source before running scripts. Browsers may auto-extract ZIPs or suffix repeated downloads, so inspect the real name rather than guess a path or overwrite an existing project. Archive extraction is separate from running JavaScript. No Git installation needed.
+
+Status: download reported; exact source folder/extraction PENDING. Do not open index.html, replace a project, run scripts or enter credentials yet. No local source test/hidden input, live sign-in/UPDATE/DELETE/C-isolation test, database mutation, cleanup, production/personal-record action, stable-v122 edit, merge or deployment. Prior snapshot from Entry 183 is too old for live preflight and will be freshly recaptured when testing is ready; no stale evidence reused.
+
+Rollback: locating/extracting a new source folder changes no database and needs no database rollback. If Finder reports an existing conflicting item, stop rather than replace/merge it. Keep downloaded source separate from user records. Repository action: append Entry 197 only with fetched current log blob SHA, preserve prior history. Next dependent step will use the confirmed folder path for offline-only checks.
