@@ -788,3 +788,32 @@ Rollback/error procedure: Auth account creation is not a multi-step SQL transact
 Status: account A creation instruction issued; execution/result PENDING user report. Existing routine fictional-account setup authorization applies; no additional approval request. No assistant DB mutation this turn, production read/write, policy/grant/membership change, task fixture write, live RLS test, cleanup, merge/deployment or stable-v122 change.
 
 How to reproduce / teach: verify sandbox name/reference before submission, create one supported confirmed fictional identity with a privately saved password, then independently verify before proceeding to B. Report success without sending credentials. Repository action: append Entry 178 only on the existing PR branch with the fetched current log blob SHA, preserving all prior history.
+
+
+## Entry 179 — Account A independently verified; create fictional B next
+
+Timestamp: 2026-10-16 13:22 EDT (17:22 UTC), America/New_York.
+
+Evidence: user screenshot shows one visible Authentication Users row with UUID 6fe4e705-a92f-44ea-9898-d0eebf1f95d5 and the beginning of the intended fictional A email. Footer says Total: 10 users (estimated). Do not treat that estimate as an exact count or proof of unexpected real users.
+
+Read-only verification executed only on sandbox wozynsftofkjqwlflosv:
+
+```sql
+SELECT (SELECT count(*) FROM auth.users) AS total_auth_users,
+       id, email,
+       (email_confirmed_at IS NOT NULL) AS email_confirmed
+FROM auth.users
+WHERE email = 'burns-security-a@example.test';
+```
+
+Actual result: exactly one result row; total_auth_users 1; id 6fe4e705-a92f-44ea-9898-d0eebf1f95d5; email burns-security-a@example.test; email_confirmed true. This independently establishes successful creation/confirmation of A and resolves the screenshot footer discrepancy. It does not explain the UI estimation algorithm or prove password login. No password/hash/token/metadata selected; no other identity details read.
+
+Starting-count change: prior independent count 0 → current independent count 1, attributable to the user-performed supported create-user step. Assistant made no Auth mutation. Password remains privately managed by user; runtime credential binding and login remain unverified. No membership or task records were created by the account creation flow in our setup; table counts have not been freshly remeasured in this query.
+
+Next single setup operation: in the same sandbox, Add user > Create new user; email burns-security-b@example.test; generate a distinct password of at least 24 characters, save privately as Burns Base Security Sandbox — Test B; enable Auto Confirm User if shown; click Create user once, never Invite user. Expected Auth count becomes 2, both fictional identities confirmed. No household membership/grants/policies/tasks yet. Ask only B created or exact non-secret error; do not request password or credential screenshot.
+
+Reason / why this matters: B will later be the fictional household peer/member. A supported confirmed Auth identity is separate from household authorization. We must have distinct real Auth UUIDs, not invented IDs, before creating foreign-key-backed fixtures and measuring RLS. Exact database counts take precedence over UI estimates in the evidence report.
+
+Rollback/error handling: Auth creation is not undone by SQL ROLLBACK. On an error/uncertain result, stop and inspect exact fictional count/identity before retrying; no automatic user deletion or reset. Deletion would need separately reviewed exact scope/approval. This instruction is within the user's existing routine fictional-account setup authorization.
+
+Status: A creation/confirmation verified live; B creation instruction issued, result PENDING. C remains uncreated. No assistant database mutations, production operations, membership/policy/grant/task changes, live RLS test, destructive cleanup, merge/deployment or stable-v122 edit. Read-only verification needs no rollback/cleanup. Repository action: append Entry 179 only with fetched current log blob SHA; preserve history.
