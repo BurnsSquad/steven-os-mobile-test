@@ -356,3 +356,28 @@ Status: execution role/version confirmed; auth count query issued, result PENDIN
 How to reproduce / teach it: verify sandbox selection, run only the aggregate SELECT, and report its single number. Explain database roles versus app sign-in users: postgres operates the database administratively; fictional A/B/C will authenticate through Supabase Auth and exercise the authenticated role under RLS. Before any mutations, present exact scope/permissions, expected outcomes, cleanup and rollback and obtain required approval.
 
 Rollback: aggregate SELECT changes no database records or schema and requires no cleanup/rollback. If the count is unexpected, stop; never remove existing users to manufacture a clean baseline. Repository action: append Entry 159 only to the existing PR branch using the freshly fetched log blob SHA and preserve historical entries.
+
+
+## Entry 160 — Zero Auth users reported; exact empty-table setup prepared for approval
+
+Timestamp: 2026-10-16 11:42 EDT (15:42 UTC), America/New_York.
+
+Evidence/result: user reported 0 for Entry 159's existing_auth_users aggregate. This is user-reported query output, not an independent connection or new screenshot. Together with the earlier public-table screenshot, the observed starting inventory is zero public tables and zero Auth users at their respective check times. Current SQL role postgres and PostgreSQL 17.11 are screenshot-verified. No new live client test result is implied.
+
+Action/reason: prepare a concrete reviewable first mutation rather than asking for blanket setup permission. Added docs/SANDBOX_SETUP_REVIEW.md on the existing PR branch in commit 29417d2924a0d8dd03e4792bf228876e400153f7. It contains the exact proposed SQL, target reference wozynsftofkjqwlflosv, staged overall test plan, required permissions, expected results, verification limits, cleanup and rollback. This is a proposed sandbox schema authored from the handoff architecture; no source production DDL was fetched or assumed identical.
+
+Exact scope: BEGIN; guard postgres role, no public tables and no Auth users; CREATE three empty bb_test_private_tasks/bb_test_household_members/bb_test_shared_tasks tables with explicit UUID/owner/membership/creator columns, primary/foreign-key constraints and role check; ENABLE RLS; REVOKE ALL table privileges from PUBLIC/anon/authenticated on those new tables only; assert no effective ordinary-role table or column grants and no policies; COMMIT. Service/admin defaults and project-wide default privileges are not changed. No INSERT/UPDATE/DELETE, users, fixtures, memberships or policies are included. No IF NOT EXISTS bypasses drift checks.
+
+Permissions: sandbox SQL Editor postgres creates/owns objects and adjusts grants on those new objects only. Later ordinary-client tests require separately reviewed grants/policies and protected A/B/C credentials; elevated SQL does not prove RLS. No secrets requested in chat.
+
+Whole sequence explained in the review: closed empty tables → separately reviewed fictional Auth/fixture/membership setup → least-privilege policies/grants → disposable v131-equivalent UPDATE first → DELETE denial → unrelated C isolation → separately approved optional DELETE policy semantics → approved exact cleanup → final baseline/privilege checks. Broad original v131 negative PATCH is excluded from approved testing. No production migration or personal data import.
+
+Expected first-step result: exactly three empty tables, RLS true, zero policies, no anon/authenticated effective table/column privileges; zero Auth users unchanged. Independent read-only verification follows, not an assumed PASS from a success message. Proposed SQL is reviewed text only; it has not been executed or parser-validated against PostgreSQL. No claim of syntax/runtime PASS.
+
+Rollback/cleanup: failure before COMMIT prevents transaction changes from committing; an open failed transaction requires ROLLBACK and read-only inspection before retrying. A successful commit cannot be undone by ROLLBACK. Later removal requires verified empty tables/definitions/dependents and separate approval for exact RESTRICT drops; no CASCADE or project deletion. No fictional-row cleanup is needed for this first step because no rows are created.
+
+Next single user action: review the linked proposal and approve or request changes to the empty-table step only. Do not paste/run SQL yet; guided execution follows only after approval. This explicit pause is grounded in CODEX_HANDOFF.md Connection and access requirements and Development log contract, which require approval for schema changes; the user's current request also requires explaining mutations/permissions/expected results/cleanup/rollback first. Approval of this step will not authorize destructive cleanup, production permissions or later fixture/policy setup.
+
+Status: approval PENDING. No database mutations, Auth creation, live security tests, production permissions/policies/memberships, personal records, stable-v122 changes, merge or deployment performed. Repository changes now include one new review document beyond the original four reviewed files; draft PR remains open/unmerged. Append-only log update uses fetched blob SHA and preserves all previous entries.
+
+Why this matters / how to teach: distinguish a proposed script, approval, actual execution and independent verification as four different events. Closed initial tables let privileges be built deliberately. Transactions protect against partial setup; snapshots and exact approvals govern post-commit recovery.
