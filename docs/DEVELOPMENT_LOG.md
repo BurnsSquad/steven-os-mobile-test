@@ -677,3 +677,18 @@ Status: alternate-browser rendering success screenshot-verified; scope and conne
 Why this matters / teaching: OAuth capability and authorized task scope are separate. A promise to target only a sandbox is a behavioral restriction, not provider-enforced project isolation. Read the actual authorization screen before approval and do not infer narrow scope from a sandbox project name elsewhere.
 
 Rollback: viewing the screen has no database effects; Cancel exits without approving this request. Later revoking an approved connection would remove future access, not reverse committed SQL. No database rollback/cleanup applies to this step. Repository action: append Entry 173 only with current fetched blob SHA and preserve previous entries.
+
+
+## Entry 174 — Displayed organization-wide connection approved; finish provider authorization
+
+Timestamp: 2026-10-16, America/New_York; recorded after Entry 173 in the same setup session.
+
+Authorization evidence: user replied "the whole thing is good" directly to the explicit question whether they approve the displayed organization-wide connection with all assistant database work restricted to Burns Base Security Sandbox. Treat this as approval of the exact OAuth scope shown in Entry 173. Do not ask for the same scope approval again. This does not authorize production operations, personal-data access, secret inspection unrelated to the task, destructive cleanup, new shared DELETE semantics, merging PR #1 or modifying stable v122.
+
+Next single setup action: on the displayed Supabase authorization page, click Authorize ChatGPT once. Expected result: return to ChatGPT with Supabase connected, or a visible error/pending state. Request only the resulting status; no authorization URL/code/token, passwords or keys. Do not initiate parallel authorization flows.
+
+Status: scope approval confirmed by user statement; completion of provider authorization remains PENDING until observed. No database operation is executed by this instruction. Once connected capabilities appear, first identify sandbox reference wozynsftofkjqwlflosv and recheck metadata/counts read-only before any further setup/test mutations. Broader OAuth capability never expands the task's permitted database target.
+
+Why this matters / teaching: user approval and successful provider connection are distinct events. Record both rather than assuming one proves the other. After a connection, administrative metadata queries still do not substitute for ordinary authenticated RLS tests.
+
+Rollback: if authorization fails or stalls, report the exact non-secret status; do not reset the project or clear personal browser storage. An approved connection can later be revoked through supported settings, which does not undo any committed database work. No database rollback/cleanup applies to this authorization step. Repository action: append Entry 174 only on the existing PR branch using the fetched current blob SHA and preserve history.
