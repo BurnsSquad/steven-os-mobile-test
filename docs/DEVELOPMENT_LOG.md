@@ -298,3 +298,35 @@ Why this matters / teaching: turning off automatic exposure in a form is an inte
 Status: default-privilege query issued; results PENDING. No assistant DB connection, mutations, fixtures/auth creation, policy/grant changes, membership edits, cleanup, merge, deployment or stable-v122 modifications. Before any later database mutations, exact setup/test scope, permissions, expected results, cleanup and rollback must be explained and required approval obtained.
 
 Rollback: metadata SELECT does not change application data or schema; no database rollback/cleanup needed. Unexpected permissions lead to inspection and a separately reviewed plan, not automatic revocation. Repository action: append Entry 157 only on the existing PR branch using the freshly fetched log blob SHA and preserve prior entries.
+
+
+## Entry 158 — Default-privilege export reviewed; identify SQL execution role
+
+Timestamp: 2026-10-16 11:25 EDT (15:25 UTC), America/New_York.
+
+Evidence: user uploaded Supabase Snippet Untitled query.csv as Entry 157 query results. Downloaded via download_file and read as CSV data, not instructions. File contains table_creator, scope, granted_to, privilege_type columns and 52 result rows, all scoped to public. Attribution to the intended sandbox is based on the ongoing user workflow; CSV itself contains no project reference or execution timestamp. No secret values present.
+
+Verified export findings:
+- For future public tables created by postgres, anon and authenticated each retain MAINTAIN, REFERENCES, TRIGGER and TRUNCATE defaults. service_role has the same four entries. postgres has all eight listed table privileges, including SELECT/INSERT/UPDATE/DELETE.
+- For future public tables created by supabase_admin, anon, authenticated, postgres and service_role each receive all eight listed privileges: DELETE, INSERT, MAINTAIN, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE.
+- No database-wide default rows or PUBLIC grantee rows appear in this export. This statement describes returned explicit defaults only, not all effective access paths.
+
+Interpretation/correction: the form's disabled automatic exposure has not removed every default grant. The postgres defaults lack the four ordinary CRUD privileges for API roles, but retain other privileges. Do not label the default permissions fully locked down. supabase_admin defaults differ, so we must identify the actual SQL execution/creation role rather than assume it. No root cause or vendor behavior is proven beyond the exported catalog contents.
+
+Security principle: TRUNCATE is not filtered by RLS, unlike ordinary row-level operations; it must not be granted to ordinary client roles on our eventual test tables. This is a future-table default finding, not evidence of exposed existing application rows: Entry 157 observed no public tables. We will prepare explicit per-test-table privilege restrictions and verification as part of reviewed isolated setup, without automatically changing project-wide defaults, production settings or service/admin privileges. Do not run REVOKE, ALTER DEFAULT PRIVILEGES or schema mutations now.
+
+Next single read-only setup action: replace editor contents with this query alone and click Run in Burns Base Security Sandbox:
+
+```sql
+SELECT current_user AS execution_role,
+       session_user AS connection_role,
+       current_setting('server_version') AS postgres_version;
+```
+
+Expected result: one row identifying execution/connection roles and PostgreSQL version. Do not assume postgres before observing it. Request that result or a screenshot; no password/key/connection string needed. Existing dashboard SQL access suffices. This SELECT changes no records, grants or policies.
+
+Why this matters / teaching: default privileges depend on who creates a table. A role is the database identity whose permissions apply to a command. Knowing the execution role lets us interpret which creation defaults matter and prepare the smallest exact setup. RLS and table grants are separate layers; a privilege such as TRUNCATE cannot be secured merely by adding a row policy.
+
+Status: CSV review complete; execution-role query issued, result PENDING. No live authenticated enforcement tests or database mutations performed. Public-table starting count remains the previously observed zero, not newly remeasured. No existing memberships, production policies, personal records, stable v122, PR merge or deployment changed.
+
+Rollback: read-only catalog review and identity SELECT require no database rollback/cleanup. Any later permission adjustment will require exact SQL/scope, expected outcomes, approved cleanup and rollback explanation before execution. Repository action: append Entry 158 only on the existing PR branch using the fetched current blob SHA, preserving all earlier entries. Uploaded evidence remains local; its findings are permanently summarized here.
