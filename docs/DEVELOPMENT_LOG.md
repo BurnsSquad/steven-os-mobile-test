@@ -381,3 +381,22 @@ Next single user action: review the linked proposal and approve or request chang
 Status: approval PENDING. No database mutations, Auth creation, live security tests, production permissions/policies/memberships, personal records, stable-v122 changes, merge or deployment performed. Repository changes now include one new review document beyond the original four reviewed files; draft PR remains open/unmerged. Append-only log update uses fetched blob SHA and preserves all previous entries.
 
 Why this matters / how to teach: distinguish a proposed script, approval, actual execution and independent verification as four different events. Closed initial tables let privileges be built deliberately. Transactions protect against partial setup; snapshots and exact approvals govern post-commit recovery.
+
+
+## Entry 161 — Empty-table setup explicitly approved; execution instructions issued
+
+Timestamp: 2026-10-16 11:46 EDT (15:46 UTC), America/New_York.
+
+Authorization: user explicitly said "Approve empty-table setup," in response to Entry 160's concrete proposal. Approval covers only the proposed three empty sandbox tables, RLS enablement and withholding ordinary client grants. It does not authorize fixture/user/membership creation, later policy/grant setup, destructive cleanup, production access or permission changes, PR merge, or stable-v122 edits. Do not request the same approval again for this unchanged operation.
+
+Pre-execution review: fetched docs/SANDBOX_SETUP_REVIEW.md from the review branch at blob fb585840e4a5ffdee433663c5f05e2b41a7a10e0. It is the proposal published in commit 29417d2924a0d8dd03e4792bf228876e400153f7. Read the full exact SQL and confirmed scope is unchanged. The historical title "approval pending" records proposal-time status; this entry records the subsequent approval. No SQL edits, silent scope changes or new permissions added.
+
+Next single setup operation: in the sandbox SQL Editor, replace existing query text with the proposal's single complete SQL block, BEGIN through COMMIT, without Markdown fences. Source pinned to commit 29417d2924a0d8dd03e4792bf228876e400153f7, docs/SANDBOX_SETUP_REVIEW.md, section Proposed first mutation: exact SQL. Ensure no partial text is selected, verify dashboard identifies Burns Base Security Sandbox / project reference wozynsftofkjqwlflosv, then click Run once. If a Supabase warning specifically identifies the reviewed table-scoped REVOKE, it is within this approval; cancel if it lists DROP/DELETE/TRUNCATE statements or any different operation/project. TRUNCATE appears in a privilege-check string, not as an executed truncation command.
+
+Expected result: successful transaction, possibly Success. No rows returned. Three EMPTY named bb_test tables, RLS enabled, no policies, and no anon/authenticated effective grants. Success text alone is provisional: next step will independently verify state with SELECTs. Ask the user only for success/error output; no credentials needed.
+
+Error/rollback instructions: stop on any error, do not rerun or modify SQL, and report exact non-secret error text. An explicit transaction prevents committing a partial setup if a statement fails. If a failed/open transaction is encountered, ROLLBACK and read-only state inspection may be needed before retry; do not blindly COMMIT. A successful committed setup cannot be undone by ROLLBACK; removing tables remains a separately approved destructive operation after verifying empty state and definitions. No fixture cleanup is required because this operation inserts no rows.
+
+Why this matters / teaching: approval, execution and verification are separate stages. Copying the full transaction ensures the guard and postcondition checks run with the table creation. Running only a selected statement could omit protections. Existing unexpected tables/users trigger a deliberate stop rather than being overwritten.
+
+Actual result: execution instructions issued; database execution and outcome PENDING user report. Assistant has not connected to or mutated Supabase. No live RLS PASS, cleanup, personal data operation, production policy/membership change, merge or stable-v122 edit. Repository action: append only Entry 161 on the existing review branch with current blob SHA, preserving all history.
