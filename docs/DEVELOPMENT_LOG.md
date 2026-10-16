@@ -260,3 +260,41 @@ Status: query instructions issued; execution/results PENDING user report. No ass
 How to reproduce / teach it: verify sandbox header, paste only this SELECT into an empty editor and click Run once. Compare actual result to expectations and preserve the reported outcome in the next log entry. Before later mutations, provide exact scope/permissions, test assertions, cleanup and rollback for review.
 
 Rollback: SELECT has no application data/schema changes to undo, so no database rollback/cleanup is needed. If unexpected tables appear, stop and investigate without deleting them. Repository action: append Entry 156 only to the existing PR branch using the fetched log blob SHA, preserving all prior entries.
+
+
+## Entry 157 — Empty public-table inventory observed; inspect table default privileges
+
+Timestamp: 2026-10-16 11:20 EDT (15:20 UTC), America/New_York.
+
+Evidence/result: user screenshot shows the exact Entry 156 SELECT in the SQL Editor for Burns Base Security Sandbox, with 0 rows and Success. No rows returned. Verified from screenshot: catalog query executed successfully and found no public-schema tables at that time. This is not proof that all schemas/auth users are empty, or that default grants and security policies are correct. No application records were read by that query.
+
+Next single setup action: replace the editor text with the following read-only query alone and click Run once, keeping the sandbox selected. It inspects explicit default privileges for future tables, including database-wide defaults and defaults specific to public.
+
+Exact SQL:
+
+```sql
+SELECT pg_get_userbyid(d.defaclrole) AS table_creator,
+       COALESCE(n.nspname, '(all schemas)') AS scope,
+       CASE WHEN a.grantee = 0 THEN 'PUBLIC'
+            ELSE pg_get_userbyid(a.grantee) END AS granted_to,
+       a.privilege_type
+FROM pg_catalog.pg_default_acl AS d
+LEFT JOIN pg_catalog.pg_namespace AS n
+  ON n.oid = d.defaclnamespace
+CROSS JOIN LATERAL aclexplode(d.defaclacl) AS a
+WHERE d.defaclobjtype = 'r'
+  AND (d.defaclnamespace = 0 OR n.nspname = 'public')
+ORDER BY table_creator, scope, granted_to, privilege_type;
+```
+
+Purpose/permissions: read catalog metadata only through existing dashboard SQL access; no changes to grants, schema, policies or records. Defaults are creator-specific. Global and per-schema defaults must both be considered; inspecting only public-scoped entries can miss global privileges. PUBLIC in privilege output means every database role, not the public schema.
+
+Expected result: zero or more rows, depending on Supabase's configured creator-role defaults. Owner/admin-only entries may exist. With intended explicit control, we want no automatic new-table API access granted to anon/authenticated/PUBLIC for the actual future table-creation role. Treat actual output as evidence to interpret, not a predetermined PASS. The all-roles inventory may include service/admin defaults; never change them based only on their appearance. Zero rows means no matching explicit default-ACL entries, not lack of owner privileges or proof of complete isolation. Effective grants on the actual future tables must be verified after creation, and event-trigger behavior is not proven by this query.
+
+Request: report results or screenshot limited to query/results, with no credentials. If there is an error, preserve the exact error text and stop rather than attempting permission fixes.
+
+Why this matters / teaching: turning off automatic exposure in a form is an intention; database catalog checks provide evidence. Default privileges are rules assigning permissions to objects created later by a particular role. They are separate from table-specific grants and RLS policies. This read-only step identifies the starting configuration before we propose test-only setup SQL.
+
+Status: default-privilege query issued; results PENDING. No assistant DB connection, mutations, fixtures/auth creation, policy/grant changes, membership edits, cleanup, merge, deployment or stable-v122 modifications. Before any later database mutations, exact setup/test scope, permissions, expected results, cleanup and rollback must be explained and required approval obtained.
+
+Rollback: metadata SELECT does not change application data or schema; no database rollback/cleanup needed. Unexpected permissions lead to inspection and a separately reviewed plan, not automatic revocation. Repository action: append Entry 157 only on the existing PR branch using the freshly fetched log blob SHA and preserve prior entries.
