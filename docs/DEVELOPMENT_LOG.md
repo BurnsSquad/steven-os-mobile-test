@@ -918,3 +918,18 @@ Why this matters / teaching: ChatGPT plugin authorization and runtime environmen
 Status: walkthrough diagnostic issued; UI identification PENDING. No database/network configuration mutation, new policy/grant/membership/user/fixture changes, ordinary-user test, DELETE attempt, cleanup, production operation, stable-v122 modification, merge or deployment. Keep shared DELETE disabled and future exact destructive approvals intact. Fresh snapshot will be recaptured once sign-in execution is ready.
 
 Rollback: looking at/sharing a properly cropped non-secret toolbar has no database effects or cleanup requirement. Do not clear browser storage, reset projects or rotate credentials. Repository action: append Entry 184 only on the existing PR branch using fetched current blob SHA, preserving history.
+
+
+## Entry 185 — Actual Codex toolbar shown; inspect cloud control
+
+Timestamp: 2026-10-16 13:41 EDT (17:41 UTC), America/New_York.
+
+Evidence: user screenshot shows the current Codex conversation toolbar at chatgpt.com. A small cloud-outline icon is visible immediately to the right of the truncated conversation title Continue Burns Base ..., followed by a three-dot control. No open environment/configuration/secret panel is shown. The screenshot establishes the actual visible control, not its function or available settings. No credential values appear; no private sidebar details are transcribed.
+
+Next single action: click that cloud-outline icon beside the conversation title once. Expected result: a popup/panel or tooltip showing its actual purpose/options; environment details are possible but not assumed. Ask the user to report the visible labels or share a screenshot of the opened panel with secret values hidden. If nothing opens, report that; do not click unrelated settings or enter passwords.
+
+Reason / why this matters: we can now give a specific click grounded in the visible UI instead of inventing a Secrets menu path. Inspect the actual control before deciding how to configure protected test passwords and sandbox network access. A cloud icon does not prove secret configuration is available.
+
+Status: screenshot identification complete; panel inspection PENDING. No changes to runtime secrets/network settings, database records/policies/grants/memberships, Auth users, stable v122, production or personal records. No ordinary-user sign-in/security test/DELETE attempt/cleanup, merge or deployment. Last live sandbox state remains Entry 183; re-snapshot before actual tests.
+
+Rollback/teaching: opening/closing an informational UI control requires no database rollback/cleanup. Do not clear site data, reset projects or share passwords/API keys/tokens. The next instruction depends on the panel's real labels. Repository action: append Entry 185 only using fetched current log blob SHA and preserve prior history.
