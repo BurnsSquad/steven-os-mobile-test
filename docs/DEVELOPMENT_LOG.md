@@ -984,3 +984,18 @@ Reason / teaching: separate action-approval preferences from secret storage. The
 Status: approval menu identified; no settings changed. Local Terminal availability PENDING. No password prompts/code executed, runtime configuration changed, new database mutation, ordinary-user UPDATE/DELETE/C test, cleanup, production operation, stable-v122 edit, merge or deployment. Sandbox remains the populated fictional baseline last verified in Entry 183; obtain a fresh snapshot immediately before actual testing.
 
 Rollback: opening Terminal changes no database or repository and requires no cleanup/rollback. Close the unused window if desired. No project/account reset or browser data clearing. Next step after Terminal opens is a non-secret runtime prerequisite check, then a reviewable local launcher if supported. Repository action: append Entry 188 only using current fetched log blob SHA and preserve history.
+
+
+## Entry 189 — Local Terminal opened; check Node version without installing anything
+
+Timestamp: 2026-10-16 13:49 EDT (17:49 UTC), America/New_York.
+
+User confirms Terminal open. This establishes a local shell window, not Node availability or permission to execute live database tests. Hosted runtime capability/credentials are unchanged.
+
+Next single action: type or paste node --version in the user's Terminal and press Return. Expected result: a version such as v24.x.x, or a command not found message. Request only that output. No npm/npx install, package-manager operation, sudo, login command, credential prompt, environment dump or network request. Check Node first; Git availability can be handled later if needed, without triggering macOS developer-tool installation unnecessarily.
+
+Reason / teaching: the prepared test runner needs a modern Node runtime with built-in fetch, AbortSignal.timeout and node:test. Observe the actual installed version before selecting compatible local setup; do not assume this Mac matches the hosted Node 24.19.0. A missing executable is a prerequisite gap, not a Supabase security failure. Do not install software merely as part of a version check.
+
+Status: local Node version PENDING user report. No local launcher or private input prompts have been run. Before live use, prepare/review a hidden-input launcher and UPDATE-only stage so DELETE attempts cannot run before their separate exact approval. No password shared/read, database mutation, fresh snapshot, live RLS/DELETE/C test, cleanup, production/personal-data change, stable-v122 edit, merge or deployment.
+
+Rollback: node --version only prints the runtime version and needs no rollback/cleanup. If not found, stop and report output rather than run suggested install commands. Repository action: append Entry 189 only using fetched current log blob SHA and preserve history.
