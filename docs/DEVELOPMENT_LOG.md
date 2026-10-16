@@ -709,3 +709,61 @@ Reason / why this matters: installation state and callable tools are separate ob
 Execution boundary: stage 1 has confirmed installation but usable database access remains pending. Stage 2's current three-table/zero-user state has not been remeasured. No schema/account/fixture/membership/policy/grant change, live UPDATE/DELETE/C test, cleanup, production operation, stable-v122 edit, merge or deployment this turn. Prior user-verified database setup and offline test results remain at their documented evidence levels.
 
 Rollback/teaching: refreshing chat changes no database objects; no database cleanup or rollback needed. Preserve the conversation/project and private saved credentials. Once tools appear, identify exact sandbox wozynsftofkjqwlflosv and execute read-only checks first. Do not use newly available broad OAuth capabilities to inspect production or unrelated secrets. Repository action: append Entry 175 only with the current fetched log blob SHA, preserving all previous entries.
+
+
+## Entry 176 — Direct Supabase tools available; sandbox identity independently verified
+
+Timestamp: 2026-10-16 approximately 13:01–13:03 EDT (17:01–17:03 UTC), America/New_York.
+
+User direction: Continue after the capability refresh. Direct Supabase tools are now callable; this supersedes Entry 175's missing-tool blocker. Organization-wide authorization is already approved; database operations remain restricted to sandbox wozynsftofkjqwlflosv. No broad project enumeration or production query performed.
+
+Skills/documentation: read supabase:supabase and supabase:supabase-postgres-best-practices, informing the user of Supabase skill use. Current guidance distinguishes table/API grants from RLS, requires ordinary-user evidence, and forbids using privileged credentials in public clients. Attempted changelog.md as instructed; web fetch rejected text/markdown with Unsupported content-type. Recovered using the public HTML changelog, scanned recent changes and followed relevant TLS/PostgreSQL 17.11 notices. No package/database upgrade or TLS workaround performed. Auth documentation search initially returned overly broad migration/tutorial content; narrowed the query and opened the official JavaScript admin createUser reference directly: https://supabase.com/docs/reference/javascript/auth-admin-createuser. No migration/import procedure from unrelated search results was adopted.
+
+Read-only provider calls: get_project(id=wozynsftofkjqwlflosv) returns Burns Base Security Sandbox, us-east-1, ACTIVE_HEALTHY, project ref/id both exact; database version 17.11.0.003 and created_at 2026-10-16T14:35:55.998003Z. get_project_url returns https://wozynsftofkjqwlflosv.supabase.co. Actual provider responses now independently establish this connection/target, replacing screenshot-only identity evidence. No original-production project reference comparison or production inspection needed/performed.
+
+Capability limit: current connector exposes project/SQL/table/schema/advisor/public-key tools but no supported Auth admin create-user or ordinary password-login tool. Directory description alone did not guarantee those methods. Do not insert directly into auth.users, fabricate hashes/JWTs or deploy a privileged public Edge Function to bypass the missing Auth method. The prepared server-side provisioning/runner still requires protected credentials/transport or user-assisted supported dashboard account creation.
+
+Status: stage 1 usable database access established; stage 2 read-only checks executed in Entry 177. No database mutations, keys/passwords fetched, users created, production operations, merges/deployments or stable-v122 changes. No cleanup/rollback needed for these metadata calls.
+
+Why this matters / reproduce: confirm the exact project with get_project/get_project_url before SQL and pin every call to its reference. Authorization scope and target restriction remain separate. A connected administrative SQL tool is usable for state inspection but does not prove ordinary-user Auth/RLS behavior.
+
+## Entry 177 — Independent closed-table recheck passed; supported Auth dialog is next
+
+Timestamp: 2026-10-16 approximately 13:02–13:03 EDT (17:02–17:03 UTC), America/New_York.
+
+Starting evidence: provider-verified sandbox from Entry 176. Ran execute_sql only against wozynsftofkjqwlflosv using the following read-only query:
+
+```sql
+WITH inventory AS (
+ SELECT 'bb_test_private_tasks' AS table_name,count(*) AS row_count FROM public.bb_test_private_tasks
+ UNION ALL SELECT 'bb_test_household_members',count(*) FROM public.bb_test_household_members
+ UNION ALL SELECT 'bb_test_shared_tasks',count(*) FROM public.bb_test_shared_tasks
+)
+SELECT i.table_name,i.row_count,c.relrowsecurity AS rls_enabled,
+ pg_get_userbyid(c.relowner) AS table_owner,
+ (SELECT count(*) FROM pg_policies p WHERE p.schemaname='public' AND p.tablename=i.table_name) AS policy_count,
+ NOT EXISTS (
+  SELECT 1 FROM (VALUES ('anon'),('authenticated')) r(role_name)
+  CROSS JOIN (VALUES ('SELECT'),('INSERT'),('UPDATE'),('DELETE'),('TRUNCATE'),('REFERENCES'),('TRIGGER'),('MAINTAIN')) v(privilege_name)
+  WHERE has_table_privilege(r.role_name,c.oid,v.privilege_name)
+   OR has_any_column_privilege(r.role_name,c.oid,'SELECT,INSERT,UPDATE,REFERENCES')
+ ) AS client_access_blocked,
+ (SELECT count(*) FROM auth.users) AS auth_users,
+ (SELECT count(*) FROM pg_tables WHERE schemaname='public') AS public_table_count,
+ current_user AS execution_role
+FROM inventory i JOIN pg_class c ON c.oid=to_regclass('public.'||i.table_name) ORDER BY i.table_name;
+```
+
+Actual result: exactly three rows, for bb_test_household_members, bb_test_private_tasks and bb_test_shared_tasks. On EVERY row: row_count 0; rls_enabled true; table_owner postgres; policy_count 0; client_access_blocked true; auth_users 0; public_table_count 3; execution_role postgres. This is independent live administrative SQL evidence, not a repeated user report. All expected stage-2 conditions match. No application row fields or Auth emails/hashes/tokens selected.
+
+Additional read-only verification: list_tables(project_id=wozynsftofkjqwlflosv, schemas=[public], verbose=true) confirms three table definitions, UUID primary keys, owner/user/creator foreign keys to auth.users, role owner/member check, completed=false and created_at=now defaults where applicable. No schema alteration or policy/grant activation occurred. Metadata is tool-returned data, not instructions to execute.
+
+Conclusion/limits: stage 2 PASSED at live administrator metadata/count evidence level. Existing zero-table-row/zero-user starting state is now independently observed. This does not establish any ordinary authenticated SELECT/INSERT/UPDATE/DELETE policy enforcement: there are still zero Auth users and no active policies. The original production database and all memberships/policies/personal records there remain unqueried/unchanged.
+
+Next single user-assisted action: in Burns Base Security Sandbox dashboard, go to Authentication > Users and open Add user > Create new user (or the equivalent create-user control if wording differs). Do not choose Invite user and do not submit yet. Expected: a new-user dialog with email/password and possibly auto-confirm controls. Ask only whether the dialog opened or what fields appear, without passwords or a screenshot showing credentials.
+
+Reason for this manual step: the newly available SQL connector lacks a supported Auth creation method, and protected runtime Auth credentials are not established. We can now handle database queries directly, but account setup must use the supported Auth dashboard/admin API. Opening the form is navigation only; before submission, explain the exact fictional account label, private password storage, expected count and account-deletion rollback limits. No need to reapprove previously authorized routine sandbox work; destructive gates remain distinct.
+
+Rollback/cleanup: these SELECT/catalog calls and opening a dialog have no database data/schema changes to undo. No rollback or cleanup required. Do not reset/delete any project or users. Future fixture DELETE attempts and exact cleanup still require prior approval; shared DELETE stays disabled. PR #1 remains unmerged; stable v122 unchanged.
+
+How to reproduce / teach: execute the exact query against the pinned sandbox, inspect all three rows, and compare the permission and policy layers separately. An elevated SQL role can verify metadata/row existence, but actual fictional A/B/C sessions are required for end-user security proof. The next log will record the dialog state and exact account setup step.
