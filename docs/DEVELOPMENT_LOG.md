@@ -86,3 +86,20 @@ Actual result: instructions prepared; dashboard state, selected organization and
 How to reproduce / teach it: follow the dashboard navigation above and report only non-secret UI context. If the interface differs or access is denied, stop navigation and describe the visible message without sharing credentials. Next action will be selected after that report; no later setup action is issued now.
 
 Rollback: navigation has no database effects, so no database rollback or cleanup is needed. Close the dashboard if necessary. Documentation rollback, if requested, is a targeted revert on the review branch; never reset index.html or browser storage.
+
+
+## Entry 148 — Organization confirmed; prepare explicit access control
+
+Timestamp: 2026-10-16 10:57 EDT (14:57 UTC), America/New_York.
+
+Evidence: user supplied a screenshot of Supabase's Create a new project form. Organization is BurnsSquad's Base, labeled FREE. GitHub optional selector has no repository selected; project name and database-password fields are empty. Region shows Americas. Enable Data API and Automatically expose new tables are checked; Enable automatic RLS is unchecked. Create new project is visible. This verifies form access, not successful provisioning or eventual project-creation permission. Entry 147 navigation is now confirmed by screenshot, although the user has proceeded to the creation form. No project has been shown as created.
+
+Next single setup action: under Security, click the checked checkbox beside Automatically expose new tables once to clear it. Leave Enable Data API checked, since later ordinary-client tests need the REST API. Leave other controls alone for this action and do not click Create new project. Expected result: Automatically expose new tables is unchecked; its subordinate automatic-RLS control may change visibility or availability. Ask the user only to confirm that unchecked state.
+
+Reason / why this matters: automatically granting API roles privileges on new tables makes access implicit. Disabling this option lets later reviewed test-only SQL grant exactly the required operations and columns. Data API availability and database privileges are separate controls. Row Level Security must also be explicitly enabled and verified for each test table; this checkbox alone does not establish RLS or secure an existing table.
+
+Status: instructions issued, checkbox change PENDING user confirmation. No SQL, database mutations, auth accounts, policies, memberships, secrets or personal records touched. Screenshot contains no entered password/key; none requested. No current production metadata or row counts verified. Existing stable v122 and PR merge state untouched.
+
+Reproduction / teaching: on this unsubmitted new-project form, locate Security and clear Automatically expose new tables; visually verify an empty checkbox before reporting completion. Do not infer creation from a completed form. Later project creation and table setup will be separately explained, with exact scope and permissions before execution.
+
+Rollback: this is an unsubmitted form setting; checking it again reverses the form edit, or Cancel discards the form. No database cleanup or rollback is applicable. Repository action: append only Entry 148 to the PR branch using the fetched current log blob SHA; retain all previous entries.
