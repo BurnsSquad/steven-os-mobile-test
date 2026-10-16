@@ -53,3 +53,15 @@ How to reproduce / teach it: from repository root run `node scripts/audit-html.m
 Rollback procedure: revert only the docs/scripts commit on this review branch. For future interrupted UPDATE tests, inspect the exact fixture before preparing a conditional title/completed restoration; never blindly rerun. Future cleanup must assert identity/count inside a transaction and ROLLBACK on mismatch. Permission rollback must restore a captured exact pre-change snapshot.
 
 Pending: publish this preparation as a review PR, then supply isolated-project configuration/protected test identities and capture read-only DB state. No destructive or production-permission operation may proceed without specific approval. Current live record counts before/after remain unknown; no personal record was migrated, synchronized, erased or invented.
+
+## Entry 146 — Review branch published and scope verified
+
+Timestamp: 2026-10-16 09:54 America/New_York (13:54 UTC).
+
+Action/reason: shell Git transport was unavailable, so the working GitHub connector created codex/household-security-audit-20261016 from the audited exact base SHA. Sequential create_file calls published the four reviewed files in commits 80575dd7f4a20bad990b31b6a38f722203c6200b, dc7264caf9e2f1d41629aeaf52a5cbbb7d00e4a7, 174c67a1d27c3176f7915df0b6dfdd910f152129, and f5264470cec6b4eb8ba07ce5ddd58f8a499b4568. No secrets were included; contents are documentation and an offline parser only.
+
+Result: draft PR https://github.com/BurnsSquad/steven-os-mobile-test/pull/1 opened against main. Returned base SHA equals the audited checkout SHA. compare_commits(base, f5264470cec6b4eb8ba07ce5ddd58f8a499b4568) reports ahead by four commits, behind by zero, exactly the four intended added paths and no HTML changes. The offline parser and whitespace checks passed locally; parser output is reproducible rather than fabricated live security evidence. This entry is appended to preserve the publication record. PR remains a preparation review; no merge or deployment performed.
+
+Why this matters / teaching procedure: inspect a PR's actual changed-file list and base SHA; a branch name alone cannot prove the stable app was preserved. Connector publication provides a reviewable result despite the shell transport failure. Reproduce scope review using the GitHub compare view and rerun `node scripts/audit-html.mjs` on the branch. To roll back preparation, revert only added docs/scripts via a reviewed commit; there is no database rollback needed for this session.
+
+Remaining blocker: configure and identify an isolated Supabase project and protected fictional A/B/C accounts, then collect read-only database evidence before any mutations. DELETE semantics, destructive tests and cleanup require explicit review of concrete SQL/fixture scope after that preflight. No live test is marked PASS.
