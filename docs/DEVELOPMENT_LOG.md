@@ -817,3 +817,29 @@ Reason / why this matters: B will later be the fictional household peer/member. 
 Rollback/error handling: Auth creation is not undone by SQL ROLLBACK. On an error/uncertain result, stop and inspect exact fictional count/identity before retrying; no automatic user deletion or reset. Deletion would need separately reviewed exact scope/approval. This instruction is within the user's existing routine fictional-account setup authorization.
 
 Status: A creation/confirmation verified live; B creation instruction issued, result PENDING. C remains uncreated. No assistant database mutations, production operations, membership/policy/grant/task changes, live RLS test, destructive cleanup, merge/deployment or stable-v122 edit. Read-only verification needs no rollback/cleanup. Repository action: append Entry 179 only with fetched current log blob SHA; preserve history.
+
+
+## Entry 180 — Account B independently verified; create unrelated fictional C next
+
+Timestamp: 2026-10-16 13:25 EDT (17:25 UTC), America/New_York.
+
+User report: B created. Independently queried only sandbox wozynsftofkjqwlflosv using read-only SQL:
+
+```sql
+SELECT (SELECT count(*) FROM auth.users) AS total_auth_users,
+       id, email, (email_confirmed_at IS NOT NULL) AS email_confirmed
+FROM auth.users
+WHERE email IN ('burns-security-a@example.test',
+                'burns-security-b@example.test')
+ORDER BY email;
+```
+
+Actual result: exactly two returned fictional identities; total_auth_users 2 on both rows. A remains 6fe4e705-a92f-44ea-9898-d0eebf1f95d5, confirmed true. B is fd9810b3-6190-4587-b33c-81de6564a5dc, email burns-security-b@example.test, confirmed true. Exact total increased from 1 to 2 after the user-performed supported creation. No password/hash/token/other-user field read. Ordinary password login and protected runtime binding remain untested.
+
+Next single setup operation: create ONLY fictional C via sandbox Authentication > Users > Add user > Create new user. Email burns-security-c@example.test; a third distinct generated password of at least 24 characters, saved privately as Burns Base Security Sandbox — Test C; enable Auto Confirm User if shown; click Create user once, not Invite user. Expected Auth total 3 confirmed fictional users. C must receive NO household membership. Account creation alone grants no access to the currently closed test tables.
+
+Reason / why this matters: C is the unrelated account needed to test that being signed in does not grant access to someone else's household. Its Auth UUID must be genuine and distinct, with no membership record, rather than an invented request identifier. Auth account existence and household authorization remain different layers.
+
+Error/rollback: report only C created or exact non-secret error. Do not send passwords/screenshots showing credentials, retry blindly or delete users. Auth creation cannot be reversed by SQL ROLLBACK; any later removal needs exact reviewed scope and destructive approval. Existing routine fictional-account setup authorization applies; no redundant approval requested.
+
+Status: A/B creation and confirmation independently verified; C creation instruction issued, result PENDING. No assistant database mutations, memberships/policies/grants/task fixtures, live RLS tests, destructive cleanup, production operations, merge/deployment or stable-v122 edits. Read-only verification needs no rollback/cleanup. Next: verify C and all three exact IDs/counts before preparing the already-planned sandbox policy/fixture step. Repository action: append Entry 180 only with fetched current blob SHA, preserving history.
