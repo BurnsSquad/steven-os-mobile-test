@@ -42,3 +42,12 @@ The reviewed source does not target the original shared baseline for writes in t
 ## Decision and next action
 
 Do not execute the current broad negative UPDATE test against the existing project. Follow SECURITY_EXECUTION_PLAN.md: verify isolated project and protected identities, capture read-only metadata and fixture state, then prepare the exact scoped runner and requests for authorized execution. Preserve current DELETE denial until a separately approved change. No PASS in this document implies observed live RLS enforcement.
+
+
+## Setup progress through Entry 164 — 2026-10-16
+
+The audit-time table above is historical. Subsequent guided setup created Burns Base Security Sandbox, observed project reference wozynsftofkjqwlflosv, Healthy status, North Virginia and no GitHub repository (screenshots). After explicit user approval, the user executed the three-empty-table setup and reported success. The independent postcondition SELECT was reported to match exactly: three tables, each empty/RLS true/policy count zero/no effective anon/authenticated table or column access; Auth users zero and public tables three. These postconditions are verified by user report, not an assistant database connection. SQL Editor role/version are screenshot-verified as postgres / PostgreSQL 17.11.
+
+User now confirms Authentication Users list opened and requests completion by the assistant. No fictional accounts, memberships, baseline fixtures or active policies/grants have yet been established in this sandbox by this session. No ordinary-user UPDATE, DELETE or third-account tests have run.
+
+Fresh runtime readiness: observations current; network policy enforced, sandbox endpoint absent; no configured secrets, runtime variables, identities or capabilities. Plugin discovery found an available Supabase integration, uninstalled/unconnected at discovery, and issued a suggestion. Connection remains pending. See SANDBOX_AUTOMATION_ACCESS.md for the target, first read-only checks, secure ordinary-user credential requirements and exact remaining boundaries. No connector access, account creation or live RLS PASS is implied by discovery.
