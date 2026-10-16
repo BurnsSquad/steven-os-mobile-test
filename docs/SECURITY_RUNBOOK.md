@@ -158,3 +158,10 @@ Expected cleanup report status CLEANUP_AND_FINAL_METADATA_MATCH: shared baseline
 Local output is ignored under work/ and created with restrictive permissions for JSON reports. Reports contain fictional fixture IDs, pseudonyms, methods, statuses, SQLSTATE, timestamps and evidence digests, never credentials or full response bodies. Do not blindly commit artifacts; review/redact first. Append actual commands, observed results, errors/corrections, counts, approval scope and evidence locations to DEVELOPMENT_LOG.md. Update SECURITY_TEST_REPORT.md only with observed outcomes; keep prior historical statements intact and add dated progress notes.
 
 A syntax PASS, simulation PASS, successful ordinary request, matching admin snapshot and approved cleanup are distinct milestones. Explain each separately when teaching this procedure.
+
+
+## Local execution update — Entries 193–195
+
+The user's Mac now runs Node v24.22.0. Use LOCAL_TEST_WALKTHROUGH.md for the private hidden-input launcher and staged execution. run.mjs now supports --mode update (27 assertions; no INSERT/DELETE tests), independently finalized as UPDATE_CLIENT_AND_ADMIN_SNAPSHOTS_MATCH; that status cannot authorize cleanup. Full --mode live retains all 38 cases and its separate exact DELETE-denial approval gate. Twelve offline safety/simulation groups pass. No live client security test has run.
+
+The sandbox is now populated and independently administratively verified (Entries 181–183); do not rerun empty-state setup/Auth provisioning. Fresh session evidence must be captured just before local execution. private-run.mjs reads the public publishable key and saved test passwords through hidden local TTY prompts, passes them only to the ordinary-user process environment, and creates credential-free local evidence. It is not a hosted secret vault. No password is requested in chat, shell arguments or source files. Downloading source alone executes nothing.

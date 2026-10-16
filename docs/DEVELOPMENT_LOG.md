@@ -1055,3 +1055,42 @@ Reason / teaching: distinguish software download, reported installation and veri
 Status: local installation user-reported; actual Node version PENDING. No live security tests or private password prompts, database/policy/grant/membership/fixture changes, DELETE attempts, cleanup, production operation, stable-v122 modification, merge or deployment. A reviewed hidden-input launcher and UPDATE-only stage still need preparation before local credential use; preserve separate exact DELETE/cleanup approvals.
 
 Rollback: node --version only prints version and needs no cleanup/rollback. Do not uninstall software or reset Supabase as part of verification. Repository action: append Entry 192 only using fetched current log blob SHA, preserving prior history.
+
+
+## Entry 193 — Local Node v24.22.0 verified; prepare private execution before download
+
+Timestamp: 2026-10-16 approximately 13:58–14:02 EDT (17:58–18:02 UTC), America/New_York.
+
+Evidence: user Terminal screenshot shows node --version returning v24.22.0. Node is now screenshot-verified executable in the local shell, replacing the earlier command-not-found result. OS/architecture remain screenshot-verified macOS 14.3 / x86_64. No passwords/keys supplied. Do not repeat local installation or infer a live test from this version check.
+
+Reason for implementation before source download: the original full live runner bundled UPDATE and destructive DELETE-denial attempts behind one approval gate. The requested sequence requires UPDATE first, with DELETE attempts separately approved. Also prepare hidden private input before asking the user to type passwords. Existing routine code/test authorization applies; no database mutation or new approval-setting change included.
+
+## Entry 194 — Add UPDATE-only stage and hidden-input local launcher
+
+Timestamp: 2026-10-16 approximately 13:59–14:02 EDT (17:59–18:02 UTC), America/New_York.
+
+Files changed: scripts/security/run.mjs, finalize.mjs and safety.test.mjs. New scripts/security/private-run.mjs and docs/LOCAL_TEST_WALKTHROUGH.md. SECURITY_RUNBOOK.md receives a dated update. Historical log preserved; no HTML edits.
+
+run.mjs now supports preflight (default), update and live. UPDATE mode requires only the already-authorized UPDATE guard; it runs 27 assertions, excludes all POST/DELETE test requests, and ends UPDATE_CLIENT_CHECKS_PASSED_ADMIN_VERIFICATION_PENDING. Full live still requires the separate exact DELETE-denial approval and runs 38 cases. finalize.mjs can independently compare either stage, requiring the correct exact case count and all stage-required cases; UPDATE-only success returns UPDATE_CLIENT_AND_ADMIN_SNAPSHOTS_MATCH, which cannot satisfy the cleanup generator's full-suite requirement.
+
+private-run.mjs is a local launcher with no third-party dependencies. It accepts only immutable raw.githubusercontent.com URLs under this exact repository/40-hex commit/docs/evidence/sandbox-session.json path; no alternate host, mutable branch URL, query string or redirect. The independently queried session evidence must be fresh, reviewed, exact-target and fixture/privilege-valid both before and after private input. Session JSON will contain fictional metadata only, no password/admin key/token. It is not created in this step; capture just-in-time before tests.
+
+Credential handling: public publishable key and three test passwords entered through a raw TTY with no echo, no secret command arguments or file writes. Backspace/cancel/normal completion restore raw-mode state. Non-TTY input rejected. Inputs are passed only in local memory/child-process environment; this is not a hosted vault or protection against privileged local process inspection, and immutable JS strings cannot promise secure memory erasure. Tokens/reports omit credentials; private-run refuses inherited admin binding/simulation mode. Passwords are not requested until a reviewed command/prompt is ready. Parent environment is not overwritten with test passwords. Child secret fields are removed from the temporary env object after exit; process memory is discarded on exit.
+
+Full-suite launcher requires --mode live plus --approved-delete-denial; it never infers approval from an inherited environment variable. UPDATE/preflight mode clears any inherited DELETE guard before spawning the runner. Exact destructive approval remains a prerequisite, not replaced by a flag. No cleanup performed by the launcher.
+
+Local artifact behavior: uses a new timestamped work/security directory within the downloaded source, restrictive permissions and non-overwriting JSON paths. No home/profile modifications, npm packages, .env files, browser storage, backups or personal OS data. The local private prompt is the agreed alternative after no protected host-secret control was identified; do not change the action-approval menu to Full access.
+
+Teaching/rollback: differentiate private local environment input from hosted secret management, preflight/table reads from UPDATE, and UPDATE success from approval for DELETE/cleanup. Command cancellation makes no database changes if before login/writes; interrupted writes require exact fixture inspection, not blind retry. Existing known-state restoration logic remains unchanged; committed deletes would need reviewed snapshot recovery. No production access or stable-v122 changes.
+
+## Entry 195 — Twelve offline groups pass; prepare pinned source distribution
+
+Timestamp: 2026-10-16 approximately 14:02 EDT (18:02 UTC), America/New_York.
+
+Validation: node --check run.mjs, finalize.mjs and private-run.mjs PASS; node scripts/security/safety.test.mjs PASS 12 groups. Existing ten guards/synthetic full-suite checks still pass. New UPDATE-only synthetic run yields exactly 27 cases with no POST/DELETE, needs no DELETE guard, finalizes only as UPDATE stage, and is refused by cleanup generator. New private-launcher tests verify immutable repository URL restrictions, hidden input not appearing in output, backspace, Ctrl+C restoring raw mode, and non-TTY refusal. Synthetic input/HTTP data remains OFFLINE_SIMULATION; no real passwords, Auth logins or API requests used.
+
+node scripts/audit-html.mjs PASS unchanged 167 inline scripts and stable hash. sha256sum index.html remains aecb177cdebe6eded90f5e5b9626e152fd677066b923e8b988ece2b83c6683f8. Staged whitespace check passes. No live Supabase test, SQL mutation, DELETE attempt, cleanup, production/personal-record operation, merge or deployment this turn.
+
+Publication plan: add the reviewed launcher/stage/doc changes to the existing PR branch with expected-head lease, then verify changed paths and supply a pinned commit ZIP. Next single user action is source download only, not execution or secret entry. Expected ZIP/extracted folder contains reviewed test scripts in a separate folder; do not overwrite existing project records. Fresh session/snapshot and private key/password prompts come later, after offline checks. No fixture reset or user recreation needed.
+
+The old PR description still described missing Supabase tools/empty sandbox; update it to current live administrative setup evidence and explicit unrun client tests. Next entry records actual publication. Local source rollback is a targeted reviewed revert; no database rollback needed for this preparation.

@@ -114,3 +114,36 @@ test('Post-cleanup verifier preserves baselines, memberships, identities and pol
  const members=structuredClone(after);members.members.pop();assert.throws(()=>verifyCleanup(before,members,finalReport,ids));
  const grant=structuredClone(after);grant.privileges[0].allowed=true;assert.throws(()=>verifyCleanup(before,grant,finalReport,ids));
 });
+
+test('UPDATE-only simulation needs no DELETE approval and cannot finalize cleanup',()=>{
+ const dir=mkdtempSync(join(tmpdir(),'burns-update-offline-'));
+ try{
+  const before=synthetic();before.captured_at=new Date(Date.now()-1000).toISOString();
+  const path=join(dir,'before.json'),output=join(dir,'update.json');writeFileSync(path,JSON.stringify(before));
+  const r=spawnSync(process.execPath,['--import','./scripts/security/offline-transport.mjs','scripts/security/run.mjs','--mode','update','--before',path,'--out',output],{cwd:process.cwd(),encoding:'utf8',env:{...env,BB_TEST_A_PASSWORD:'OFFLINE_ONLY_A_PASSWORD_24_CHARS',BB_TEST_B_PASSWORD:'OFFLINE_ONLY_B_PASSWORD_24_CHARS',BB_TEST_C_PASSWORD:'OFFLINE_ONLY_C_PASSWORD_24_CHARS',BB_TEST_POLICY_REVIEW:ref,BB_TEST_SNAPSHOT_ATTESTATION:ref,BB_TEST_UPDATE_APPROVAL:ref,BB_TEST_OFFLINE_SIMULATION:'1'}});
+  assert.equal(r.status,0,r.stderr);
+  const report=JSON.parse(readFileSync(output,'utf8'));
+  assert.equal(report.mode,'update');assert.equal(report.cases.length,27);assert.equal(report.status,'UPDATE_CLIENT_CHECKS_PASSED_ADMIN_VERIFICATION_PENDING');
+  assert.equal(report.cases.some(c=>['DELETE','POST'].includes(c.method)),false);
+  const after=structuredClone(before);after.captured_at=new Date().toISOString();
+  assert.throws(()=>finalize(before,after,report,ids),/Offline simulation/);
+  const final=finalize(before,after,{...report,execution_transport:'REAL_NETWORK_REQUESTS'},ids);
+  assert.equal(final.status,'UPDATE_CLIENT_AND_ADMIN_SNAPSHOTS_MATCH');
+  assert.throws(()=>cleanupSQL(after,ids,final));
+ }finally{rmSync(dir,{recursive:true,force:true});}
+});
+
+test('Private launcher accepts only pinned session paths and hidden TTY input',async()=>{
+ const {PassThrough}=await import('node:stream');
+ const {readHidden,validateSessionURL}=await import('./private-run.mjs');
+ const good='https://raw.githubusercontent.com/BurnsSquad/steven-os-mobile-test/'+('a'.repeat(40))+'/docs/evidence/sandbox-session.json';
+ assert.equal(validateSessionURL(good),good);
+ for(const url of [good.replace('raw.githubusercontent.com','evil.example'),good+'?token=bad',good.replace('a'.repeat(40),'main'),good.replace('https:','http:')])assert.throws(()=>validateSessionURL(url));
+ const input=new PassThrough(),output=new PassThrough();let transcript='';
+ input.isTTY=true;input.isRaw=false;input.setRawMode=raw=>{input.isRaw=raw;};output.isTTY=true;output.on('data',chunk=>transcript+=chunk);
+ const p=readHidden('Private test input',input,output);input.write('HIDDEN_SENTINEL\u007fL\r');
+ assert.equal(await p,'HIDDEN_SENTINEL');assert.equal(input.isRaw,false);assert.doesNotMatch(transcript,/HIDDEN_SENTINEL/);
+ const cancelled=readHidden('Cancel test',input,output);input.write('\u0003');await assert.rejects(cancelled,/Cancelled/);assert.equal(input.isRaw,false);
+ await assert.rejects(readHidden('Reject pipe',new PassThrough(),output),/interactive Terminal/);
+ input.destroy();output.destroy();
+});

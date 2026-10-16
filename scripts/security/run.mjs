@@ -5,17 +5,15 @@ import {configuration,validateSnapshot,digest,canonical,ensure,fixtures,ref,hous
 const arg=key=>{const i=process.argv.indexOf(key);return i<0?null:process.argv[i+1];};
 async function main(){
  const cfg=configuration(),mode=arg('--mode')||'preflight';
- ensure(['preflight','live'].includes(mode),'Use preflight or live');
+ ensure(['preflight','update','live'].includes(mode),'Use preflight, update or live');
  ensure(!process.env.BB_TEST_ADMIN_KEY,'Remove privileged admin key from ordinary-user test process');
  ensure(process.env.BB_TEST_POLICY_REVIEW===ref,'Review snapshot policy expressions against generated setup SQL before testing');
  ensure(process.env.BB_TEST_SNAPSHOT_ATTESTATION===ref,'Confirm sandbox snapshot provenance with BB_TEST_SNAPSHOT_ATTESTATION');
  const beforePath=arg('--before'),out=arg('--out');
  ensure(beforePath&&out,'Use --before <snapshot.json> --out <new-report.json>');
  const before=validateSnapshot(JSON.parse(readFileSync(beforePath,'utf8')),cfg.ids,{fresh:true});
- if(mode==='live'){
-  ensure(process.env.BB_TEST_UPDATE_APPROVAL===ref,'Live UPDATE approval guard missing');
-  ensure(process.env.BB_TEST_DELETE_DENIAL_APPROVAL===ref,'Explicit existing-fixture DELETE-denial approval required');
- }
+ if(mode==='update'||mode==='live') ensure(process.env.BB_TEST_UPDATE_APPROVAL===ref,'Live UPDATE approval guard missing');
+ if(mode==='live') ensure(process.env.BB_TEST_DELETE_DENIAL_APPROVAL===ref,'Explicit existing-fixture DELETE-denial approval required');
  // Reserve the artifact before login/writes. Never overwrite previous evidence.
  mkdirSync(dirname(out),{recursive:true});
  writeFileSync(out,JSON.stringify({status:'STARTING',project_ref:ref}),{flag:'wx',mode:0o600});
@@ -52,7 +50,7 @@ async function main(){
    const shared=await api(actor,'/rest/v1/bb_test_shared_tasks?select=*');
    record('shared household inventory',actor,exact(shared,before.shared.filter(x=>x.household_id===household)));
   }
-  if(mode==='live'){
+  if(mode==='update'||mode==='live'){
    for(const actor of ['A','B']){
     const seed=original(f.shared[actor==='A'?1:2].id);let current=seed;
     activeCase=`UPDATE disposable ${actor}`;
@@ -89,6 +87,8 @@ async function main(){
     }
     record('shared baseline preserved',actor,exact(await get(actor,baseline),[baseline]));
    }
+  }
+  if(mode==='live'){
    activeCase='DELETE denial';
    for(const actor of ['A','B']){
     const row=original(f.shared[actor==='A'?1:2].id);
@@ -121,7 +121,7 @@ async function main(){
    const p=await api(actor,'/rest/v1/bb_test_private_tasks?select=*');
    record('final own private baseline preserved',actor,exact(p,before.private.filter(x=>x.owner_id===cfg.ids[actor])));
   }
-  report.status=mode==='live'?'CLIENT_CHECKS_PASSED_ADMIN_VERIFICATION_PENDING':'PREFLIGHT_PASSED_NO_TEST_WRITES';
+  report.status=mode==='live'?'CLIENT_CHECKS_PASSED_ADMIN_VERIFICATION_PENDING':mode==='update'?'UPDATE_CLIENT_CHECKS_PASSED_ADMIN_VERIFICATION_PENDING':'PREFLIGHT_PASSED_NO_TEST_WRITES';
  }catch(e){
   report.status='STOPPED_REVIEW_REQUIRED';
   report.cases.push({name:activeCase,result:'INCONCLUSIVE_OR_FAILED',reason:'Stopped. Inspect preceding case and current fixture state; raw exceptions omitted to avoid secret leakage.'});
