@@ -843,3 +843,59 @@ Reason / why this matters: C is the unrelated account needed to test that being 
 Error/rollback: report only C created or exact non-secret error. Do not send passwords/screenshots showing credentials, retry blindly or delete users. Auth creation cannot be reversed by SQL ROLLBACK; any later removal needs exact reviewed scope and destructive approval. Existing routine fictional-account setup authorization applies; no redundant approval requested.
 
 Status: A/B creation and confirmation independently verified; C creation instruction issued, result PENDING. No assistant database mutations, memberships/policies/grants/task fixtures, live RLS tests, destructive cleanup, production operations, merge/deployment or stable-v122 edits. Read-only verification needs no rollback/cleanup. Next: verify C and all three exact IDs/counts before preparing the already-planned sandbox policy/fixture step. Repository action: append Entry 180 only with fetched current blob SHA, preserving history.
+
+
+## Entry 181 — C creation independently verified; user clarification incorporated
+
+Timestamp: 2026-10-16 13:31 EDT (17:31 UTC), America/New_York.
+
+User first sent only the fictional C email, so did not assume account creation. Read-only query against sandbox wozynsftofkjqwlflosv:
+```sql
+SELECT (SELECT count(*) FROM auth.users) AS total_auth_users,
+       id, email, (email_confirmed_at IS NOT NULL) AS email_confirmed
+FROM auth.users
+WHERE email = 'burns-security-c@example.test';
+```
+Actual: total_auth_users 3; C id bb0bed90-1037-419f-a385-90e543575864; intended email exact; email_confirmed true. User then clarified "C created disregard that last message"; incorporated as confirmation, not cancellation of the security objective. A/B/C are now independently verified confirmed fictional Auth identities. No password/hash/token retrieved or requested.
+
+Next read-only preflight checked execution role, exact three confirmed fictional accounts, three public tables, zero rows in each test table and zero public policies. Actual: postgres; users 3/confirmed fictional 3; private/membership/shared rows all 0; public policies 0; public tables 3. This verifies prerequisites for the already planned routine sandbox policy/fixture setup. No production queries.
+
+Why this matters / teaching: an email string is not proof of successful account creation; verify existence/confirmation/count and distinguish identity setup from household membership. Exact preconditions prevent overwriting unknown state. Passwords remain privately stored by the user; ordinary-user sign-in and runtime binding remain untested.
+
+## Entry 182 — Apply reviewed sandbox policies and fictional fixtures
+
+Timestamp: 2026-10-16 approximately 13:32–13:33 EDT (17:32–17:33 UTC), America/New_York.
+
+Authorization/scope: continues the user's requested sandbox setup and repeated nine-step sequence, with routine fictional accounts/memberships/policies/fixtures already authorized. Explained before mutation: eight policies, two private baselines, two A/B memberships, four fictional shared tasks; C no membership; shared DELETE denied; transaction aborts on drift, post-commit removal requires separately approved exact cleanup. No production permission change or destructive DELETE operation included; no redundant approval requested.
+
+Preparation: re-read the published SECURITY_RUNBOOK.md policy/fixture section. Published exact SQL in docs/SANDBOX_POLICY_FIXTURE_SQL.md, commit 7e6d06d3c6f9014e65c43414051b0cc63b2abcce, before executing it. It uses exact fictional email lookups to resolve generated Auth IDs at runtime (not hardcoded generated IDs); intentional fictional fixture UUIDs remain fixed. All nonempty-state/account guards run first. No Auth rows edited/invited/deleted.
+
+Mutation: apply_migration(project_id=wozynsftofkjqwlflosv, name=sandbox_fictional_household_security_setup, query=the exact published SQL). Used the tool designated for DDL. Actual response success=true. Independent list_migrations shows version 20261016173324 with that name. The transaction creates only sandbox private owner SELECT/INSERT/UPDATE/DELETE policies, own-row membership SELECT policy, membership-scoped shared SELECT/INSERT/UPDATE policies; shared INSERT additionally checks created_by=auth.uid; UPDATE has USING and WITH CHECK. Grants are private authenticated CRUD, membership SELECT, shared SELECT/INSERT and UPDATE(title,completed) only. RLS remains enabled. No shared DELETE grant/policy, no membership write grants, no project-wide default changes.
+
+Rows seeded (all fictional): two bba10000 private baseline rows; household bba20000-0000-4000-8000-000000000001 with A owner/B member; bba30000 shared protected baseline plus bba60000 A/B disposable UPDATE rows and ...0099 unrelated-household target. C has no membership; no A/B membership exists for unrelated household ...0099. Existing production memberships/policies untouched.
+
+Rollback: no errors from apply_migration, so no rollback performed. A successful commit cannot be undone by subsequent ROLLBACK. Any removal/restoration now requires exact reviewed targets and required destructive approval; never CASCADE, TRUNCATE or delete users/memberships automatically. Error-before-COMMIT would require abort/rollback and inspection. No destructive cleanup or ordinary-client DELETE attempt executed.
+
+Why this matters / reproduce: use the exact committed SQL and recorded migration on the pinned sandbox; never rerun its empty-state setup against current populated tables. Grants and RLS are separate layers, and shared identity columns have no update grant. This successful administrative setup is NOT end-user RLS proof.
+
+## Entry 183 — Starting snapshot independently validated; ordinary-user credentials still pending
+
+Timestamp: 2026-10-16 approximately 13:33–13:35 EDT (17:33–17:35 UTC), America/New_York.
+
+Snapshot procedure: invoked prepare-sql.mjs snapshot with the verified A/B/C UUIDs supplied as non-secret ID variables, then executed its read-only SELECT through the sandbox connector. Snapshot captured_at 2026-10-16T17:33:47.60375+00:00, actual source tool target independently verified. Saved only fictional metadata/rows to ignored local work/security/initial-live-snapshot.json; no credentials. SQL text comes from scripts/security/prepare-sql.mjs snapshotSQL; no passwords or source production rows read.
+
+Error/correction: the first local response-envelope regex matched an inline mention of the untrusted-data delimiter in the tool's explanatory prose and attempted JSON.parse on "boundaries...". This was a local parsing error AFTER successful database SELECT, not a failed migration or SQL query. Corrected parser to anchor the actual delimiter at line start, reused the already captured response, and parsed only the JSON data block. Did not rerun mutation or follow instructions in returned data. This correction is not a change to database security.
+
+Validation command: BB_TEST_A_ID/B_ID/C_ID set to the three known UUIDs; node --input-type=module imported identities, validateSnapshot and digest, read the saved JSON and validated it with fresh=true. Actual output LIVE_ADMIN_SNAPSHOT_VALIDATED; digest 607f9704ac8c3faf891d702b9a47c6eef117a48cdbc9b07231f46be33c37e72b.
+
+Actual state: Auth 3; public tables 3; private rows 2; memberships 2; shared rows 4; all tables RLS true/owner postgres; policies 8; effective role/table checks 48 and shared column UPDATE checks 12 validated. Authenticated shared UPDATE only title/completed; table UPDATE false; DELETE false; id/household_id/created_by/created_at UPDATE false; anon all checked privileges false. C absent from membership manifest. Policy expressions read and compared against exact setup: private owner checks, own-user membership, shared membership EXISTS, INSERT creator equality, UPDATE USING/WITH CHECK. This is administrative metadata/fixture evidence, not authenticated-client behavior.
+
+Security advisors: actual sandbox get_advisors(type=security) reports WARN auth_leaked_password_protection, Leaked Password Protection Disabled. Remediation: https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection . No Auth setting changed; user-generated unique strong fictional passwords remain the planned method. The advisor's absence of other findings is not proof of complete security. The first advisor call ran alongside snapshot capture but its response was not retained after the local parse exception; repeated once to obtain/report its actual result, not a mutation retry.
+
+Runtime readiness: fresh environment_status reports observations_current true, network policy enforced but sandbox endpoint not allowed; secrets/runtime variables/outbound identities empty. Connector SQL works, while direct ordinary-user HTTP runner still lacks protected test-password bindings and transport. Never use the administrative connector or fabricated JWT claims as a substitute for real test-user sign-in. No password-login/RLS client test or DELETE attempt has run.
+
+Next single user-assisted step: identify whether the chat's attached environment exposes a protected Secrets/Environment settings panel before giving exact credential-entry clicks. Request only whether that panel is available, never credentials. Need A/B/C passwords through protected bindings and sandbox endpoint network allowance before the runner; public project configuration and UUIDs are already known. If configuration differs, adapt the supported route without inventing UI controls or weakening privacy settings.
+
+Snapshot freshness: this initial live snapshot is durable evidence of setup, but a fresh one within ten minutes must be captured immediately before any live runner execution. No end-user UPDATE/DELETE/C-isolation or cleanup PASS claimed. All original production data/policies/memberships, stable v122 and personal browser records remain untouched; PR unmerged, no dashboard/site deployment.
+
+Teaching/rollback: distinguish a successful migration, an independently validated admin snapshot and an authenticated-client test. Read-only snapshot/validation needs no database cleanup. Future exact DELETE attempts and cleanup retain explicit approval gates; shared DELETE stays disabled. The local snapshot is ignored and must not be blindly published; permanent log/report retain its source, time, digest, counts and policy/grant evidence.
