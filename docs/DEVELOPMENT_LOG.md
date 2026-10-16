@@ -330,3 +330,29 @@ Why this matters / teaching: default privileges depend on who creates a table. A
 Status: CSV review complete; execution-role query issued, result PENDING. No live authenticated enforcement tests or database mutations performed. Public-table starting count remains the previously observed zero, not newly remeasured. No existing memberships, production policies, personal records, stable v122, PR merge or deployment changed.
 
 Rollback: read-only catalog review and identity SELECT require no database rollback/cleanup. Any later permission adjustment will require exact SQL/scope, expected outcomes, approved cleanup and rollback explanation before execution. Repository action: append Entry 158 only on the existing PR branch using the fetched current blob SHA, preserving all earlier entries. Uploaded evidence remains local; its findings are permanently summarized here.
+
+
+## Entry 159 — SQL role/version verified; establish authentication starting count
+
+Timestamp: 2026-10-16 11:41 EDT (15:41 UTC), America/New_York.
+
+Evidence/result: user screenshot shows the Entry 158 query and one result row in Burns Base Security Sandbox: execution_role postgres, connection_role postgres, postgres_version 17.11. This is direct screenshot evidence of that query's output, not proof of ordinary authenticated-client access. No errors shown.
+
+Interpretation: table creation in this SQL Editor under the observed role would use postgres-specific default privileges unless the execution role changes. Entry 158's CSV shows residual postgres/public defaults for anon/authenticated including TRUNCATE, REFERENCES, TRIGGER and MAINTAIN. A later reviewed setup must explicitly remove unintended privileges from each new test table and then grant only the needed operations/columns; it must also enable and verify RLS. No default-privilege or table-grant changes are authorized or executed by this observation. PostgreSQL MAINTAIN appears in this version's privilege inventory; do not assume older privilege lists are complete.
+
+Next single setup action: with Burns Base Security Sandbox still selected, replace SQL editor contents with this read-only query alone and click Run:
+
+```sql
+SELECT count(*) AS existing_auth_users
+FROM auth.users;
+```
+
+Expected result: one row with existing_auth_users = 0 for a newly created unused sandbox. A nonzero count is a reason to investigate before creating test users, not authorization to delete users. Request only the aggregate count or screenshot of that result. Do not SELECT email addresses, password hashes, tokens, metadata or individual auth records. Use current dashboard access; do not change permissions if an error occurs.
+
+Purpose / why this matters: Supabase Auth stores sign-in accounts separately from public application tables. An empty public-table inventory does not establish that authentication is empty. Counting accounts establishes a minimal starting baseline without exposing identity details. Dashboard postgres access remains elevated and must not substitute for later ordinary-user RLS tests.
+
+Status: execution role/version confirmed; auth count query issued, result PENDING. No auth-user account creation, SQL mutation, fixture setup, grants/policies/membership changes, cleanup, merge, deployment or stable-v122 edit performed. Existing original-project reference has not been compared; runtime credentials and endpoint allowlisting remain pending. No secret requested or received.
+
+How to reproduce / teach it: verify sandbox selection, run only the aggregate SELECT, and report its single number. Explain database roles versus app sign-in users: postgres operates the database administratively; fictional A/B/C will authenticate through Supabase Auth and exercise the authenticated role under RLS. Before any mutations, present exact scope/permissions, expected outcomes, cleanup and rollback and obtain required approval.
+
+Rollback: aggregate SELECT changes no database records or schema and requires no cleanup/rollback. If the count is unexpected, stop; never remove existing users to manufacture a clean baseline. Repository action: append Entry 159 only to the existing PR branch using the freshly fetched log blob SHA and preserve historical entries.
