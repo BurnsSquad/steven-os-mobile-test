@@ -541,3 +541,22 @@ Status: authorization-screen location confirmed by user report; connection outco
 How to reproduce / teach: distinguish where an error occurred from whether the requested operation completed. Return to the originating application and inspect status before retrying. If the plugin page is unavailable, report that rather than navigating destructive settings. Provider authorization scope must still be reviewed before granting access; sandbox remains the only permitted database target.
 
 Rollback: returning to the originating page has no database effects and requires no rollback/cleanup. Do not reset/delete/recreate the project or rotate credentials as speculative recovery. Repository action: append Entry 166 only using current fetched log blob SHA and retain historical entries.
+
+
+## Entry 167 — Connection stuck finalizing; single originating-page reload proposed
+
+Timestamp: 2026-10-16 12:16 EDT (16:16 UTC), America/New_York.
+
+Evidence/result: user reports "it freezes on finalizing connection" after being asked to inspect ChatGPT's Supabase plugin connection status. Treat Finalizing connection as a pending/stalled UI state, not confirmed successful connection or definitive OAuth rejection. Exact elapsed time, failing network request and root cause remain unknown. Current tool-name inspection again finds no callable Supabase capability.
+
+Next single recovery action: reload once the ChatGPT browser page showing Finalizing connection, using Safari's circular-arrow reload button. Do not reload/replay the Supabase authorization/callback URL. After reload, allow up to about 30 seconds for the status to settle, then report its exact wording (Connected, Connect, Finalizing connection, or error). If the pending screen is actually on supabase.com rather than ChatGPT, do not reload it; return here and clarify that distinction. No repeated connection attempts or new authorizations requested.
+
+Reason / why this matters: the originating UI may be stale even if backend authorization completed, and a normal reload can fetch current state. This is a bounded recovery attempt, not proof of a root cause or a promised fix. Replaying a callback or starting multiple flows could obscure the outcome. A normal reload does not intentionally clear cookies, localStorage or project data.
+
+Expected/actual: expected refreshed connection status; actual result PENDING user report. If still stalled, preserve that result and inspect a different supported recovery path instead of looping the same action.
+
+Safety/rollback: this page reload executes no SQL or database maintenance and needs no database cleanup/rollback. Do not clear site data, disable privacy/security settings, rotate passwords, uninstall/reinstall integrations, reset projects or delete records. Plugin authorization scope remains unverified; target restriction to sandbox wozynsftofkjqwlflosv persists. No secrets/codes/tokens or full OAuth URLs requested.
+
+Status: live sandbox setup/testing remains blocked by missing usable connection; no Auth creation, memberships, fixtures, policy/grant changes, destructive operations or live RLS PASS this turn. Stable v122, personal records, production database/policies/memberships unchanged; PR remains unmerged. Repository action: append only Entry 167 with the current fetched log blob SHA, preserving history.
+
+Teaching note: distinguish a pending status from a failed operation, refresh the originating UI once, and record the observed outcome before escalating troubleshooting.
