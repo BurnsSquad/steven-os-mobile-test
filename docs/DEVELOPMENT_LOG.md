@@ -933,3 +933,18 @@ Reason / why this matters: we can now give a specific click grounded in the visi
 Status: screenshot identification complete; panel inspection PENDING. No changes to runtime secrets/network settings, database records/policies/grants/memberships, Auth users, stable v122, production or personal records. No ordinary-user sign-in/security test/DELETE attempt/cleanup, merge or deployment. Last live sandbox state remains Entry 183; re-snapshot before actual tests.
 
 Rollback/teaching: opening/closing an informational UI control requires no database rollback/cleanup. Do not clear site data, reset projects or share passwords/API keys/tokens. The next instruction depends on the panel's real labels. Repository action: append Entry 185 only using fetched current log blob SHA and preserve prior history.
+
+
+## Entry 186 — Cloud control unresponsive; inspect adjacent conversation menu
+
+Timestamp: 2026-10-16 13:43 EDT (17:43 UTC), America/New_York.
+
+User report: clicking the cloud-outline icon produced "nothing happens". Entry 185's inspection produced no usable panel. Do not infer a secret-settings capability from the icon, diagnose a browser bug without evidence, or ask the user to repeat that click.
+
+Next single diagnostic action: click the three-dot menu immediately to the right of that cloud icon beside the conversation title, not the separate far-right menu. This control is visible in the supplied toolbar screenshot. Expected result: a menu of conversation/environment options; exact labels remain unknown. Ask for the visible labels or a cropped screenshot without secret values. Do not select options, enter credentials, delete/reset anything or change settings yet.
+
+Reason / why this matters: the adjacent menu is a concrete visible navigation control that may disclose the supported environment workflow. Read its actual options before directing any configuration changes. No claim it must contain Secrets or Environment settings. If it has no relevant configuration options, choose a different supported execution route rather than loop toolbar guesses.
+
+Status: cloud-icon attempt completed without visible effect; adjacent-menu inspection PENDING. Protected credential bindings/network allowance still unconfigured as last observed. No database mutation, new user/membership/fixture/policy/grant, ordinary-user test, DELETE attempt, cleanup, production operation, personal-record change, stable-v122 edit, merge or deployment.
+
+Rollback/teaching: UI inspection has no database rollback/cleanup requirement; close the menu if needed. A nonresponsive control is a navigation observation, not a database failure. Do not clear browser/site data or reset the sandbox. Repository action: append Entry 186 only using fetched current blob SHA, preserving history.
