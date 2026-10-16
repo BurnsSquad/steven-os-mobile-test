@@ -522,3 +522,22 @@ Actions deliberately withheld: no clearing browser/site data or localStorage, no
 Status: diagnosis PENDING page identification; independent preparation remains in PR #1. Live account/fixture/policy setup and security testing remain blocked by unverified connection. No DB mutation this turn, no new security PASS, no change to stable v122, original production permissions/memberships or personal records. No merge/deployment.
 
 Rollback: diagnostic clarification has no state changes and needs no rollback or cleanup. A web-page error is not a reason to restore/delete database objects. Repository action: append Entry 165 only using current remote blob SHA and preserve prior history. Next log entry will distinguish the reported page and any recovery result.
+
+
+## Entry 166 — Authorization-page failure confirmed; check connection outcome before retry
+
+Timestamp: 2026-10-16 12:13 EDT (16:13 UTC), America/New_York.
+
+Evidence/result: user identifies the failing page as the authorization page while connecting the Supabase plugin. The Entry 165 client-side exception is therefore associated with the connection flow, not a reported dashboard query failure. This does not determine whether authorization completed before rendering failed. Root cause remains unknown.
+
+Read-only capability check: searched current callable tool names for Supabase; none available. This establishes no usable Supabase tool in the current context, not a definitive provider-side OAuth status. Inspected permission-tool documentation and did not invoke it: it explicitly is not for OAuth/admin scope or connection troubleshooting. No integration reinstall/uninstall or repeated suggestion performed.
+
+Next single diagnostic action: return to the Supabase plugin page in ChatGPT from which the connection was started, without reopening/reloading/copying the failed authorization URL. Look at the displayed connection state or button. Ask whether it shows Connected, Connect/Retry, or another message (report actual wording). Expected: some connection state/control; do not infer success from a closed authorization tab. Do not click another authorization attempt yet.
+
+Reason / why this matters: authorization can succeed even if the final page fails to render, or fail before completion. Checking the application-side outcome avoids duplicate attempts and unnecessary credential/session resets. The next recovery action will depend on the observed state, not an assumed Safari bug or outage.
+
+Status: authorization-screen location confirmed by user report; connection outcome PENDING. No passwords, keys, OAuth URLs, codes, cookies or tokens requested. No browser storage cleared. No database/permission/membership/record changes or live authenticated tests; original production and stable v122 unchanged, PR unmerged.
+
+How to reproduce / teach: distinguish where an error occurred from whether the requested operation completed. Return to the originating application and inspect status before retrying. If the plugin page is unavailable, report that rather than navigating destructive settings. Provider authorization scope must still be reviewed before granting access; sandbox remains the only permitted database target.
+
+Rollback: returning to the originating page has no database effects and requires no rollback/cleanup. Do not reset/delete/recreate the project or rotate credentials as speculative recovery. Repository action: append Entry 166 only using current fetched log blob SHA and retain historical entries.
