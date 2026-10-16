@@ -192,3 +192,22 @@ Rollback/recovery: do not automatically delete or recreate a possibly provisione
 How to reproduce / teach it: after form submission, inspect the dashboard's project header and distinguish a provisioning message from a ready project. Avoid Enter in remaining form controls when it could submit. Next setup instruction will depend on the reported project name/state. Before later database mutations, explain exact scoped operations, permissions, expected results, cleanup and rollback and obtain required approval.
 
 Repository action: append only Entry 153 to the existing PR branch using the fetched current log blob SHA, preserving all prior entries.
+
+
+## Entry 154 — Sandbox dashboard identified; inspect General project identity
+
+Timestamp: 2026-10-16 11:15 EDT (15:15 UTC), America/New_York.
+
+Evidence/result: user's screenshot shows Settings > Integrations; browser title identifies Burns Base Security Sandbox under BurnsSquad's Base. Header shows main with a PRODUCTION badge. GitHub field displays Choose GitHub repository, confirming no repository selection in that displayed control. Vercel shows Install Vercel integration; no integration installation performed. Dashboard navigation is available. This supports that a project dashboard exists after the reported submission; database health, project reference, region and effective security settings have not yet been verified.
+
+Explanation: PRODUCTION labels the displayed project's main branch. The label alone does not identify the original Burns Base Project or demonstrate any connection to it. A sandbox project's main branch can carry that label. Distinct project identity remains the next verification step.
+
+Next single setup action: click General in the Settings sidebar visible in the screenshot. Expected result: general project settings showing the project name and a Project ID or Reference ID field (wording may vary). Request only that non-secret project identifier, or the visible labels if absent. Do not request a password, API key, database connection string or access token. Do not change settings or use any destructive controls.
+
+Reason / why this matters: a name is human-readable and can be duplicated; a project reference identifies the actual Supabase project targeted by later API/database operations. We must verify this reference and eventual runtime configuration before test writes. Sharing an identifier does not grant database access. This step is read-only, not authorization for schema or fixture changes.
+
+Status: prior destination verification is now supported by screenshot; General navigation/identifier retrieval PENDING user report. No GitHub/Vercel integration needed or added. No database mutation, SQL, account/fixture creation, permission/policy/membership changes, cleanup, merge or stable-v122 modification performed by the assistant. No secrets received. No current live RLS results or baseline counts established.
+
+Reproduction / teaching: from the sandbox's Settings > Integrations view, click General and read only the project identity fields. Keep optional integrations unconnected. Before later database mutations, explain exact test/setup operations, necessary privileges, expected results, cleanup approval and rollback procedures.
+
+Rollback: read-only navigation requires no database rollback. Do not delete/recreate the project or edit its name to resolve uncertainty; verify identity first. Repository action: append Entry 154 only to the existing PR branch using the fetched current blob SHA, preserving historical entries.
