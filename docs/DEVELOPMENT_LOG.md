@@ -211,3 +211,22 @@ Status: prior destination verification is now supported by screenshot; General n
 Reproduction / teaching: from the sandbox's Settings > Integrations view, click General and read only the project identity fields. Keep optional integrations unconnected. Before later database mutations, explain exact test/setup operations, necessary privileges, expected results, cleanup approval and rollback procedures.
 
 Rollback: read-only navigation requires no database rollback. Do not delete/recreate the project or edit its name to resolve uncertainty; verify identity first. Repository action: append Entry 154 only to the existing PR branch using the fetched current blob SHA, preserving historical entries.
+
+
+## Entry 155 — Healthy sandbox and project reference observed; open SQL Editor
+
+Timestamp: 2026-10-16 11:16 EDT (15:16 UTC), America/New_York.
+
+Evidence/result: user supplied the project Overview screenshot rather than General settings. It displays Burns Base Security Sandbox, project URL https://wozynsftofkjqwlflosv.supabase.co, and the matching project reference in a dashboard link: wozynsftofkjqwlflosv. Status Healthy; primary database East US (North Virginia), us-east-1; compute NANO. GitHub says No repository connected. Last migration says No migrations; last backup says No backups. These are screenshot observations, not an independent database/API inspection. No migrations does not prove there are no tables or records.
+
+Identity boundary: this is the observed intended sandbox endpoint. The original project's reference has not been provided or independently compared; do not claim a completed reference-to-reference isolation check. The sandbox name, reported creation flow and dashboard support its intended identity. Before executing database writes, recheck the sandbox header/reference and current database state. Do not connect existing browser configurations or import production data.
+
+Next single setup action: click SQL Editor in the far-left sidebar, the >_ icon visible as the third main icon from the top (below the table/grid icon). Expected result: the SQL Editor workspace, possibly with a new-query control or onboarding screen. Request only confirmation that it opened, or the non-secret screen label if different. Do not paste or run SQL yet. No API key, password or connection string needed.
+
+Reason / why this matters: the SQL Editor can run elevated database commands, so navigating to it is separate from authorizing SQL execution. The next planned checks will be read-only metadata queries to identify current test tables and security configuration, not mutations. Later authenticated-client tests are still necessary because elevated SQL Editor queries do not prove ordinary-user RLS enforcement.
+
+Status: project dashboard health, region, reference and lack of connected repository verified from screenshot only. SQL Editor navigation PENDING. Effective grants, default privileges, RLS, policies, auth users, table/row counts and network/credential readiness for the runtime remain unverified. No database mutations, schema setup, fixtures, permission/membership changes, cleanup, merge, deployment or stable-v122 modification performed.
+
+Reproduction / teaching: use the sandbox Overview to identify the URL/reference, status and location. Click only SQL Editor, then stop. Before subsequent database mutations, explain exact scoped SQL/requests, required permissions, expected counts/results, cleanup gates and rollback. Do not treat the Healthy badge as a security test result.
+
+Rollback: read-only navigation has no database effects; no cleanup or database rollback is required. No project deletion/recreation prescribed. Repository action: append only Entry 155 on the existing PR branch using the fetched current log blob SHA and retain all prior entries.
