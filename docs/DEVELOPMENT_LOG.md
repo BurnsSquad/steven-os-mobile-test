@@ -692,3 +692,20 @@ Status: scope approval confirmed by user statement; completion of provider autho
 Why this matters / teaching: user approval and successful provider connection are distinct events. Record both rather than assuming one proves the other. After a connection, administrative metadata queries still do not substitute for ordinary authenticated RLS tests.
 
 Rollback: if authorization fails or stalls, report the exact non-secret status; do not reset the project or clear personal browser storage. An approved connection can later be revoked through supported settings, which does not undo any committed database work. No database rollback/cleanup applies to this authorization step. Repository action: append Entry 174 only on the existing PR branch using the fetched current blob SHA and preserve history.
+
+
+## Entry 175 — Sequence reaffirmed; Supabase installation now confirmed, tools not exposed
+
+Timestamp: 2026-10-16 13:00 EDT (17:00 UTC), America/New_York.
+
+User direction: repeats the nine-stage live sequence: establish access; read-only sandbox recheck; fictional A/B/C and fixtures; starting snapshot; UPDATE first; separately approved exact DELETE-denial attempts/C isolation; independent comparison; separately approved exact cleanup; final report/browser checks. Follow this order under existing authorization. Organization-wide connection scope was already approved in Entry 174; do not ask again.
+
+Readiness findings: current callable-tool catalog has no Supabase entries and no tool-search capability. Queried the existing plugin discovery service for Supabase without issuing another suggestion. Returned installed=true for the same Supabase integration, with enabled status. This is new verified installation metadata; it supersedes earlier installed=false observations. Installation alone does not prove completed OAuth/session health or expose an executable database connection. No provider query attempted or authentication success inferred.
+
+Next single user action: refresh this existing ChatGPT conversation page once, then send Continue so the next turn can check whether newly installed plugin tools are exposed. This differs from the earlier failed-authorization troubleshooting: installation is now confirmed, and the target is the originating chat's capability refresh, not a Supabase callback URL. Expected result is a refreshed chat; tool availability remains to be checked rather than promised.
+
+Reason / why this matters: installation state and callable tools are separate observed facts. The assistant must not invent a SQL tool or claim a database recheck without one. A bounded chat refresh may allow updated capabilities to load. Do not reinstall, repeat OAuth, clear storage, disable security settings or send secrets just because tools are missing.
+
+Execution boundary: stage 1 has confirmed installation but usable database access remains pending. Stage 2's current three-table/zero-user state has not been remeasured. No schema/account/fixture/membership/policy/grant change, live UPDATE/DELETE/C test, cleanup, production operation, stable-v122 edit, merge or deployment this turn. Prior user-verified database setup and offline test results remain at their documented evidence levels.
+
+Rollback/teaching: refreshing chat changes no database objects; no database cleanup or rollback needed. Preserve the conversation/project and private saved credentials. Once tools appear, identify exact sandbox wozynsftofkjqwlflosv and execute read-only checks first. Do not use newly available broad OAuth capabilities to inspect production or unrelated secrets. Repository action: append Entry 175 only with the current fetched log blob SHA, preserving all previous entries.
