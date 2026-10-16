@@ -999,3 +999,25 @@ Reason / teaching: the prepared test runner needs a modern Node runtime with bui
 Status: local Node version PENDING user report. No local launcher or private input prompts have been run. Before live use, prepare/review a hidden-input launcher and UPDATE-only stage so DELETE attempts cannot run before their separate exact approval. No password shared/read, database mutation, fresh snapshot, live RLS/DELETE/C test, cleanup, production/personal-data change, stable-v122 edit, merge or deployment.
 
 Rollback: node --version only prints the runtime version and needs no rollback/cleanup. If not found, stop and report output rather than run suggested install commands. Repository action: append Entry 189 only using fetched current log blob SHA and preserve history.
+
+
+## Entry 190 — Node command unavailable; check macOS and architecture before installation choice
+
+Timestamp: 2026-10-16 13:51 EDT (17:51 UTC), America/New_York.
+
+Evidence: user Terminal screenshot shows node version attempts returning zsh: command not found: node. Node is not available in the current shell PATH/session; this does not conclusively prove no installation exists elsewhere. No runtime version obtained. Do not repeat the same failed command or infer database failure. No credentials visible or requested; personal shell/host labels are not transcribed.
+
+Next single prerequisite action: paste these two read-only platform checks into Terminal, press Return after the final line, and report their output:
+
+```sh
+sw_vers -productVersion
+uname -m
+```
+
+Expected: a macOS version number plus architecture such as arm64 or x86_64. These inspect platform metadata only, install nothing and need no network/admin access, passwords or environment dump. They are one platform-identification step used to select a compatible official Node distribution; do not choose an installer/version based only on window appearance.
+
+Reason / teaching: supported Node versions and macOS/CPU compatibility must be verified before installation. Current Node distribution/support details will be checked against official sources once the actual platform is known. No Homebrew, curl-to-shell script, sudo or developer-tool install is requested here.
+
+Status: platform outputs PENDING. Local test launcher/staged UPDATE preparation still required before private credential entry or live tests. Existing sandbox/policies/fixtures remain unchanged; no new SQL, sign-in, UPDATE/DELETE/C-isolation run, cleanup, production/personal-data action, stable-v122 edit, merge or deployment. Hosted credentials/network remain unconfigured at last observation.
+
+Rollback: these platform checks only print version/architecture and require no rollback/cleanup. Do not clear browser storage or reset the sandbox to solve a local Node prerequisite. Repository action: append Entry 190 only using fetched current log blob SHA and preserve previous history.
