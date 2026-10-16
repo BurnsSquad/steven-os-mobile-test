@@ -656,3 +656,24 @@ Safety: no clearing website data/localStorage, no disabling tracking/privacy/sec
 Expected/actual: alternate-browser attempt issued; result PENDING. No extra plugin suggestion repeated. No database/fixture/user/policy/grant/membership mutation, destructive cleanup, merge/deployment or stable-v122 edit this turn. Live phase remains blocked, not complete.
 
 Rollback / teaching: no database rollback or cleanup applies. The alternate browser tab/window may be closed if unsuccessful; retain the saved sandbox password privately. If any actual authorization is approved later, record the confirmed scope/state separately and revalidate sandbox access read-only. Do not repeat this diagnostic indefinitely if the same error occurs; use its result to choose a different supported access path. Repository action: append Entry 172 only to the existing PR branch with fetched current blob SHA, preserving all earlier entries.
+
+
+## Entry 173 — Chrome authorization screen renders; organization-wide scope requires decision
+
+Timestamp: 2026-10-16 12:55 EDT (16:55 UTC), America/New_York.
+
+Evidence/result: user supplies Chrome screenshot of Authorize ChatGPT on Supabase. Selected organization BurnsSquad's Base. The authorization screen renders successfully in this attempt, unlike the earlier Safari failure; this comparison does not establish the underlying cause of the Safari exception. Authorize ChatGPT and Cancel controls are visible; approval/completed connection not shown.
+
+Visible permissions: Database, Edge Functions, Environment and Projects READ + WRITE; Secrets, Organizations, Analytics and Storage READ. Description explicitly applies access to the selected organization. No project-only selector visible in the supplied screen. Do not claim sandbox-only technical scoping, editable permissions, hidden project restrictions or known secret-value exposure behavior beyond what the screen states. The screenshot includes part of the authorization URL; no URL/code/token is transcribed into this log or requested from the user.
+
+Interpretation: authorizing this displayed connection would grant organization-level capabilities, potentially including the existing production project in that organization. The user's sandbox-only task boundary restricts assistant actions but cannot technically narrow the provider's displayed OAuth grant. Production remains outside authorized operations even if a broader connection is later approved.
+
+Next single decision: ask whether the user approves this organization-wide connection while all assistant database work remains restricted to sandbox wozynsftofkjqwlflosv, or prefers not to authorize it and use a narrower/manual path. Do not instruct clicking Authorize before this scope decision. No claim that broad access is mandatory for all alternative approaches. If approved, user completes provider authorization privately, then actual callable capabilities/target must be confirmed read-only; no repeated approval for this same known scope will be required.
+
+Reason for confirmation: the newly observed provider grant is broader than the intended sandbox and the earlier guidance explicitly asked the user to report broader scope before deciding. This is a concrete permission-boundary decision, not another request to approve already authorized empty-table setup or routine testing.
+
+Status: alternate-browser rendering success screenshot-verified; scope and connection approval PENDING. No connected plugin success, secret read, database mutation, user/fixture creation, membership/policy/grant change, cleanup, merge, deployment or stable-v122 edit. Live RLS tests remain unrun.
+
+Why this matters / teaching: OAuth capability and authorized task scope are separate. A promise to target only a sandbox is a behavioral restriction, not provider-enforced project isolation. Read the actual authorization screen before approval and do not infer narrow scope from a sandbox project name elsewhere.
+
+Rollback: viewing the screen has no database effects; Cancel exits without approving this request. Later revoking an approved connection would remove future access, not reverse committed SQL. No database rollback/cleanup applies to this step. Repository action: append Entry 173 only with current fetched blob SHA and preserve previous entries.
