@@ -1145,3 +1145,26 @@ Purpose / teaching: Terminal's working directory determines which relative scrip
 Status: folder name confirmed; path/file-list verification PENDING. Node remains screenshot-verified v24.22.0. No local test execution/private input, live sign-in/security test, new SQL/DELETE/cleanup, production/personal-data operation, stable-v122 change, merge or deployment. Last sandbox snapshot is historical and must be refreshed before actual client testing.
 
 Rollback: changing Terminal directory and listing names changes no files/database and needs no cleanup/rollback. Do not move/merge/replace existing personal folders or open index.html. Next step after successful listing is the prepared offline-only safety/integrity checks. Repository action: append Entry 198 only using fetched current log blob SHA and preserve historical entries.
+
+
+## Entry 199 — Local source path/scripts verified; issue offline safety/integrity checks
+
+Timestamp: 2026-10-16 15:44 EDT (19:44 UTC), America/New_York.
+
+Evidence: user Terminal screenshot shows Entry 198's cd/list operation succeeded in the pinned downloaded source folder. Listed config.mjs, finalize.mjs, offline-transport.mjs, prepare-sql.mjs, private-run.mjs, provision-auth.mjs, run.mjs, safety.test.mjs and verify-cleanup.mjs. Prompt now shows the intended source directory. This verifies path/file presence by screenshot, not yet local test success or live security.
+
+Next single setup action: run this offline verification command from the current directory:
+
+```sh
+node scripts/security/safety.test.mjs && node scripts/audit-html.mjs
+```
+
+Expected: all twelve offline test groups pass, fail 0; then stable index hash check and HTML parsing pass for 167 inline scripts across eleven HTML files. The && prevents the HTML audit after a failed safety run. Request the final output or screenshot, including any failures. Do not treat partial printed successes as full completion.
+
+What executes/why safe: Node runs the reviewed guard tests with synthetic fixtures/HTTP transport and local parser/hash checks. The safety suite creates/removes its own synthetic temporary test directory; does not touch personal records, browser storage, database or production. No npm install, key/password prompt, real Auth sign-in or Supabase request. Tests verify the local runner's protection behavior and source integrity, not real PostgreSQL RLS.
+
+Teaching: verify the same source on the user's actual runtime before supplying private credentials. Separate a simulation PASS from ordinary-user API evidence. HTML compilation is not browser smoke; a hash match proves this downloaded stable index copy matches the audited bytes, not a production deployment inspection.
+
+Error/rollback: if tests fail, stop and report exact non-secret output; do not run private-run or reset fixtures. Offline tests need no database rollback/cleanup. Synthetic temporary files are removed by their own test cleanup; no manual broad deletion instructed.
+
+Status: local path/module presence screenshot-verified; local twelve-group/HTML audit results PENDING. No private credential entry, fresh session, ordinary-user security test, UPDATE/DELETE request, database mutation, cleanup, production/personal-data action, stable-v122 edit, merge or deployment. Once local checks pass, obtain the public connection-key readiness and fresh independently validated snapshot before sign-in testing; retain exact destructive approval gates. Repository action: append Entry 199 only using current fetched blob SHA and preserve history.
