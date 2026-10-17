@@ -14,8 +14,7 @@ GRANT bb_planner_executor TO postgres;
 CREATE SCHEMA bb_planner_private;
 REVOKE ALL ON SCHEMA bb_planner_private FROM PUBLIC,anon,authenticated,service_role;
 GRANT USAGE ON SCHEMA bb_planner_private TO authenticated,bb_planner_executor;
-GRANT USAGE ON SCHEMA public,auth TO bb_planner_executor;
-GRANT EXECUTE ON FUNCTION auth.uid() TO bb_planner_executor;
+GRANT USAGE ON SCHEMA public TO bb_planner_executor;
 
 CREATE TABLE public.bb_planner_households (
  id uuid PRIMARY KEY, label text NOT NULL CHECK(length(btrim(label)) BETWEEN 1 AND 120),
@@ -105,11 +104,19 @@ CREATE POLICY planner_executor_completions_insert ON public.bb_planner_completio
 CREATE POLICY planner_executor_events_read ON public.bb_planner_events FOR SELECT TO bb_planner_executor USING(true);
 CREATE POLICY planner_executor_events_insert ON public.bb_planner_events FOR INSERT TO bb_planner_executor WITH CHECK(true);
 
+-- Mirrors the verified hosted auth.uid() implementation without requiring access
+-- to Supabase's managed auth schema. Claims are supplied by verified PostgREST;
+-- clients cannot pass an actor/role parameter or use editable profile metadata.
+CREATE FUNCTION bb_planner_private.actor_uid() RETURNS uuid
+LANGUAGE sql STABLE SECURITY INVOKER SET search_path='' AS $$
+ SELECT coalesce(nullif(current_setting('request.jwt.claim.sub',true),''),
+ (nullif(current_setting('request.jwt.claims',true),'')::jsonb ->> 'sub'))::uuid
+$$;
 CREATE FUNCTION bb_planner_private.require_member(h uuid) RETURNS text
 LANGUAGE plpgsql SECURITY INVOKER SET search_path='' AS $$
 DECLARE r text; BEGIN
- IF auth.uid() IS NULL THEN RAISE EXCEPTION 'Authentication required' USING ERRCODE='42501'; END IF;
- SELECT member_role INTO r FROM public.bb_planner_members WHERE household_id=h AND user_id=auth.uid();
+ IF bb_planner_private.actor_uid() IS NULL THEN RAISE EXCEPTION 'Authentication required' USING ERRCODE='42501'; END IF;
+ SELECT member_role INTO r FROM public.bb_planner_members WHERE household_id=h AND user_id=bb_planner_private.actor_uid();
  IF r IS NULL THEN RAISE EXCEPTION 'Household access denied' USING ERRCODE='42501'; END IF;
  RETURN r;
 END $$;
@@ -139,12 +146,12 @@ DECLARE r text; BEGIN
  r:=bb_planner_private.require_member(h);
  IF k IS NULL OR k NOT IN ('task','activity') OR t IS NULL OR length(btrim(t)) NOT BETWEEN 1 AND 120 OR i IS NULL THEN
   RAISE EXCEPTION 'Invalid item' USING ERRCODE='22023'; END IF;
- IF r='child' AND (k<>'activity' OR m IS DISTINCT FROM 'individual' OR ids IS DISTINCT FROM ARRAY[auth.uid()]) THEN
+ IF r='child' AND (k<>'activity' OR m IS DISTINCT FROM 'individual' OR ids IS DISTINCT FROM ARRAY[bb_planner_private.actor_uid()]) THEN
   RAISE EXCEPTION 'Children create self-assigned Activities only' USING ERRCODE='42501'; END IF;
  PERFORM bb_planner_private.check_assignments(h,m,ids);
- INSERT INTO public.bb_planner_items(id,household_id,created_by,item_type,title,completion_mode) VALUES(i,h,auth.uid(),k,btrim(t),m);
+ INSERT INTO public.bb_planner_items(id,household_id,created_by,item_type,title,completion_mode) VALUES(i,h,bb_planner_private.actor_uid(),k,btrim(t),m);
  INSERT INTO public.bb_planner_assignments(item_id,household_id,assignee_id) SELECT i,h,x FROM unnest(ids) x;
- INSERT INTO public.bb_planner_events(item_id,household_id,actor_id,action) VALUES(i,h,auth.uid(),'created');
+ INSERT INTO public.bb_planner_events(item_id,household_id,actor_id,action) VALUES(i,h,bb_planner_private.actor_uid(),'created');
  RETURN bb_planner_private.item_state(i);
 END $$;
 CREATE FUNCTION bb_planner_private.rename_item(i uuid,t text,v bigint) RETURNS jsonb
@@ -153,11 +160,11 @@ DECLARE row public.bb_planner_items; r text; BEGIN
  SELECT * INTO row FROM public.bb_planner_items WHERE id=i FOR UPDATE;
  IF NOT FOUND THEN RAISE EXCEPTION 'Item unavailable' USING ERRCODE='42501'; END IF;
  r:=bb_planner_private.require_member(row.household_id);
- IF r<>'adult' AND NOT(row.item_type='activity' AND row.created_by=auth.uid()) THEN RAISE EXCEPTION 'Edit denied' USING ERRCODE='42501'; END IF;
+ IF r<>'adult' AND NOT(row.item_type='activity' AND row.created_by=bb_planner_private.actor_uid()) THEN RAISE EXCEPTION 'Edit denied' USING ERRCODE='42501'; END IF;
  IF v IS NULL OR row.version<>v THEN RAISE EXCEPTION 'Version conflict' USING ERRCODE='40001'; END IF;
  IF t IS NULL OR length(btrim(t)) NOT BETWEEN 1 AND 120 THEN RAISE EXCEPTION 'Invalid title' USING ERRCODE='22023'; END IF;
  UPDATE public.bb_planner_items SET title=btrim(t),version=version+1,updated_at=clock_timestamp() WHERE id=i;
- INSERT INTO public.bb_planner_events(item_id,household_id,actor_id,action) VALUES(i,row.household_id,auth.uid(),'renamed');
+ INSERT INTO public.bb_planner_events(item_id,household_id,actor_id,action) VALUES(i,row.household_id,bb_planner_private.actor_uid(),'renamed');
  RETURN bb_planner_private.item_state(i);
 END $$;
 CREATE FUNCTION bb_planner_private.assign_item(i uuid,m text,ids uuid[],v bigint) RETURNS jsonb
@@ -172,7 +179,7 @@ DECLARE row public.bb_planner_items; BEGIN
  DELETE FROM public.bb_planner_assignments WHERE item_id=i;
  INSERT INTO public.bb_planner_assignments(item_id,household_id,assignee_id) SELECT i,row.household_id,x FROM unnest(ids) x;
  UPDATE public.bb_planner_items SET completion_mode=m,version=version+1,updated_at=clock_timestamp() WHERE id=i;
- INSERT INTO public.bb_planner_events(item_id,household_id,actor_id,action) VALUES(i,row.household_id,auth.uid(),'assigned');
+ INSERT INTO public.bb_planner_events(item_id,household_id,actor_id,action) VALUES(i,row.household_id,bb_planner_private.actor_uid(),'assigned');
  RETURN bb_planner_private.item_state(i);
 END $$;
 CREATE FUNCTION bb_planner_private.complete_item(i uuid,for_member uuid) RETURNS jsonb
@@ -180,10 +187,10 @@ LANGUAGE plpgsql SECURITY DEFINER SET search_path='' AS $$
 DECLARE row public.bb_planner_items; r text; target uuid; key text; BEGIN
  SELECT * INTO row FROM public.bb_planner_items WHERE id=i FOR UPDATE;
  IF NOT FOUND THEN RAISE EXCEPTION 'Item unavailable' USING ERRCODE='42501'; END IF;
- r:=bb_planner_private.require_member(row.household_id);target:=COALESCE(for_member,auth.uid());
- IF r<>'adult' AND target<>auth.uid() THEN RAISE EXCEPTION 'Contribution impersonation denied' USING ERRCODE='42501'; END IF;
+ r:=bb_planner_private.require_member(row.household_id);target:=COALESCE(for_member,bb_planner_private.actor_uid());
+ IF r<>'adult' AND target<>bb_planner_private.actor_uid() THEN RAISE EXCEPTION 'Contribution impersonation denied' USING ERRCODE='42501'; END IF;
  IF row.completion_mode='household' THEN
-  IF target<>auth.uid() THEN RAISE EXCEPTION 'Household completion records actual actor' USING ERRCODE='42501'; END IF;
+  IF target<>bb_planner_private.actor_uid() THEN RAISE EXCEPTION 'Household completion records actual actor' USING ERRCODE='42501'; END IF;
   key:='household';
  ELSE key:=target::text; END IF;
  IF NOT(row.completion_mode='household' AND r='adult') AND NOT EXISTS(SELECT FROM public.bb_planner_assignments WHERE item_id=i AND assignee_id=target) THEN RAISE EXCEPTION 'Assignee required' USING ERRCODE='42501'; END IF;
@@ -193,8 +200,8 @@ DECLARE row public.bb_planner_items; r text; target uuid; key text; BEGIN
  IF row.completion_mode='household' AND r='adult' AND NOT EXISTS(SELECT FROM public.bb_planner_assignments WHERE item_id=i AND assignee_id=target) THEN
   INSERT INTO public.bb_planner_assignments(item_id,household_id,assignee_id) VALUES(i,row.household_id,target);
  END IF;
- INSERT INTO public.bb_planner_completions(item_id,household_id,contribution_key,assignee_id,actor_id) VALUES(i,row.household_id,key,target,auth.uid());
- INSERT INTO public.bb_planner_events(item_id,household_id,actor_id,action,details) VALUES(i,row.household_id,auth.uid(),'completed',jsonb_build_object('member',target));
+ INSERT INTO public.bb_planner_completions(item_id,household_id,contribution_key,assignee_id,actor_id) VALUES(i,row.household_id,key,target,bb_planner_private.actor_uid());
+ INSERT INTO public.bb_planner_events(item_id,household_id,actor_id,action,details) VALUES(i,row.household_id,bb_planner_private.actor_uid(),'completed',jsonb_build_object('member',target));
  UPDATE public.bb_planner_items SET version=version+1,updated_at=clock_timestamp() WHERE id=i;
  RETURN bb_planner_private.item_state(i);
 END $$;
@@ -219,6 +226,7 @@ LANGUAGE sql SECURITY INVOKER SET search_path='' AS $$ SELECT * FROM bb_planner_
 
 -- Fixed object lists prevent this proposal from changing any existing function ACL.
 GRANT CREATE ON SCHEMA bb_planner_private TO bb_planner_executor;
+ALTER FUNCTION bb_planner_private.actor_uid() OWNER TO bb_planner_executor;
 ALTER FUNCTION bb_planner_private.require_member(uuid) OWNER TO bb_planner_executor;
 ALTER FUNCTION bb_planner_private.check_assignments(uuid,text,uuid[]) OWNER TO bb_planner_executor;
 ALTER FUNCTION bb_planner_private.item_state(uuid) OWNER TO bb_planner_executor;

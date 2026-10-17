@@ -17,7 +17,7 @@ public.bb_planner_create(uuid,uuid,text,text,text,uuid[]);
 DROP FUNCTION bb_planner_private.list_items(uuid),bb_planner_private.complete_item(uuid,uuid),
 bb_planner_private.assign_item(uuid,text,uuid[],bigint),bb_planner_private.rename_item(uuid,text,bigint),
 bb_planner_private.create_item(uuid,uuid,text,text,text,uuid[]),bb_planner_private.item_state(uuid),
-bb_planner_private.check_assignments(uuid,text,uuid[]),bb_planner_private.require_member(uuid);
+bb_planner_private.check_assignments(uuid,text,uuid[]),bb_planner_private.require_member(uuid),bb_planner_private.actor_uid();
 DROP TABLE public.bb_planner_events,public.bb_planner_completions;
 DROP TABLE public.bb_planner_assignments;
 DROP TABLE public.bb_planner_items;
@@ -25,8 +25,7 @@ DROP POLICY planner_household_read ON public.bb_planner_households;
 DROP TABLE public.bb_planner_members;
 DROP TABLE public.bb_planner_households;
 DROP SCHEMA bb_planner_private;
-REVOKE EXECUTE ON FUNCTION auth.uid() FROM bb_planner_executor;
-REVOKE USAGE ON SCHEMA public,auth FROM bb_planner_executor;
+REVOKE USAGE ON SCHEMA public FROM bb_planner_executor;
 REVOKE bb_planner_executor FROM postgres;
 DROP ROLE bb_planner_executor;
 COMMIT;

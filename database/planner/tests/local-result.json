@@ -1,8 +1,9 @@
 {
   "status": "PASS",
-  "checks": 57,
+  "checks": 59,
   "passed": [
     "schema refuses missing administrator opt-in",
+    "restricted executor works without managed auth schema access",
     "create 1",
     "child cannot create Task",
     "create 2",
@@ -57,6 +58,7 @@
     "Shared first contribution remains incomplete",
     "create 8",
     "concurrent completion blocks reassignment without losing contribution",
+    "modern verified JWT claim format supported",
     "rollback refuses populated planner",
     "empty rollback removes only new objects and role"
   ],

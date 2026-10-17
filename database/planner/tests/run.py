@@ -36,7 +36,8 @@ def create(n,kind='task',mode='individual',ids=None,u=A,h=H):
 sql("""DO $$ BEGIN IF current_database()<>'bb_planner_disposable' THEN RAISE EXCEPTION 'Local only'; END IF; END $$;
 CREATE ROLE anon; CREATE ROLE authenticated; CREATE ROLE service_role;
 CREATE SCHEMA auth; CREATE TABLE auth.users(id uuid PRIMARY KEY);
-CREATE FUNCTION auth.uid() RETURNS uuid LANGUAGE sql STABLE AS $$ SELECT nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$;
+CREATE FUNCTION auth.uid() RETURNS uuid LANGUAGE sql STABLE AS $$ SELECT coalesce(nullif(current_setting('request.jwt.claim.sub',true),''),(nullif(current_setting('request.jwt.claims',true),'')::jsonb ->> 'sub'))::uuid $$;
+REVOKE ALL ON SCHEMA auth FROM PUBLIC;
 GRANT USAGE ON SCHEMA public,auth TO authenticated,anon;
 CREATE TABLE public.bb_test_canary(id integer PRIMARY KEY,payload text);
 INSERT INTO public.bb_test_canary VALUES(1,'preserve');
@@ -47,6 +48,11 @@ p=sql((ROOT/'schema.sql').read_text(),False)
 assert p.returncode and 'explicit planner-v1 opt-in' in p.stderr
 checks.append('schema refuses missing administrator opt-in')
 sql("SET bb_planner.approved_schema='planner-v1';\n" + (ROOT/'schema.sql').read_text())
+sql((ROOT/'hosted-identity-compatibility.sql').read_text())
+sql((ROOT/'indexes.sql').read_text())
+sql("REVOKE USAGE ON SCHEMA auth FROM bb_planner_executor;")
+assert sql("SELECT has_schema_privilege('bb_planner_executor','auth','USAGE');").stdout.strip()=='f'
+checks.append('restricted executor works without managed auth schema access')
 sql('INSERT INTO auth.users VALUES '+','.join(f"('{x}')" for x in [A,B,C,D])+';'+
     f"INSERT INTO public.bb_planner_households(id,label) VALUES('{H}','Fictional test household'),('{J}','Unrelated fictional household');"+
     'INSERT INTO public.bb_planner_members(household_id,user_id,member_role) VALUES '+','.join(f"('{h}','{u}','{r}')" for h,u,r in [(H,A,'adult'),(H,B,'child'),(H,C,'child'),(J,D,'adult')])+';')
@@ -136,6 +142,9 @@ with concurrent.futures.ThreadPoolExecutor() as pool:
     f.result()
 assert p.returncode and '55000' in p.stderr
 checks.append('concurrent completion blocks reassignment without losing contribution')
+# Verify modern JSON claim extraction without the legacy sub GUC.
+assert sql(as_user('',f"SET request.jwt.claims='{{\"sub\":\"{B}\"}}'; SELECT count(*) FROM public.bb_planner_list('{H}');")).stdout.strip()=='8'
+checks.append('modern verified JWT claim format supported')
 # Rollback must refuse populated data, then remove only the empty planner namespace.
 p=sql("SET bb_planner.approved_rollback='empty-planner-v1';\n"+(ROOT/'rollback-empty.sql').read_text(),False)
 assert p.returncode and 'Planner contains data' in p.stderr
