@@ -2082,3 +2082,12 @@ Independent read-only database verification confirms Household mode retains exac
 Next phase is real-household onboarding and release preparation: provision the authorized adult/child memberships and actual sign-ins, confirm recovery and deployment configuration, and verify household separation before personal use. Current preview remains fictional sandbox only; these results do not establish full production readiness or authorize personal-data migration, cleanup, merge or production promotion. Existing Free-plan choice stands; paid leaked-password screening is optional. Preserve all fictional acceptance records.
 
 Generic log-only update under existing authorization. No application, schema, policy, Auth setting, billing or production changes; database verification was read-only.
+
+
+## Entry 273 — Plain-language family co-designer guide delivered; onboarding preparation next
+
+Date: 2026-10-17, America/New_York. Reviewed the user-supplied earlier development-journey PDF, which ends through v122. Produced a four-page visual continuation covering browser-local origins, isolated sharing development, v134 live device acceptance, nontechnical co-design contributions, a suggested first session, and an account/plugin checklist. Credits the user's co-creator's Finance design/backend authorship without assuming that backend has been inspected or connected. Personal identity and private Finance details are omitted from this public log.
+
+Guide-only preview READY: https://steven-os-mobile-test-pzva0g4vx-burns6.vercel.app/ ; downloadable PDF at /family-guide.pdf. Seven static assets, no production aliases or promotion. Existing connected planner preview unchanged. Source PDF extracted and reviewed; generated PDF first and final pages visually inspected. Guide distinguishes required family planner identities from conditional GitHub/Supabase/Vercel developer access, optional ChatGPT connections, and possible hosting seat costs. It does not create accounts, grant access, add plugins or change billing.
+
+Next: establish adult invitation emails and the actual account/onboarding design before provisioning; map the existing Finance implementation with its creator before integration. Preserve current sandbox and existing personal records. No code/schema/Auth-policy change, personal-data migration, cleanup, merge or production release. Generic log-only append under existing approval.
