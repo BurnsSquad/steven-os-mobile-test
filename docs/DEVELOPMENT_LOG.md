@@ -1759,3 +1759,14 @@ Next meaningful development phase: prepare a normal household sign-in/onboarding
 Next single clarification: ask only how many real household members should have separate accounts initially (a count, not names/emails/passwords). This scopes member onboarding without requesting personal records or making external invitations. No messaging/invite tool action authorized. Prepare subsequent concrete implementation/release plan using the count; no repetition of completed setup just for documentation.
 
 Actual actions this turn: append evidence and roadmap only; no database/hosting operation, account/member/policy change, personal-data import/sync/erasure, stable HTML edit, merge or deployment. No cleanup or rollback operation performed.
+
+
+## Entry 243 — Four household accounts confirmed; onboarding plan drafted
+
+Date: 2026-10-17, America/New_York. User answered4 to initial household-account count. Confirmed requirement is four separate real household accounts; identities, adult/child composition, ownership/administrative roles and invitation mechanics remain unconfirmed. Do not create a fourth fictional or real account, alter memberships, send messages or reuse fictional identities based on this count alone.
+
+Added docs/FOUR_MEMBER_HOUSEHOLD_PLAN.md with confirmed scope, ordinary sign-in without API-key/account-selector fields, session lifecycle, database-backed household authorization, private-record safeguards, release/approval boundaries, test evidence reuse and targeted rollback. First vertical slice remains shared tasks, not all-module data synchronization. Existing personal files/browser records stay untouched. Plan is a draft, not an executed onboarding flow or production migration.
+
+Next single clarification: of the four accounts, how many are adults and how many children? Ask counts only, not names/emails/ages/passwords. This determines whether equal task capabilities suffice or child-specific administrative/data restrictions require design and new tests. Do not assume age/role authority, promise restrictions without implementation, or grant roles from editable client metadata.
+
+No database/hosting operation, invitation, account/member/policy change, secret handling, personal-data migration/sync/erasure, stable-index edit, merge or deployment this turn. Core fictional Mac/phone acceptance and completed API security evidence retained without rerun. Retained preview task remains unapproved for cleanup. Repository plan/log changes only; rollback is a targeted documentation revert if requested.
