@@ -1,6 +1,6 @@
 # Planner database v1 — sandbox installation and verification
 
-This is the database implementation for the generic Tasks/Activities rules reviewed in the v133 interface. It is separate from the stable application and the older generic-member sharing tables. The original schema and fictional bootstrap are installed in Burns Base Security Sandbox. Hosted compatibility repair, index follow-up and verification are recorded in DEVELOPMENT_LOG.md. Production and both preview frontends are unchanged.
+This is the database implementation for the generic Tasks/Activities rules reviewed in the v133 interface. It is separate from the stable application and the older generic-member sharing tables. The schema, fictional bootstrap, hosted identity compatibility repair and foreign-key indexes are installed in Burns Base Security Sandbox. Hosted SQL-role verification passed; see tests/hosted-result.json and DEVELOPMENT_LOG.md through Entry261. Production and both preview frontends are unchanged. Do not rerun setup over the installed objects.
 
 ## Objects and permission boundary
 
