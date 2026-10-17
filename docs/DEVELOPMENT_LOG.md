@@ -1302,3 +1302,21 @@ Beginner explanation: cd selects the separately extracted pinned correction. Eac
 Expected: 12 tests pass, 0 fail; stable index hash PASS; 167 scripts parsed. User-machine corrected-copy results remain PENDING until output arrives. Assistant-side checks at Entry 205 passed but do not replace this verification. An error stops this sequence; report it without credentials and do not run the old expired live-session command.
 
 No actual Supabase login, API request, database mutation, password rotation, membership/policy change, DELETE attempt or cleanup is part of this command. Fresh independent sandbox snapshot and approved live scope are still required before testing. No stable-v122 edit, merge or deployment. Recovery requires inspecting local error/path/output; no database rollback applies to extraction or offline checks.
+
+
+## Entry 208 — Corrected Mac checks pass; fresh sandbox snapshot and UPDATE-only launch
+
+Date: 2026-10-17 (UTC). User screenshot shows the command selecting the be041313 corrected directory and new output: tests 12, pass 12, fail 0, cancelled/skipped/todo 0; stable index SHA-256 aecb177cdebe6eded90f5e5b9626e152fd677066b923e8b988ece2b83c6683f8; 167 scripts parsed; prompt remains in corrected directory. These verify local offline checks only. Older failed-launch output remains visible above and is not a new execution.
+
+Read-only provenance: get_project(id=wozynsftofkjqwlflosv) independently returned Burns Base Security Sandbox, ACTIVE_HEALTHY, us-east-1, PostgreSQL 17.11.0.003. Generated SELECT using snapshotSQL with the existing A/B/C UUIDs, then execute_sql(project_id=wozynsftofkjqwlflosv, query=generated SELECT). No mutation. Captured 2026-10-17T14:00:05.089748+00:00. Existing three fictional Auth identities, three public tables, two private baselines, two A/B memberships, four shared fictional records and eight policies all present. RLS true; all 48 table-operation and 12 column-UPDATE checks match expected least privileges. Shared DELETE false; protected identity-column UPDATE false. C still unrelated.
+
+Parsed only the marked SQL data region, wrote ignored local work/security/snapshot208.json and previous208.json, validated with validateSnapshot(...,{fresh:true}), and compared canonical objects excluding capture time. Result unchanged=true against prior session. Digest c394a355d5a74c1cb7b20257f988f1e0b3560f4d2f8a39f07832dc3f6a85eca8. Actual passwords/sign-in remain unverified; no secret-bearing Auth columns read.
+
+Published credential-free session snapshot commit d36e6e8586854ac3e85d985b4dbacd8114db30fc, immutable URL:
+https://raw.githubusercontent.com/BurnsSquad/steven-os-mobile-test/d36e6e8586854ac3e85d985b4dbacd8114db30fc/docs/evidence/sandbox-session.json
+
+Next single user operation: run private-run.mjs --mode update with that pinned URL from the corrected directory. Privately enter sandbox publishable key and ORIGINAL saved fictional A/B/C passwords at hidden prompts. Do not use the replacement marked not applied. No passwords/keys/tokens in command/chat/files/report. Snapshot must stay within ten minutes at input completion and runner validation; expiration requires a new independent capture, never bypassing the guard.
+
+Authorized plan/expected results: 27 ordinary-user client assertions including allowed title/completed edits to exact A/B disposable rows; denied creator/household changes; unrelated disposable target remains inaccessible; exact baseline comparisons. No INSERT/DELETE test or cleanup. Ordinary authentication is required; HTTP 401 never means RLS PASS. Expected final client status UPDATE_CLIENT_CHECKS_PASSED_ADMIN_VERIFICATION_PENDING; independent administrator post-snapshot comparison still required. Actual execution/result PENDING user output.
+
+Cleanup/rollback: runner restores A/B disposable title/completed fields only when current state matches its known test states. It never writes protected baselines. If interrupted/failed, stop and inspect exact records before recovery; do not blindly reset. No cleanup deletion authorized; shared DELETE remains denied. No production/personal records, password changes, memberships or policies changed. No stable-v122 edit, merge or deployment.
