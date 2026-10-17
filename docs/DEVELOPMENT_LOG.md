@@ -1870,3 +1870,12 @@ Date: 2026-10-17, America/New_York. User screenshot shows fictional River select
 Next single user operation: enter Plan a fictional treasure hunt in the Activity name field and click Add Activity once. Expected second Activity assigned to River, corresponding demo-added message, and own Edit/Mark complete controls. This changes only in-memory fictional demonstration state; nothing is inserted into Supabase or old browser storage. Do not reload/reset until later view/ownership checks, because those discard this temporary item. Ask for Activity added or exact error.
 
 This is the newly requested child Activity flow, not a repeated API security test or live account role mutation. Any later switch to the other fictional role should retain visibility but remove ownership controls; that observation remains pending. No database read/write, permission/schema/account/member change, real household/personal-record operation, stable-index edit, cleanup, merge or explicit deployment. No rollback beyond resetting/reloading fictional demo state is required.
+
+
+## Entry 252 — Fictional Activity creation reported; sibling ownership boundary next
+
+Date: 2026-10-17, America/New_York. User reports activity added after River's scoped in-memory creation of Plan a fictional treasure hunt. This is user-reported demo behavior, not a database record or cross-device synchronization. Existing scripted browser/model checks already passed separately.
+
+Next single operation: change View as to Sky · fictional child while remaining on Activities tab. Expected River's new fictional Activity remains visible, but its Edit and Mark complete controls are absent. Sky may still see an Add Activity form for Sky's own new items; that does not grant edit authority over River's items. Ask only whether River's Activity is visible without those controls. Do not create another Activity, complete River's item, reload/reset or change assignment.
+
+This tests visibility versus ownership in the approved generic UI model; it is not proof of server-enforced roles. No real household details, credentials or records involved. No DB/hosting operation, account/member/schema/policy change, personal-data migration/sync/erasure, stable-index edit, cleanup, merge or explicit deployment. Earlier v132 live sharing preview and retained sandbox fixture untouched. Demo rollback remains reload/reset only when review is finished.
