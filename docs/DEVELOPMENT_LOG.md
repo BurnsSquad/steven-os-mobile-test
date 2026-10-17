@@ -1691,3 +1691,16 @@ Next single user action on MACA: type Fictional cross-device picnic — acceptan
 Cleanup/rollback: app has no DELETE. Do not remove this new row now or reuse approved old bba60000 cleanup. Future deletion of exact newly captured bba80000 row requires separate reviewed SQL and user approval. If insert/peer edit fails, preserve exact message and inspect row before any retry; unauthorized state must not be overwritten. Stop further writes on unexpected count/permission/baseline drift. Known expected completed state can be reviewed for restoration; no blind reset. No private/local-storage record import or sync.
 
 Actual result: task creation PENDING user action; assistant performed SELECT only this turn. No deployment/settings change, production/private-data operation, stable-index edit, merge or destructive action. All prior safeguards retained.
+
+
+## Entry 237 — Mac A creation reaches phone B; exact new fixture captured
+
+Date: 2026-10-17, America/New_York. User reported task added after instructed single fictional creation on MacA. Next issued phoneB in-app Refresh (not browser reload) and asked visibility only, no edits. User now reports B sees it. This is real user-reported A-to-B/two-device visibility, not automated browser telemetry; no screenshot provided for those two observations. Do not repeat the completed API security tests or create more fixtures.
+
+Independent targeted sandbox SELECT now returned exactly one matching reserved-preview row with original fictional title, household and creatorA, completedfalse. Captured ignored local work/security/browser-task237.json. Exact fixture ID bba80000-5ad3-49b4-b522-44ea0bc2d76d; created_at2026-10-17T15:37:33.915967+00:00; stored title TEST ONLY - Fictional cross-device picnic — acceptance 1. Household/creator match Entry236's reviewed scope. This is the new preview fixture, not an old bba60000 security fixture. Read only; no assistant mutation.
+
+Next single user operation on PHONEB: tap checkbox for this fictional picnic task only, leaving original shared baseline untouched. Expected task becomes completed (checked/struck through), update confirmation, then later MacA in-app Refresh should show same completion. Requires existing authenticated member title/completed UPDATE permission; peer editing (B edits A-created row) is the behavior now under acceptance. No identity-field change, permissions or DELETE. Ask user to report B marked complete or exact error before issuing next action.
+
+Expected server transition: only completedfalse→true on exact captured preview ID; creator/household/title/created_at unchanged. Later independently compare whole baseline/metadata inventory and exact fixture. On error stop/inspect current row before retry, no blind restoration/recreation. Known-state edit can be reviewed separately; later precise deletion remains separately approved and must not use old cleanup proposal. No additional task instructed.
+
+Current status: A creation and B visibility user-reported, matching created record independently verified. Peer edit/return propagation pending. No private/production-record access, local data migration, stable-index edit, policy/account/membership change, merge, deployment or cleanup this turn. App session credentials remain private in browser, no secret requested.
