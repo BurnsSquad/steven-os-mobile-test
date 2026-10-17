@@ -1816,3 +1816,19 @@ Offline browser command node scripts/planner-demo-smoke.cjs uses environment Pla
 Deployment plan: new upload-only preview with exactly index.html/style.css/app.mjs/model.mjs, not source root/README/evidence; preserve existing live preview and production aliases/settings. User's continuing preview-development authorization covers the separate fictional demo, not database permission changes. Verify hosting target and readiness/assets before providing URL. Actual deployment outcome to be recorded separately. Existing Git automation may generate branch previews on commit; no merge/promotion.
 
 No assistant database operation, Auth/account/member/policy/schema change, real-user invitation, personal-data transfer/migration/erasure, stable-v122 edit or cleanup. Previous security tests were not rerun. Retained prior fictional acceptance task unchanged. Next real implementation is exact reviewed server schema/policy proposal and new-rule testing before connecting this role simulation to actual accounts. Rollback new demo by targeted revert/retiring its exact preview only; no DB rollback needed.
+
+
+## Entry 247 — Separate v133 design preview READY; exact four assets verified
+
+Date: 2026-10-17, America/New_York. Completed source publication commit72a2bb567f715b58d66397665810f9a71451c897 on existing draft PR branch;9 new/updated paths cover isolated demo, tests, server proposal and log. No existing live-preview or stable HTML edits. User's continuing preview development authorization applied; no database permission or production release authorization inferred.
+
+Verified intended hosting project/account through scoped get_project. Created upload-only preview with exactly index.html,style.css,app.mjs,model.mjs from reviewed source commit72a2bb5. API target omitted deliberately (preview), framework/build/install/output/root overrides static/null, no Git root or secret/env upload. Deployment dpl_EeiLedseJS9icWeL38QBDegLUmD3 is READY, targetnull, alias[]. File listing confirms four source assets only. No project protection/settings or production-domain change, no new project/expanded scope, no failure/retry in this deployment.
+
+Dedicated design-demo URL:
+https://steven-os-mobile-test-6at7f7v23-burns6.vercel.app/
+
+Authenticated provider web fetch checks each asset200. JS/model/CSS exact reviewed source, HTML complete source prefix plus provider optional feedback injection as in prior preview. No share token/cookie/auth URL logged/published. Source CSP remains self-only script/connect-srcnone; optional provider feedback may be blocked while app modules remain allowed. User may need their own hosting login before page access; no app credentials/public key needed because this is a disconnected simulation.
+
+Next single user action: open this distinct v133 URL on Mac and confirm Tasks/Activities tabs plus fictional role selector. Do not enter real records or credentials. Existing v132 live-sharing URL unchanged. No actual household accounts/roles created and no existing sandbox task changed. New demo is not cross-device persistence; reload resets. Children/adult controls model approved generic capabilities only; production/server enforcement remains unimplemented pending concrete reviewed new schema/policy design.
+
+Core verification from Entry246:5 model tests pass, offline mobile/desktop browser smoke pass, external/database calls0, stable hash unchanged. No completed API suite rerun, personal-record import/sync/erasure, membership/private-policy change, cleanup or merge. Code/UI and server-design proposal now reviewable; rollback retires only this exact preview/targeted new-file changes, never stable site or existing database records. Future destructive cleanup and permission changes still need required approvals.
