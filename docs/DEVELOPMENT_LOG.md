@@ -1899,3 +1899,12 @@ Observed UI wording issue: after Sky completes own Shared part, fallback text sa
 Next single scoped demo operation: select River in View as, stay on Tasks, click Mark complete only under the Shared game-night item. Expected2/2 contributions, item Complete, total1/3 complete, both actors recorded. Do not complete household/individual items or reset/reload. Request final Shared status before next check.
 
 No database/hosting operation, real account/member/policy change, personal records, stable-index edit, cleanup, merge or explicit deployment. Existing live preview and sandbox task unchanged. This is manual design acceptance of the approved Shared meaning; automated model/browser tests already pass separately.
+
+
+## Entry 255 — Shared aggregate completion screenshot verified; household-once next
+
+Date: 2026-10-17, America/New_York. User screenshot shows fictional River selected, Shared game-night task2/2 contributions, both River and Sky checked with separate actor attribution, title struck through, Complete label and total1/3 complete. Individual picnic and household bird-feeder tasks remain incomplete. This verifies expected aggregate Shared completion presentation in the user's demo session, not a database transaction or authenticated role.
+
+Next single scoped operation: while River remains selected, click Mark complete only under Fill the fictional bird feeder (Household mode). Expected that item Complete, one actor recorded, total2/3 complete. A later Sky view should show already complete without another completion control; verify that separately before concluding household-once acceptance. Do not click individual task, reset/reload or add more Activities.
+
+No server-side row, account/membership/policy, personal record or existing live-preview task is changed by this disconnected simulation. No database/hosting operation, stable-index edit, cleanup, merge or explicit deployment this turn. Prior automated checks remain separate evidence. Actual atomic/concurrent first-completion on the eventual server remains untested.
