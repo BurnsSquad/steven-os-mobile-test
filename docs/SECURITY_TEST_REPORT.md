@@ -145,3 +145,12 @@ User upload is byte-identical to audited repository v131 (Git blobd0db22f59d0ea1
 Separate preview/household implements fictional-only shared tasks, fixed sandbox/A-B-C identities, no legacy storage/personal records, no DELETE, protected baseline read-only, new preview-task namespace, conditional title/completed edits and15-second polling. No deployment or live request during implementation. No changes to v131, stable index, personal files or database permissions.
 
 Offline Playwright smoke PASS across3 isolated contexts with desktop/mobile viewport: mocked A creation reaches B, B completion reaches A, C isolation UI, baseline protection, literal task rendering/XSS check, no horizontal mobile overflow, no app browser storage, sign-out clearing and no DELETE requests. All Supabase requests intercepted, real calls0. Node syntax/whitespace checks and stable index hash pass. Real Mac/phone acceptance, hosting and production onboarding remain pending; no all-module sync or production-ready claim.
+
+
+## HTTPS preview READY — Entry232
+
+https://steven-os-mobile-test-k56r3ikms-burns6.vercel.app/
+
+Dedicated upload-only preview in authorized existing project, three reviewed static files from commit a875076c19ff7198a5b77d387f729c80debe55b9, no production target/aliases, no project protection/settings changes. READY and deployment file list verified. Authenticated page/JS/CSS fetch200; JS/CSS exact source, HTML source prefix plus provider feedback injection. Optional injected feedback script is blocked by existing self-only script CSP; no relaxation made. Existing Git integration also creates automatic previews on branch commits, now independently observed; earlier no-explicit-deployment statements did not establish absence of automatic builds.
+
+Live Safari/Mac/phone sign-in and actual cross-account UI sharing remain pending. No new DB records created or cleaned by hosting. Do not rerun completed security suite or publish personal HTML. First user step is opening this exact preview; Vercel account login may be required before fictional application sign-in. No secret-bearing share URL published.
