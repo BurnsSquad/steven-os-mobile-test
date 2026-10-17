@@ -1276,3 +1276,15 @@ First verification failed 11/12 because my new synthetic label accidentally cont
 Delivery: publish only the three corrected scripts and this append-only log on the existing draft PR branch. Next user operation is to download/extract the pinned correction; do not run the expired session command. Then obtain a new independent sandbox starting snapshot before any client mutations. Use original privately saved A/B/C credentials at hidden prompts; report status only. Authentication failures remain inconclusive and require inspection, never permission-denial PASS.
 
 Rollback: retain the prior download; the prior scripts remain available at commit 0a666d1cbbaf4b10ce4671f841ad70c01c494ec0. Reverting these three script changes restores the old local restriction but does not change any account/database state. No database rollback required because this turn performed no database operation. Production/personal records, stable v122, Auth accounts, memberships and policies unchanged; no DELETE attempt, cleanup, merge or deployment.
+
+
+## Entry 206 — User download confirmed; extract separate corrected source
+
+Date: 2026-10-17 (UTC). User screenshot shows curl --fail --location downloading the pinned source archive for be0413139213fd8563054f1ac8ba0b9daee82267 to "$HOME/Downloads/burns-security-fix.zip": 100%, 1078k received, then normal shell prompt. This verifies download completion, not archive content integrity, extraction, use of corrected scripts, or live security results. The older stopped-launch output above it is historical; it is not a new failure.
+
+Next single local operation:
+ditto -x -k "$HOME/Downloads/burns-security-fix.zip" "$HOME/Downloads/burns-security-fix-be041313"
+
+Explanation: macOS ditto extracts the ZIP into a separately named local folder, preserving the previous downloaded copy. Expected success is normally silent with the shell prompt returning; extraction errors must be reported before continuing. Do not rerun the old launcher/session. Follow extraction with inspection/offline verification in the new source directory, then a fresh independent sandbox snapshot before any live run. No credential input requested here.
+
+Scope/rollback: only local source extraction; no authentication, database mutation, account/password change, permission change, fixture cleanup, stable-v122 modification, merge or deployment. The original saved A/B/C credentials remain intended for sign-in; the replacement stays not applied. If extraction fails, preserve the error and ZIP; no database rollback is needed. The earlier download remains available. Permanent record appended on the existing unmerged draft PR branch.
