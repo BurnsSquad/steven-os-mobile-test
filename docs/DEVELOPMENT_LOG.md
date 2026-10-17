@@ -2019,3 +2019,10 @@ Date: 2026-10-17, America/New_York. User phone screenshot shows the exact connec
 No cross-device item-sharing PASS yet: there are no items to compare. Next scoped user operation on Mac as A: add Fictional v134 picnic preparation under Tasks, keep One assigned person, choose Account B, click Add Task once. Then inspect phone B's list on its next refresh before requesting completion. Use fictional text only and preserve new acceptance rows until any separately approved cleanup. No password is needed in chat.
 
 This checkpoint adds generic status to the existing approved public log only. No app/schema/policy/Auth setting change, personal record operation, cleanup, merge or production promotion. Free-plan optional password-protection decision remains as clarified in Entry264.
+
+
+## Entry 266 — New Task creation saved and phone visibility reported
+
+Date: 2026-10-17, America/New_York. User reports the newly requested fictional picnic Task appears on phone Account B after creation on Mac Account A. Independent provider read confirms exactly the expected named Task, Individual mode, creator A, sole assignee B, initial revision and no completion. This combines actual device visibility report with independently saved assignment state; no completion or return-to-Mac visibility claimed yet.
+
+Next single operation: on phone as B, click Mark complete for that Task once. Expected Complete state on phone; then separately inspect Mac A after refresh. Preserve the fictional acceptance item; no cleanup authorized. Generic progress-log append only, no app/schema/policy/Auth setting changes, personal data operation, merge or production promotion.
