@@ -5,10 +5,13 @@ let roster=[];const label=id=>roster.find(x=>x.id===id)?.label||'Household membe
 let user=null,membership=null,items=[],tab='task',busy=false,editing=null,assigning=null,generation=0;
 const adult=()=>membership?.member_role==='adult';
 function message(text,error=false){$('status').textContent=text;$('status').dataset.error=String(error);}
-function clear(){generation++;client.clear();user=null;membership=null;items=[];roster=[];editing=null;assigning=null;for(const id of ['edit-dialog','assign-dialog'])$(id).close();$('workspace').hidden=true;$('signin').hidden=false;$('password').value='';$('key').value='';$('title').value='';$('identity').textContent='';$('sync').textContent='';$('items').replaceChildren();}
+function clear(){generation++;client.clear();user=null;membership=null;items=[];roster=[];editing=null;assigning=null;for(const id of ['edit-dialog','assign-dialog'])$(id).close();$('workspace').hidden=true;$('signin').hidden=false;$('password').value='';$('key').value='';$('title').value='';$('identity').textContent='';$('sync').textContent='';$('items').replaceChildren();for(const id of ['username','username-password'])$(id).value='';for(const id of ['assignee','assign-person','participant-options','assign-participants'])$(id).replaceChildren();}
 function errorMessage(error){
  if(['SESSION','MEMBERSHIP','ISOLATION','EXPOSURE'].includes(error.code)){clear();message(error.code==='MEMBERSHIP'?'This account has no access to this planner.':['ISOLATION','EXPOSURE'].includes(error.code)?'The API configuration could not be verified. The page stopped; contact the developer.':'Your session ended. Sign in again.',true);}
- else if(error.code==='SIGNIN')message('Sign-in failed. Check the email address and password.',true);
+ else if(error.code==='SIGNIN')message('Sign-in failed. Check the email or username and password.',true);
+ else if(error.code==='USERNAME_TAKEN')message('That username is unavailable. Choose another.',true);
+ else if(error.code==='PASSWORD')message('The current password was not accepted. Your username was not changed.',true);
+ else if(error.code==='USERNAME')message('Use 3–24 letters, numbers or underscores, starting with a letter.',true);
  else if(error.code==='RATE_LIMIT'||error.status===429)message('Too many requests. Wait a moment before trying again.',true);
  else if(error.code==='42501'||error.status===403)message('Your account is not allowed to make that change.',true);
  else if(error.code==='40001')message('This item changed elsewhere. Review the refreshed list and open its controls again.',true);
@@ -18,12 +21,18 @@ function errorMessage(error){
 }
 function lock(){for(const el of document.querySelectorAll('button,input,select'))el.disabled=busy||el.dataset.locked==='true';}
 async function action(work){if(busy)return;busy=true;lock();try{await work();}catch(error){if(error.code==='40001'){editing=null;assigning=null;$('edit-dialog').close();$('assign-dialog').close();try{await load();}catch(other){errorMessage(other);return;}}errorMessage(error);}finally{busy=false;render();lock();}}
-async function load(){const current=generation;if(!user)return;const m=await client.membership();const rows=await client.list();if(current!==generation||!user)return;membership=m;items=rows;$('sync').textContent=`Last checked ${new Date().toLocaleTimeString()}. Updates every 15 seconds while visible.`;render();}
+async function load(){const current=generation;if(!user)return;const m=await client.membership();const rows=await client.list();const people=await client.roster(),profiles=await client.profiles();if(current!==generation||!user)return;membership=m;items=rows;if(roster.map(x=>x.id).join()!==people.map(x=>x.user_id).join())buildRoster(people);applyNames(profiles);$('sync').textContent=`Last checked ${new Date().toLocaleTimeString()}. Updates every 15 seconds while visible.`;render();}
 function participants(container,prefix){for(const person of roster){const row=document.createElement('label');row.className='participant';const check=document.createElement('input');check.type='checkbox';check.value=person.id;check.id=prefix+person.id;row.append(check,document.createTextNode(person.label));container.append(row);}}
 function buildRoster(rows){
- roster=rows.map((p,i)=>({id:p.user_id,label:p.user_id===user.id?'You':`${p.member_role==='adult'?'Adult':'Child'} ${i+1}`}));
+ roster=rows.map((p,i)=>({id:p.user_id,label:`${p.member_role==='adult'?'Adult':'Child'} ${i+1}`,fallback:`${p.member_role==='adult'?'Adult':'Child'} ${i+1}`}));
  for(const id of ['assignee','assign-person']){$(id).replaceChildren();for(const person of roster){const option=document.createElement('option');option.value=person.id;option.textContent=person.label;$(id).append(option);}}
  $('participant-options').replaceChildren();$('assign-participants').replaceChildren();participants($('participant-options'),'create-');participants($('assign-participants'),'assign-');$('assignee').value=user.id;for(const p of roster)$('create-'+p.id).checked=true;
+}
+function applyNames(profiles){
+ for(const person of roster){const p=profiles.find(p=>p.user_id===person.id);person.label=p?.username||person.fallback;}
+ for(const id of ['assignee','assign-person'])for(const option of $(id).options)option.textContent=label(option.value);
+ for(const id of ['participant-options','assign-participants'])for(const row of $(id).querySelectorAll('label'))row.lastChild.nodeValue=label(row.querySelector('input').value);
+ $('identity').textContent=`${label(user.id)} · ${membership.member_role==='adult'?'Adult':'Child'}`;
 }
 function selected(container){return [...$(container).querySelectorAll('input:checked')].map(x=>x.value);}
 function modeControls(){$('assignee-label').hidden=$('mode').value!=='individual';$('participants').hidden=$('mode').value==='individual';$('assign-person-label').hidden=$('assign-mode').value!=='individual';$('assign-participants').hidden=$('assign-mode').value==='individual';}
@@ -53,7 +62,11 @@ function render(){
 }
 $('login').addEventListener('submit',event=>{event.preventDefault();action(async()=>{
  const password=$('password').value,key=PUBLISHABLE_KEY||$('key').value.trim(),account=$('email').value.trim();$('password').value='';
- try{user=await client.signIn(account,key,password);await client.checkExposure();generation++;membership=await client.membership();buildRoster(await client.roster());$('identity').textContent=`${user.email} · ${membership.member_role==='adult'?'Adult':'Child'}`;await load();$('signin').hidden=true;$('workspace').hidden=false;$('key').value='';message('Your shared planner is ready.');}catch(error){clear();throw error;}
+ try{user=await client.signIn(account,key,password);await client.checkExposure();generation++;membership=await client.membership();buildRoster(await client.roster());$('identity').textContent=`${label(user.id)} · ${membership.member_role==='adult'?'Adult':'Child'}`;await load();$('signin').hidden=true;$('workspace').hidden=false;$('key').value='';message('Your shared planner is ready.');}catch(error){clear();throw error;}
+});});
+$('username-form').addEventListener('submit',event=>{event.preventDefault();action(async()=>{
+ const name=$('username').value.trim(),password=$('username-password').value;$('username-password').value='';
+ await client.changeUsername(name,password);await load();$('username').value='';message('Username saved. Use it the next time you sign in. Your account and history are unchanged.');
 });});
 $('create').addEventListener('submit',event=>{event.preventDefault();action(async()=>{const mode=adult()?$('mode').value:'individual';const ids=adult()?(mode==='individual'?[$('assignee').value]:selected('participant-options')):[user.id];if(!ids.length){message('Choose at least one participant.',true);return;}await client.create({id:crypto.randomUUID(),type:tab,title:$('title').value.trim(),mode,assignees:ids});$('title').value='';await load();message(`${tab==='task'?'Task':'Activity'} saved to your household planner.`);});});
 $('edit').addEventListener('submit',event=>{event.preventDefault();action(async()=>{if(!editing)return;await client.rename(editing,$('edit-title').value.trim());$('edit-dialog').close();editing=null;await load();message('Name saved.');});});

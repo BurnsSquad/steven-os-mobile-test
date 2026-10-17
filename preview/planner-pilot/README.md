@@ -1,13 +1,17 @@
-# Household pilot v135
+# Household pilot v136
 
-Separate email/password pilot; v134 fictional preview and stable root index are unchanged.
+Separate email/username/password pilot; previous preview URLs and the stable root index remain unchanged.
 
-- Provider `/auth/v1/user` verifies sign-in identity; memory-only access/refresh tokens.
-- The actor's own RLS-filtered membership determines the household and role. Zero/multiple memberships fail closed; there is no role picker or embedded personal identity mapping.
-- Member-only `bb_planner_roster` returns IDs/roles, never emails or profile metadata. Private helper uses the existing NOLOGIN executor and checks membership before reading; public wrapper is an invoker. No additional table rights or policy broadening.
-- Names are deliberately generic: You, Adult/Child plus directory position. Household display names and child onboarding are future work.
-- Same transactional create/rename/assign/complete RPCs and 15-second visible-tab refresh.
-- Recovery remains organizer-assisted through supported provider controls; this page does not send reset/invitation emails or auto-create accounts. Review recovery and delivery before relying on the pilot.
-- Finance/original-dashboard data is not imported. No production promotion.
+- Provider `/auth/v1/user` verifies identity. Memory-only session tokens; no browser-storage writes.
+- RLS-filtered membership determines the household and role. No client role picker or embedded family identity mapping.
+- Member-only directory returns IDs/roles; profiles show usernames only to members of the same household. No public email lookup. Emails remain in Auth, not profile rows.
+- New `planner-identity` Edge Function supports username/password login and current-password-confirmed username changes. It uses provider-supplied server credentials exclusively inside the hosted runtime. No administrative credentials are bundled into the browser or returned to callers. Function gateway JWT check is disabled because sign-in must be unauthenticated; the handler authenticates sign-in through provider password Auth and checks the session, current password and database membership on rename.
+- Profile writes are unavailable to browser roles. Service role has only SELECT, INSERT and username/timestamp UPDATE on the new profiles table; existing planner grants are unchanged. UUID/household/roles/assignments/completions remain immutable through this endpoint.
+- Handles: 3–24 ASCII letters/numbers/underscores, letter first, globally unique ignoring case. Exact normalized-key lookup avoids wildcard matching. Database uniqueness handles concurrent collisions.
+- Current-password confirmation also applies when selecting an initial handle through settings. Administrator bootstrap may provision initial profiles under user authorization.
+- Adult email sign-in remains supported. UI labels use usernames or generic role labels; no email-as-name fallback.
+- Edge has bounded request sizes, timeouts, generic login errors and best-effort isolate throttling plus provider Auth controls. The isolate throttle is not a globally coordinated rate limiter.
+- Children's actual identities and profiles still require separate onboarding. Stable parent-owned email aliases can route recovery mail to the designated guardian without changing when a username changes. No aliases, recovery recipient, personal names or selected family handles are embedded in this source.
+- Recovery email/callback delivery still needs live verification. No new recovery flow, automatic invitation or child Auth creation is performed by this release. Finance/original records are not imported. No production promotion.
 
-Validation: `node scripts/planner-pilot-api.test.mjs` (6 mock-transport cases) and `node scripts/planner-pilot-smoke.cjs` (desktop/mobile contexts, mocked Auth/API, no actual credentials). Hosted SQL-role directory checks are distinct from actual provider JWT/browser acceptance, which the account owners must perform.
+Validation: `node scripts/planner-identity.test.mjs`, `node scripts/planner-pilot-api.test.mjs`, and `node scripts/planner-pilot-smoke.cjs` use mock transport/Auth, not real credentials. Hosted SQL-role checks separately cover case-insensitive uniqueness, household visibility, no anonymous access, no direct client profile writes and immutable identity/household columns. Account owners must verify actual username sign-in and renaming.
