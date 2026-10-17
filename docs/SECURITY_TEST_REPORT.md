@@ -136,3 +136,12 @@ Website readiness remains a separate stage: no desktop/mobile browser smoke, pro
 User's local v115-named HTML has12 executable inline scripts (syntax compilation PASS) and one valid non-executable JSON block. No application code executed. Static inspection found browser-local persistence, no Supabase client/auth/network integration and no hosted URL. Older embedded title label is not a reliable version identifier.
 
 The uploaded HTML contains embedded personal records. It remains private attachment/source material and was not committed, hosted, migrated, synchronized or changed. Do not publish the original as a website. A separate fictional-data preview with isolated storage/origin is required for browser validation. Current sandbox security completion does not make this local app cloud-enabled, cross-device synchronized or production-ready. Original personal file/browser records and stable index remain preserved. Browser/mobile/release validation still pending.
+
+
+## Duplicate v131 confirmed; sharing preview prepared — Entries222–223
+
+User upload is byte-identical to audited repository v131 (Git blobd0db22f59d0ea1e6c20e8bd59b3302db9c9df0bd); it differs from v115 by Auth and security-test panels. Completed API tests and cleanup are not repeated. User confirmed cross-account/cross-device household sharing goal.
+
+Separate preview/household implements fictional-only shared tasks, fixed sandbox/A-B-C identities, no legacy storage/personal records, no DELETE, protected baseline read-only, new preview-task namespace, conditional title/completed edits and15-second polling. No deployment or live request during implementation. No changes to v131, stable index, personal files or database permissions.
+
+Offline Playwright smoke PASS across3 isolated contexts with desktop/mobile viewport: mocked A creation reaches B, B completion reaches A, C isolation UI, baseline protection, literal task rendering/XSS check, no horizontal mobile overflow, no app browser storage, sign-out clearing and no DELETE requests. All Supabase requests intercepted, real calls0. Node syntax/whitespace checks and stable index hash pass. Real Mac/phone acceptance, hosting and production onboarding remain pending; no all-module sync or production-ready claim.
