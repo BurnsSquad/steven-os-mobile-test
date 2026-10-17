@@ -43,3 +43,10 @@ No defensible launch date yet: role requirements, onboarding/session work and re
 ## Retained test row and rollback
 
 One fictional browser-acceptance task remains in the sandbox, separately from the three security fixtures already removed. Any deletion needs its own exact reviewed cleanup and approval. Revert only newly added preview/onboarding code when needed; never clear the original browser storage or delete memberships/accounts as a reset. Database permission changes need captured before-state and reviewed reversal; committed deletions cannot be undone by a later ROLLBACK.
+
+
+## Shared-planner capability requirements
+
+Household administrators can manage settings and assign tasks. Planning members can create tasks for their own days as well as see/complete tasks assigned to them. Self-added tasks in this shared planner are visible to everyone in the household. Do not infer edit/delete/assignment authority from visibility. Editing/completion of other members' tasks is undecided. This generic capability model does not describe any particular household's membership composition.
+
+Existing private tasks and personal records remain private; shared-planner visibility does not widen their policies. The current fictional preview has not implemented a new administrative/ordinary-member authorization matrix. Prepare separate reviewed new-record schema/policy/test proposals before role-specific permissions change. No accounts, invitations or database mutations are performed by this requirement update.
