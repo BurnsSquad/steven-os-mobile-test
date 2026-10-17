@@ -1577,3 +1577,12 @@ Date: 2026-10-17, America/New_York. User screenshot shows Plugin settings > Verc
 Next single action: click the three dots at the right of the existing connected-account row. Expected account connection menu; request option names or cropped screenshot with identifiers hidden. Do not select Disconnect/Remove/Uninstall or change permissions before actual menu options are reviewed. No guessed reconnect option, credential request, broader authorization or automatic retry. Preview manifest remains prepared; hosting blocked and no deployment created.
 
 No database/production/personal-data action, app-file modification, membership/policy change, merge or deployment. Prior security completion unchanged; no tests repeated. Navigation has no rollback requirement.
+
+
+## Entry 227 — Reconnect control confirmed; open provider authorization next
+
+Date: 2026-10-17, America/New_York. User screenshot of existing connected-account menu explicitly shows Rename account, Reconnect, Disconnect. Personal account email omitted from public log. Reconnect is now an observed control, not a guessed option.
+
+Next single user action: click Reconnect. Expected Vercel sign-in/authorization page or a connection-status message. Request only the displayed account/team names and permission labels, or status/error with sensitive values hidden; no credential, token or full OAuth URL. Do not select Disconnect/Uninstall, change ChatGPT approval preference, or approve expanded permissions blindly. If login is necessary it occurs privately on Vercel, never in chat. Verify burns6-scope availability and exact preview target after completed provider authorization; reconnect is not itself proof of restored permission or a guaranteed fix.
+
+No unchanged403 call retried, account uninstalled, permission modified, preview deployment created, production/personal-data action, DB mutation, stable-index edit, merge or migration. Only guided authorization navigation is requested; live sharing acceptance remains pending hosting access. Permanent entry appended on existing draft PR branch with current file SHA.
