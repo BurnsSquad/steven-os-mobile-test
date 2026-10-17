@@ -1288,3 +1288,17 @@ ditto -x -k "$HOME/Downloads/burns-security-fix.zip" "$HOME/Downloads/burns-secu
 Explanation: macOS ditto extracts the ZIP into a separately named local folder, preserving the previous downloaded copy. Expected success is normally silent with the shell prompt returning; extraction errors must be reported before continuing. Do not rerun the old launcher/session. Follow extraction with inspection/offline verification in the new source directory, then a fresh independent sandbox snapshot before any live run. No credential input requested here.
 
 Scope/rollback: only local source extraction; no authentication, database mutation, account/password change, permission change, fixture cleanup, stable-v122 modification, merge or deployment. The original saved A/B/C credentials remain intended for sign-in; the replacement stays not applied. If extraction fails, preserve the error and ZIP; no database rollback is needed. The earlier download remains available. Permanent record appended on the existing unmerged draft PR branch.
+
+
+## Entry 207 — Extraction returned normally; verify corrected copy offline
+
+Date: 2026-10-17 (UTC). User screenshot shows the exact Entry 206 ditto extraction command followed by the normal shell prompt, with no visible error. This supports successful extraction but does not independently establish file integrity or that Terminal is in the new source tree: the prompt still displays the older downloaded source directory. Earlier safety results and failed launch in the same screenshot are historical, not rerun results.
+
+Next single verification operation:
+cd "$HOME/Downloads/burns-security-fix-be041313/steven-os-mobile-test-be0413139213fd8563054f1ac8ba0b9daee82267" && node scripts/security/safety.test.mjs && node scripts/audit-html.mjs
+
+Beginner explanation: cd selects the separately extracted pinned correction. Each && allows the next command only if the preceding command succeeds, preventing tests from silently running in the old directory. The safety suite exercises synthetic fixtures, ordinary-credential validation including 19-character values, failure handling and cleanup guards offline. The HTML audit checks stable index hash and parses scripts; it does not open the app.
+
+Expected: 12 tests pass, 0 fail; stable index hash PASS; 167 scripts parsed. User-machine corrected-copy results remain PENDING until output arrives. Assistant-side checks at Entry 205 passed but do not replace this verification. An error stops this sequence; report it without credentials and do not run the old expired live-session command.
+
+No actual Supabase login, API request, database mutation, password rotation, membership/policy change, DELETE attempt or cleanup is part of this command. Fresh independent sandbox snapshot and approved live scope are still required before testing. No stable-v122 edit, merge or deployment. Recovery requires inspecting local error/path/output; no database rollback applies to extraction or offline checks.
