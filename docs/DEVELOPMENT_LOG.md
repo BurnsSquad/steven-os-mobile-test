@@ -1704,3 +1704,12 @@ Next single user operation on PHONEB: tap checkbox for this fictional picnic tas
 Expected server transition: only completedfalse→true on exact captured preview ID; creator/household/title/created_at unchanged. Later independently compare whole baseline/metadata inventory and exact fixture. On error stop/inspect current row before retry, no blind restoration/recreation. Known-state edit can be reviewed separately; later precise deletion remains separately approved and must not use old cleanup proposal. No additional task instructed.
 
 Current status: A creation and B visibility user-reported, matching created record independently verified. Peer edit/return propagation pending. No private/production-record access, local data migration, stable-index edit, policy/account/membership change, merge, deployment or cleanup this turn. App session credentials remain private in browser, no secret requested.
+
+
+## Entry 238 — Phone B completion reported; verify change on Mac A next
+
+Date: 2026-10-17, America/New_York. User reports B marked complete after the scoped checkbox action on the single fictional preview task. This is user-reported peer completion, not yet independent server-state or return-propagation evidence. No extra task, baseline edit or deletion requested.
+
+Next single operation on MacA: click in-app Refresh inside Household tasks, not browser reload. Expected Fictional cross-device picnic — acceptance 1 checked/struck through while preserved shared baseline stays unchecked/read-only. Ask for A sees complete or exact displayed difference/error. App polls while visible, so change may already be shown; report state rather than toggling again. Do not rename, uncheck, duplicate or delete task.
+
+After visibility confirmation, independently inspect exact fixture and preserved baseline/metadata state before recording live browser acceptance complete. Cleanup remains separately approved exact-row operation; old cleanup SQL is inapplicable. No database mutation/query, permissions/membership/account change, production/personal-data access, stable-index edit, merge or deployment by assistant this turn. No credentials requested; do not refresh away in-memory session or reset credentials to diagnose task visibility.
