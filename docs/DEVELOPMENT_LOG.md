@@ -2053,3 +2053,12 @@ Date: 2026-10-17, America/New_York. User confirms B's newly saved fictional draw
 Next scoped operation: on phone sign out of B, sign in as fictional Account C using its saved password entered only on the website, then open Activities. Expected B's drawing Activity remains visible with no Rename or Mark complete controls for C. Request that specific visible state; do not edit or complete B's Activity. Mac A may remain signed in. No new account or role change involved.
 
 Generic log-only checkpoint. No app, database, policy, Auth setting, billing, personal-record, cleanup, merge or production change. Earlier verified Task round-trip is not repeated.
+
+
+## Entry 270 — Sibling Activity read-only view confirmed; Household-once acceptance next
+
+Date: 2026-10-17, America/New_York. User confirms the requested phone Account C state: B's fictional drawing Activity visible without Rename or Mark complete controls. Independent provider check confirms C's sign-in/child membership and retained B ownership with no Activity completion. User-observed control restriction is live UI evidence; direct denied-request database behavior remains separately covered by earlier SQL tests, not inferred from absent buttons alone.
+
+Next single scoped operation on Mac Account A: create Fictional v134 household tidy-up as a Task, select Household — complete once, ensure participants B and C are selected, then Add Task once. Keep phone C signed in. Inspect creation/visibility before requesting completion; Shared per-person live acceptance remains pending. Preserve all fictional acceptance records until separately approved cleanup.
+
+Generic log-only progress update. No code/schema/policy/Auth/billing change, personal data, cleanup, merge or production promotion. Existing Individual Task round-trip and child Activity sharing checks are not repeated.
