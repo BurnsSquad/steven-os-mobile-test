@@ -1879,3 +1879,12 @@ Date: 2026-10-17, America/New_York. User reports activity added after River's sc
 Next single operation: change View as to Sky · fictional child while remaining on Activities tab. Expected River's new fictional Activity remains visible, but its Edit and Mark complete controls are absent. Sky may still see an Add Activity form for Sky's own new items; that does not grant edit authority over River's items. Ask only whether River's Activity is visible without those controls. Do not create another Activity, complete River's item, reload/reset or change assignment.
 
 This tests visibility versus ownership in the approved generic UI model; it is not proof of server-enforced roles. No real household details, credentials or records involved. No DB/hosting operation, account/member/schema/policy change, personal-data migration/sync/erasure, stable-index edit, cleanup, merge or explicit deployment. Earlier v132 live sharing preview and retained sandbox fixture untouched. Demo rollback remains reload/reset only when review is finished.
+
+
+## Entry 253 — Sibling Activity visibility/ownership screenshot verified; Shared contribution next
+
+Date: 2026-10-17, America/New_York. User screenshot shows fictional Sky selected on Activities, both River-owned fictional Activities visible, each labeled assigned to someone else with no Edit/Mark complete controls. Sky retains Add an Activity form for own items. This screenshot verifies expected shared visibility plus owner-specific control presentation and upgrades prior new-Activity creation report to visible list evidence. It remains in-memory UI review, not server authorization proof.
+
+Next scoped demo operation: with Sky selected, open Tasks and click Mark complete only for Bring your own fictional game-night idea (Shared mode). Expected Shared progress1/2, Sky contribution marked, River contribution outstanding, overall item not Complete. Do not click individual/household completion controls or reset/reload. This tests the required distinction between Shared per-person and household-once completion. Request result before next role action.
+
+No credentials, database query/mutation, record persistence, membership/permission changes, private data, stable-index edit, cleanup, merge or explicit deployment involved. Fictional demo changes can be discarded by reload later. Existing live v132 sharing preview/task untouched. Automated checks already pass; manual observation is user acceptance of the new controls, not a repeat of the security suite. Concrete future server implementation remains gated.
