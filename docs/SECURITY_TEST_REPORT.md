@@ -163,3 +163,10 @@ MacA sign-in/baseline screenshot confirmed, phoneB sign-in user-reported. User t
 Independent snapshot at2026-10-17T15:41:00.387283Z and protected-state comparison confirm private baselines2, memberships2, Auth3, original shared baseline, public table inventory, RLS, policy expressions and all checked grants unchanged. Local final status LIVE_BROWSER_SHARING_REPORTED_AND_DATABASE_STATE_VERIFIED. Cross-device actions are user reports supported by independent server state, not captured browser network traces. No repeated security suite or assistant mutation.
 
 The new preview test row remains; cleanup not approved. Previous three-row cleanup authorization does not apply. No production/personal-data migration or all-module sync. Actual shared-task preview round trip is now accepted, superseding earlier generic pending-two-device notes for this exact flow only. Live C UI/rename/conflict/expiry/offline tests, permanent sessions, real household onboarding, other modules and production release remain pending. Memory-only sessions require login after reload; updates use15second visible-tab polling/manual Refresh. Stable v122 preserved and PR unmerged.
+
+
+## Core live preview acceptance complete — Entries240–242
+
+User reports phoneB sign-out, then phoneC sign-in with expected no-membership message, no tasks and no add-task form. This completes the previously pending actual unrelated-account UI observation for the deployed preview. Together with MacA/phoneB sharing round trip and independent server-state verification, the core fictional shared-task workflow is accepted. User observations are explicitly distinguished from captured browser traces and API enforcement evidence.
+
+No repeated mutation/security suite, production operation, membership/policy change or personal-data migration. Single fictional preview acceptance row remains; separate cleanup approval pending. Real household onboarding, normal sign-in without technical configuration, durable session behavior, additional UI failure cases and reviewed production release remain future work. Do not claim the whole Steven OS application is synchronized or production-ready.
