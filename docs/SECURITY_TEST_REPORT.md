@@ -170,3 +170,14 @@ The new preview test row remains; cleanup not approved. Previous three-row clean
 User reports phoneB sign-out, then phoneC sign-in with expected no-membership message, no tasks and no add-task form. This completes the previously pending actual unrelated-account UI observation for the deployed preview. Together with MacA/phoneB sharing round trip and independent server-state verification, the core fictional shared-task workflow is accepted. User observations are explicitly distinguished from captured browser traces and API enforcement evidence.
 
 No repeated mutation/security suite, production operation, membership/policy change or personal-data migration. Single fictional preview acceptance row remains; separate cleanup approval pending. Real household onboarding, normal sign-in without technical configuration, durable session behavior, additional UI failure cases and reviewed production release remain future work. Do not claim the whole Steven OS application is synchronized or production-ready.
+
+
+## Tasks/Activities design demo — Entries246–247
+
+Separate v133 UI at https://steven-os-mobile-test-6at7f7v23-burns6.vercel.app/ is READY, preview-only, no production alias/configuration change. Source72a2bb567f715b58d66397665810f9a71451c897; exact four deployed assets verified200 (HTML prefix plus provider injection; JS/model/CSS exact). Existing live v132 sharing preview untouched.
+
+Implemented fictional in-memory Task/Activity controls, role-view simulation, own Activity creation/edit, child Task-creation restriction, sibling edit/completion restrictions, adult assignment/edit/attribution, household-once completion and per-assignee Shared completion. No database client/network capability or storage; role selector is NOT authentication/authorization. No real identities/family counts/personal records included. Reset/reload only discards fictional in-memory state.
+
+5 new model tests pass; offline Playwright UI checks pass at390px/1280px, external requests0: child Activities/no Task form, sibling view without edit, Shared contribution aggregation, household completion once, adult edit modal, literal text/XSS behavior, no storage/overflow. Model completion checks are sequential, not real concurrent transaction/RLS proof. Original live38-case sandbox evidence is unchanged and not rerun.
+
+docs/PLANNER_SERVER_DESIGN_PROPOSAL.md describes required additive membership/item/assignment/completion/audit model and server-side atomic enforcement. It is not executed SQL or permission approval. New role-specific server security, real-user onboarding, persistent/refresh sessions and actual new-UI cross-device use remain pending. No database mutation, private-policy widening, task cleanup, personal-data migration, stable-v122 edit or merge.
