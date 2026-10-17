@@ -1219,3 +1219,20 @@ Expected output: UPDATE_CLIENT_CHECKS_PASSED_ADMIN_VERIFICATION_PENDING with 27 
 Rollback/error: known-state fixture restoration is built into the UPDATE runner; unexpected state is not overwritten. Interrupted/failed runs require exact fixture inspection and evidence before any recovery. No DELETE cleanup or user removal. Independent admin post-snapshot comparison is still mandatory before calling UPDATE security verified.
 
 Actual status now: session is published and launch instructions prepared; ordinary-user test execution/result PENDING user report. No real Auth login or client UPDATE has been performed by the assistant this turn. Only database reads plus repository evidence writes occurred; production, personal records, stable v122, merge/deployment unchanged. Append-only log update preserves prior history and records the next explicit evidence boundary.
+
+
+## Entry 203 — Hidden key prompt reached; explain invisible input
+
+Timestamp: 2026-10-17 09:33 EDT (13:33 UTC), America/New_York.
+
+Evidence: user screenshot now explicitly shows local tests 12, pass 12, fail 0, cancelled/skipped/todo 0, plus stable hash and all 167 HTML scripts parsed. This upgrades Entry 200's inferred safety-process success to directly visible numeric evidence. Screenshot also shows the exact UPDATE-only launcher command, fixed sandbox target, mode explanation, hidden-input notice and prompt Sandbox public publishable key (sb_publishable_). No key/password characters or result artifact visible.
+
+User reports not letting me type. At this prompt the reviewed raw-TTY input intentionally suppresses all echo, including placeholder dots; lack of visible characters alone is not evidence of a freeze. The launcher has retrieved/validated the session and reached private input. Do not assume values were entered, sign-in occurred or tests ran.
+
+Next single input action: copy the sandbox public sb_publishable_ key from the already located dashboard control, focus Terminal, paste once with Command+V, then press Return. Expected next prompt Saved fictional A password, with no typed/pasted characters displayed. If a value was already typed/pasted and the user is unsure, use Ctrl+C to cancel rather than append a duplicate or guess; report cancellation and refresh session as needed. Never paste the value into chat or a shell command.
+
+Privacy/teaching: invisible input is the intended behavior at the program's labeled private prompt, not the ordinary shell %. No secret screenshot or value is needed to diagnose progress; report only which prompt/status appears. No request to press Return repeatedly through unknown prompts, change echo settings, select Full access, clear browser storage or rerun the launcher.
+
+Freshness note: session snapshot time is 09:29:02 EDT and the launcher rechecks freshness after all inputs; it will refuse expired evidence before sign-in/writes. If expiry occurs, stop/report and obtain a new snapshot instead of weakening guards or automatically rerunning mutations.
+
+Actual status: private key prompt reached, user input/result PENDING. No ordinary-user Auth/login/UPDATE result or DELETE/C-isolation/cleanup run established. No assistant database mutation this turn. Production/personal records, stable v122, memberships/policies and PR merge/deployment remain unchanged. No cleanup/rollback applies before sign-in/write. Repository action: append Entry 203 only using fetched current log blob SHA and preserve history.
