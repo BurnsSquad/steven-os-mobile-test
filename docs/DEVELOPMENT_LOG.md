@@ -1604,3 +1604,12 @@ Date: 2026-10-17, America/New_York. User supplied authorization-screen screensho
 An attempted detailed public log update was rejected by automatic approval review because its provider account/access metadata lacked specific public-publication authorization. That detailed content was not published. This replacement records procedural status only; it omits account/team identities, permission inventories, capabilities and screenshots. Preserve the detailed evidence privately in this conversation unless the user specifically approves publishing it. No alternate publication route or indirect disclosure used.
 
 No deployment, database operation, production/personal-data change, migration, stable-index modification or PR merge this turn. Completed security verification and prepared preview retained. No rollback needed for navigation.
+
+
+## Entry 230 — Authorization selection controls inspected; broad selection not requested
+
+Date: 2026-10-17, America/New_York. User supplied the next authorization-screen state. Continue with a single listed-project selection inspection while leaving the all-projects option unchecked. Request visible selection state only; do not authorize yet. No account identifiers, provider permission inventories or detailed screenshot metadata copied into public log, following Entry229 publication boundary.
+
+Selecting a row in the consent UI is not deployment or production modification and does not prove completed authorization. After actual consent and provider verification, preserve the original isolation requirement: deploy only the reviewed three-file preview, without replacing stable files or changing an existing production target. Do not infer authorization to create/manage arbitrary projects from provider-granted capabilities. If a separate preview project requires a different consent selection, review that concrete target before deployment.
+
+No hosting mutation, provider retry, database operation, personal-data action, migration, stable-index change, merge or deployment this turn. Preview hosting and real two-device acceptance remain pending; completed sandbox tests not repeated.
