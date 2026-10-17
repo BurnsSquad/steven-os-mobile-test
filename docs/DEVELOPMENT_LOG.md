@@ -1342,3 +1342,21 @@ Attempted to refresh docs/evidence/sandbox-session.json on the existing draft PR
 User-facing next step: request explicit approval to publish this reviewed fictional-only snapshot to the public repository. Scope is fictional account emails/UUIDs, fictional fixture records, policies and grants, capture metadata; no password, API key, token, sensitive Auth field, personal or production record. Explain public visibility. Do not claim a new session URL or launch until publication is authorized and succeeds. Refresh the capture again if needed to satisfy the ten-minute guard.
 
 Only this sanitized procedural log is appended now; no newly captured detailed snapshot data is included here. Live UPDATE remains pending, as do separately approved DELETE tests and cleanup. No account/password changes, memberships or permission changes, stable-v122 edit, merge or deployment. No database rollback is needed for SELECTs or failed repository publication. Preserve original A/B/C credentials and the unapplied replacement label.
+
+
+## Entry 211 — Explicit public-evidence approval; fresh snapshot published and UPDATE restart prepared
+
+Date: 2026-10-17 (UTC). User answered I approve to Entry 210's explicit request to publish fictional account emails/UUIDs, fictional fixtures, policy expressions and grants in the public BurnsSquad/steven-os-mobile-test repository. This approval covers the fictional-only snapshot destination; it does not authorize production access, secret publication, DELETE attempts or cleanup.
+
+Refreshed rather than reusing aging evidence. get_project independently confirmed exact allowlisted sandbox identity, healthy state and database version. Generated snapshotSQL(existing A/B/C IDs), then execute_sql with the fixed sandbox project_id; query is SELECT only. Capture 2026-10-17T14:06:51.868934+00:00. validateSnapshot(...,{fresh:true}) passed all counts/identities/fixtures/RLS/policy inventory/48 table rights/12 column rights. Canonical comparison excluding captured_at against previously published snapshot returned unchanged=true. Digest be97a14eb9635a38baa2b8215dcc8ecdf30f5fef9d730749ce5679acdfbdd86f. Full policy expressions, membership and row values unchanged. Local ignored evidence snapshot211.json and previous211.json used for reproducible validation; no secret-bearing Auth columns read.
+
+Published docs/evidence/sandbox-session.json under explicit approval, commit ff8e5722c823f6eae48e2bbd5446100175b283e9, on existing unmerged draft PR branch. File contains only previously reviewed fictional metadata and snapshot, no keys/passwords/tokens/personal/production records. Automatic-review block from Entry 210 was resolved by explicit destination approval; no indirect bypass used.
+
+Next single user operation, from the corrected be041313 source directory:
+node scripts/security/private-run.mjs --mode update --session-url https://raw.githubusercontent.com/BurnsSquad/steven-os-mobile-test/ff8e5722c823f6eae48e2bbd5446100175b283e9/docs/evidence/sandbox-session.json
+
+Run command once. First hidden prompt requests sandbox public sb_publishable_ key; paste copied key once and Return. Next A/B/C hidden prompts each receive only their original saved fictional password and Return. Do not use unapplied replacement or paste credentials at shell %. User may report final status/error only. Invisible input is intentional. Freshness must stay under ten minutes; if stopped, do not automatically rerun or weaken guards.
+
+Reviewed execution scope remains 27 UPDATE-only assertions: ordinary sign-in and identity checks, baseline reads, allowed disposable A/B edits, denied identity-field edits, unrelated-target filtering, exact known-state restoration and final client baselines. No INSERT/DELETE test or cleanup. Expected successful client status UPDATE_CLIENT_CHECKS_PASSED_ADMIN_VERIFICATION_PENDING still needs independent post-snapshot verification. Actual live execution remains PENDING.
+
+Rollback: runner restores only known disposable title/completed states; interrupted/error results require exact admin inspection, not blind reset. Protected baselines, private tasks, household memberships, policies, production and personal data unchanged by this read-only preparatory turn. No password rotation, stable-v122 edit, merge or deployment. No destructive authorization inferred.
