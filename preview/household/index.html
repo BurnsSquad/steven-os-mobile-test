@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src https://wozynsftofkjqwlflosv.supabase.co; img-src 'self'; base-uri 'none'; form-action 'none'">
+<title>Burns Base · Shared household preview</title>
+<link rel="stylesheet" href="style.css">
+<body>
+<main>
+  <header><span class="eyebrow">BURNS BASE / HOUSEHOLD PREVIEW</span><h1>A little less to keep in your head.</h1><p>One shared task list for your household.</p></header>
+  <aside>Fictional sandbox preview. Use test accounts A, B or C and fictional tasks only. Your existing Steven OS file and personal records stay separate.</aside>
+  <p id="status" role="status" aria-live="polite">Sign in to see your household.</p>
+  <section id="signin" class="card">
+    <h2>Welcome back</h2>
+    <form id="login">
+      <label>Sandbox publishable key<input id="key" required autocomplete="off" spellcheck="false" placeholder="sb_publishable_…"></label>
+      <label>Fictional account<select id="account"><option value="a">Account A</option><option value="b">Account B</option><option value="c">Account C · unrelated</option></select></label>
+      <label>Password<input id="password" type="password" required autocomplete="current-password"></label>
+      <button type="submit">Sign in</button>
+    </form>
+    <p class="muted">Use the original saved test-account password. No account creation or password change is performed here.</p>
+  </section>
+  <section id="workspace" hidden>
+    <div class="session"><span id="identity"></span><button id="signout" class="secondary">Sign out</button></div>
+    <div class="card">
+      <div class="list-heading"><h2>Household tasks</h2><button id="refresh" class="secondary">Refresh</button></div>
+      <p id="sync" class="muted">Changes are checked every 15 seconds while this tab is visible.</p>
+      <p id="empty" hidden></p>
+      <ul id="tasks"></ul>
+      <form id="create" hidden>
+        <label>New fictional task<input id="title" maxlength="120" required placeholder="Plan a fictional movie night"></label>
+        <button type="submit">Add shared task</button>
+      </form>
+    </div>
+    <p class="muted">Both household members can edit preview tasks. The preserved security baseline is read-only here. Task deletion is disabled.</p>
+  </section>
+  <footer>Shared household preview · v132 · Sandbox only</footer>
+</main>
+<script type="module" src="app.mjs"></script>
+</body>
+</html>
