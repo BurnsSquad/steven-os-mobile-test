@@ -1586,3 +1586,12 @@ Date: 2026-10-17, America/New_York. User screenshot of existing connected-accoun
 Next single user action: click Reconnect. Expected Vercel sign-in/authorization page or a connection-status message. Request only the displayed account/team names and permission labels, or status/error with sensitive values hidden; no credential, token or full OAuth URL. Do not select Disconnect/Uninstall, change ChatGPT approval preference, or approve expanded permissions blindly. If login is necessary it occurs privately on Vercel, never in chat. Verify burns6-scope availability and exact preview target after completed provider authorization; reconnect is not itself proof of restored permission or a guaranteed fix.
 
 No unchanged403 call retried, account uninstalled, permission modified, preview deployment created, production/personal-data action, DB mutation, stable-index edit, merge or migration. Only guided authorization navigation is requested; live sharing acceptance remains pending hosting access. Permanent entry appended on existing draft PR branch with current file SHA.
+
+
+## Entry 228 — ChatGPT connection notice observed; provider consent still pending
+
+Date: 2026-10-17, America/New_York. User screenshot shows ChatGPT Connect Vercel modal with data-sharing/privacy notice, Connect Vercel external-link button, Cancel and close control. This is not yet provider team/scope consent and does not establish restored authorization. Personal account email and unrelated sidebar details omitted from this log.
+
+Next single user action: click Connect Vercel in the modal to open provider sign-in/authorization. Expected Vercel account/team selection or permission/consent screen, or status/error. Request displayed team/permission labels only; hide any OAuth URL, token, password or private values. If provider login is necessary, user signs in privately there. Do not blindly approve new scope or change production access. No additional application deployment, database operation or secret sharing is authorized by clicking through the connection notice.
+
+No provider retry, account removal, permission change, database mutation, personal-data migration, production operation, stable-index modification, merge or deployment this turn. Existing preview preparation and completed security evidence retained. Authorization remains pending; connection UI is not proof that burns6-scope403 is fixed.
