@@ -1861,3 +1861,12 @@ Date: 2026-10-17, America/New_York. User screenshot now shows fictional River se
 Next single operation: click Activities while leaving fictional River selected. Expected Activities list, River's own fictional Activity with editing/completion controls, and Add an Activity form. Request that screen before adding an item. Task creation remains adult-only; no Task change or completion requested here.
 
 No credentials, real identities or private household composition involved. No app code/DB/hosting change, real account/member/policy mutation, personal-data operation, stable-index edit, cleanup or merge. Public note records approved generic role demonstration only. Existing live v132 and retained sandbox fixture unchanged; no completed security tests repeated.
+
+
+## Entry 251 — Activities controls screenshot verified; fictional in-memory creation next
+
+Date: 2026-10-17, America/New_York. User screenshot shows fictional River selected, Activities tab active, own seeded fictional Activity with Mark complete/Edit controls, Add an Activity form and no assignment/role-administration fields. This confirms child Activity creation/edit presentation on user's browser. No entered personal data or credentials visible.
+
+Next single user operation: enter Plan a fictional treasure hunt in the Activity name field and click Add Activity once. Expected second Activity assigned to River, corresponding demo-added message, and own Edit/Mark complete controls. This changes only in-memory fictional demonstration state; nothing is inserted into Supabase or old browser storage. Do not reload/reset until later view/ownership checks, because those discard this temporary item. Ask for Activity added or exact error.
+
+This is the newly requested child Activity flow, not a repeated API security test or live account role mutation. Any later switch to the other fictional role should retain visibility but remove ownership controls; that observation remains pending. No database read/write, permission/schema/account/member change, real household/personal-record operation, stable-index edit, cleanup, merge or explicit deployment. No rollback beyond resetting/reloading fictional demo state is required.
