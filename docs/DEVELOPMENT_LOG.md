@@ -1832,3 +1832,14 @@ Authenticated provider web fetch checks each asset200. JS/model/CSS exact review
 Next single user action: open this distinct v133 URL on Mac and confirm Tasks/Activities tabs plus fictional role selector. Do not enter real records or credentials. Existing v132 live-sharing URL unchanged. No actual household accounts/roles created and no existing sandbox task changed. New demo is not cross-device persistence; reload resets. Children/adult controls model approved generic capabilities only; production/server enforcement remains unimplemented pending concrete reviewed new schema/policy design.
 
 Core verification from Entry246:5 model tests pass, offline mobile/desktop browser smoke pass, external/database calls0, stable hash unchanged. No completed API suite rerun, personal-record import/sync/erasure, membership/private-policy change, cleanup or merge. Code/UI and server-design proposal now reviewable; rollback retires only this exact preview/targeted new-file changes, never stable site or existing database records. Future destructive cleanup and permission changes still need required approvals.
+
+
+## Entry 248 — New design demo opened; child-view inspection next
+
+Date: 2026-10-17, America/New_York. User reports it is open after receiving the separate v133 design-demo URL. This is reported page opening, not yet observed role-specific controls or real account authorization. Actual page remains fictional in-memory demonstration with no database/storage connection; existing live sharing preview and stable index unchanged.
+
+Next single user operation: in View as choose River · fictional child, leaving Tasks tab selected. Expected household Tasks remain visible, eligible completion controls remain, and Add a Task creation form is absent. Request visible result only. This checks generic product capability presentation under explicitly approved public rules, not actual household composition or role enforcement.
+
+No credentials, real accounts or personal records needed. Role switch simulates the view; it does not authenticate a user, change membership or prove server authorization. No item creation/completion requested in this step. Subsequent Activity creation review will be separately guided after this observation. Demo resets on reload; do not infer persistence or cross-device synchronization.
+
+No database/hosting mutation, schema/policy/account change, private-data migration/sync/erasure, stable-index edit, cleanup, merge or explicit deployment this turn. Prior automated model/UI checks retain their recorded scope. Documentation only; automatic Git previews may occur from branch commits as previously noted.
