@@ -1559,3 +1559,12 @@ Unblocked preparation completed: constructed ignored work/household-deployment-m
 Deployment once authorized: upload only the allowlisted files, inspect READY state, verify served HTML/JS/CSS and hostname/asset behavior, preserve deployment protection, then give user same HTTPS URL for Mac/phone. Public key and ordinary fictional passwords remain browser-entered only; no service key or server secret needed. Real browser/database acceptance after deployment remains pending and separate from offline UI simulation. New manual preview rows require known fictional scope and separately approved cleanup, not old security cleanup.
 
 Actual state: no create_project/create_deployment call, hosting change, DB login/mutation, migration, personal-data transfer, stable-v122 edit, merge or deployment this turn. PR remains draft/unmerged. Prior sandbox security/cleanup and offline preview results remain completed, not repeated. Rollback: nothing deployed to remove; retain manifest for resumed target validation. Report provider authorization failure as a hosting access blocker, not RLS failure or automatic-approval rejection.
+
+
+## Entry 225 — Vercel plugin page observed; inspect Manage controls next
+
+Date: 2026-10-17, America/New_York. User screenshot shows ChatGPT Plugins > Vercel with Manage and Try in chat controls and the Vercel app listing. This confirms the visible management entry point, not renewed scope authorization. Unrelated sidebar/chat titles are not copied to this log.
+
+Next single user operation: click Manage beside Try in chat. Expected a plugin/account/connection settings panel or menu; request option names only (or a cropped screenshot without secret values). Do not disconnect, uninstall, change permissions or enter credentials yet. Need actual options before issuing account-specific instructions, rather than guessing a reconnect control. The existing burns6-scope403 remains unresolved; no unchanged provider call repeated.
+
+Deployment allowlist/manifest and separate preview remain prepared per Entry224. No deployment, database operation, account or permission change, production/personal-data operation, stable-v122 edit, merge or migration. No Supabase setup/security tests repeated. Navigation requires no rollback. Repository action: append current procedural evidence only on draft PR branch, using fetched current log SHA.
