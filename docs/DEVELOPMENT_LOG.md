@@ -2026,3 +2026,12 @@ This checkpoint adds generic status to the existing approved public log only. No
 Date: 2026-10-17, America/New_York. User reports the newly requested fictional picnic Task appears on phone Account B after creation on Mac Account A. Independent provider read confirms exactly the expected named Task, Individual mode, creator A, sole assignee B, initial revision and no completion. This combines actual device visibility report with independently saved assignment state; no completion or return-to-Mac visibility claimed yet.
 
 Next single operation: on phone as B, click Mark complete for that Task once. Expected Complete state on phone; then separately inspect Mac A after refresh. Preserve the fictional acceptance item; no cleanup authorized. Generic progress-log append only, no app/schema/policy/Auth setting changes, personal data operation, merge or production promotion.
+
+
+## Entry 267 — Connected Individual Task round-trip verified
+
+Date: 2026-10-17, America/New_York. User reports phone Account B marked the assigned fictional picnic Task complete and Mac Account A updated. Independent provider read confirms one completion with both actor/effective assignee B, one completed audit event and incremented revision. Combined with prior creation/visibility evidence, the new connected planner's A-create → B-phone-see/complete → A-Mac-see round-trip is verified by user device observations plus independent saved state. This is new v134 acceptance, separate from earlier v132 sharing and mock checks.
+
+Scope is Individual Task sharing only; do not infer child Activity, sibling restriction, Household-once or Shared per-person live device acceptance from this result. Next single operation on phone B: Activities → add Fictional v134 drawing activity. Then inspect visibility on Mac A before later sibling/Shared checks. Preserve acceptance rows pending separately approved cleanup.
+
+Generic log checkpoint only. No app/schema/permission/Auth/billing changes, personal records, cleanup, merge or production promotion. Optional paid-password-screening clarification remains as recorded in Entry264.
