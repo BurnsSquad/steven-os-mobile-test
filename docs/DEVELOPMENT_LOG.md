@@ -1656,3 +1656,12 @@ Next single user operation: enter the sandbox public sb_publishable_ key in its 
 This user operation performs ordinary Auth login and household-membership/shared-task reads, not a task-table write, cleanup or repeat security suite. Auth service may create its normal session metadata. No creation/rename/completion action instructed yet; new fictional task writes and later exact cleanup require separately understood scope. Application holds credentials/token in memory, clears password and public-key field after successful login; page refresh requires sign-in again.
 
 No assistant database operation, production/private-record access, migration, stable HTML edit, membership/policy modification, merge or deployment this turn. Existing dedicated preview and protection unchanged. Real Mac A sign-in pending report; phone B and cross-account sharing acceptance remain pending. No rollback needed for rendering; sign-out clears local app session if user stops.
+
+
+## Entry 234 — Mac A sign-in and baseline display observed; phone navigation next
+
+Date: 2026-10-17, America/New_York. User screenshot shows dedicated preview signed in as accountA, ready status, one preserved fictional shared baseline marked read-only, disabled baseline checkbox, refresh control, timestamp and new fictional-task form. This is real Mac/Safari sign-in and authenticated household UI evidence, beyond earlier static rendering/simulations. No credentials visible. Screenshot does not prove phone access, cross-account peer edits or complete server-state comparison.
+
+Next single user action: leave Mac A session open, open the same immutable HTTPS preview URL on phone. If hosting protection requests login, user signs into their own hosting account privately. Expected application sign-in form; report form/status before entering testB. No public key/password in chat. Do not refresh Mac browser (in-memory session would require re-login), sign out A, or add tasks yet.
+
+No new fixture write instructed, no DELETE/cleanup, no assistant database access, production/personal-record operation, membership/policy change, stable-index edit, merge or deployment. Next actual two-device acceptance will use only a clearly fictional new preview task; its exact ID and scope must be recorded and future cleanup separately approved. Existing cleaned security fixtures must not be recreated. Completed security suite not repeated.
