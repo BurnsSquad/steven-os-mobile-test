@@ -1185,3 +1185,37 @@ Reason / teaching: a public publishable key identifies the API project and is de
 Status: local offline HTML/integrity audit directly screenshot-verified; safety successful exit inferred from chain execution. Public key exists independently via connector, user UI readiness PENDING. No private-input launcher, Auth login, UPDATE/DELETE/C-isolation test or cleanup run. Current live fixture state remains unremeasured since Entry 183; capture/revalidate fresh administrator snapshot immediately before launch. No new database mutation, key rotation, production/personal-data action, stable-v122 edit, merge/deployment.
 
 Rollback: reading/copying the public key for a later private prompt needs no database cleanup/rollback; do not regenerate keys or alter permissions. On unexpected UI, report labels rather than sharing values. Repository action: append Entry 200 only using current fetched log blob SHA and preserve history.
+
+
+## Entry 201 — Public-key location confirmed; independently refresh sandbox starting evidence
+
+Timestamp: 2026-10-17 approximately 09:28–09:30 EDT (13:28–13:30 UTC), America/New_York.
+
+User reports publishable key found. This confirms UI readiness by user report only; no key/password value supplied or requested. Continue from the existing downloaded source commit 96aef24b67c698a4770c7bef02f54e1853eaf028, local Node v24.22.0 and completed offline check chain. Do not rerun Auth/fixture setup.
+
+Read-only target check: get_project(id=wozynsftofkjqwlflosv) independently returns exact Burns Base Security Sandbox, us-east-1, ACTIVE_HEALTHY. No production project enumeration/query.
+
+Generated the existing snapshot SELECT with prepare-sql.mjs snapshot using previously verified non-secret A/B/C UUIDs, then execute_sql only on that sandbox. Captured_at 2026-10-17T13:29:02.912966+00:00. Exact state still Auth users 3, private baselines 2, memberships 2, shared rows 4, tables 3, RLS true/owner postgres, eight reviewed policies. Re-inspected all policy expressions; private owner, own membership, shared membership/creator and UPDATE USING/WITH CHECK match reviewed setup. Effective 48 table-operation and 12 shared-column checks show intended grants; shared DELETE remains false and UPDATE only title/completed.
+
+Local validateSnapshot(...fresh=true) PASS; independently compared full private/member/shared/Auth/metadata/policy/grant arrays against the prior live initial snapshot with canonical equality: state_matches_prior true. New digest 14d15463989163f4b24cc8ff49d2b68b0104d8c2bb541decceb8c23ea7ba588f. Local ignored evidence work/security/before-2026-10-17.json. No new records, policies, memberships or Auth settings changed.
+
+Why this matters / teaching: yesterday's snapshot is evidence of yesterday's state, not safe current preflight. Re-read and compare exact fixtures/policies immediately before allowing ordinary-user writes. Project target is verified by the tool call, not inferred from the literal project_ref inside the JSON.
+
+## Entry 202 — Publish credential-free session and issue UPDATE-only private launch
+
+Timestamp: 2026-10-17 approximately 09:30 EDT (13:30 UTC), America/New_York.
+
+Published docs/evidence/sandbox-session.json on the existing unmerged PR branch, commit bb023d389cdbacd2b1f94561adb5caad98012e77. Contents: schema 1, exact project_ref, policy_reviewed=true based on actual inspection, tool-source provenance and only the independently captured fictional snapshot. Before publication validated full expected identities/counts/grants and scanned for key/token/credential fields. No publishable/admin key, password, token, hash, production/personal record or unrelated identity included. Fictional Auth/fixture UUIDs and policy definitions are evidence, not authentication secrets.
+
+Immutable launcher data URL:
+https://raw.githubusercontent.com/BurnsSquad/steven-os-mobile-test/bb023d389cdbacd2b1f94561adb5caad98012e77/docs/evidence/sandbox-session.json
+
+Next single user operation: from the existing downloaded source, run the reviewed private launcher with --mode update and this exact --session-url. Command includes an explicit cd into the known Downloads folder with && to prevent wrong-directory execution. No credentials in the command. Hidden prompts request ONLY the sandbox public publishable key then privately saved A/B/C passwords. User never sends them to chat/source/report. Enter each at its labeled private prompt and press Return; invisible typing is expected. Ctrl+C cancels. Private local process/environment handling is not a hosted vault; the previously documented local-privilege limitation remains.
+
+Authorized mutation scope before run: 27 UPDATE-only client assertions, authenticating ordinary test users, reading A/B baselines, editing/restoring only exact disposable A/B rows, denied creator/household-field attempts, existing unrelated disposable-row UPDATE filtering, final client baselines. No INSERT/DELETE test, cleanup or protected-baseline write. Existing routine fictional UPDATE authorization applies; no new destructive approval inferred. Shared DELETE stays denied.
+
+Expected output: UPDATE_CLIENT_CHECKS_PASSED_ADMIN_VERIFICATION_PENDING with 27 cases and local credential-free artifact path, or stopped/error status. Ask for final status/output only, never credentials. On error/expiry stop and report, do not rerun automatically or weaken guards. Snapshot must remain within ten minutes at both launcher validation points and runner preflight; expired evidence stops before sign-in/writes and needs new capture.
+
+Rollback/error: known-state fixture restoration is built into the UPDATE runner; unexpected state is not overwritten. Interrupted/failed runs require exact fixture inspection and evidence before any recovery. No DELETE cleanup or user removal. Independent admin post-snapshot comparison is still mandatory before calling UPDATE security verified.
+
+Actual status now: session is published and launch instructions prepared; ordinary-user test execution/result PENDING user report. No real Auth login or client UPDATE has been performed by the assistant this turn. Only database reads plus repository evidence writes occurred; production, personal records, stable v122, merge/deployment unchanged. Append-only log update preserves prior history and records the next explicit evidence boundary.
