@@ -1888,3 +1888,14 @@ Date: 2026-10-17, America/New_York. User screenshot shows fictional Sky selected
 Next scoped demo operation: with Sky selected, open Tasks and click Mark complete only for Bring your own fictional game-night idea (Shared mode). Expected Shared progress1/2, Sky contribution marked, River contribution outstanding, overall item not Complete. Do not click individual/household completion controls or reset/reload. This tests the required distinction between Shared per-person and household-once completion. Request result before next role action.
 
 No credentials, database query/mutation, record persistence, membership/permission changes, private data, stable-index edit, cleanup, merge or explicit deployment involved. Fictional demo changes can be discarded by reload later. Existing live v132 sharing preview/task untouched. Automated checks already pass; manual observation is user acceptance of the new controls, not a repeat of the security suite. Concrete future server implementation remains gated.
+
+
+## Entry 254 — Shared partial completion verified; remaining contribution next
+
+Date: 2026-10-17, America/New_York. User screenshot shows fictional Sky selected, Tasks tab, completion-recorded message and Shared game-night item at1/2 contributions: Sky checked, River outstanding; overall count remains0/3 complete. Attribution identifies Sky as completing actor, no repeat completion button for Sky. Other individual/household demo items unchanged. This confirms intended per-assignee partial-completion presentation on user's browser, not server enforcement or persisted data.
+
+Observed UI wording issue: after Sky completes own Shared part, fallback text says assigned to someone else. The model state is correct, but this wording obscures that Sky's own part is finished and others remain. Record for a targeted later presentation correction; do not reinterpret this as an authorization failure or rerun database tests.
+
+Next single scoped demo operation: select River in View as, stay on Tasks, click Mark complete only under the Shared game-night item. Expected2/2 contributions, item Complete, total1/3 complete, both actors recorded. Do not complete household/individual items or reset/reload. Request final Shared status before next check.
+
+No database/hosting operation, real account/member/policy change, personal records, stable-index edit, cleanup, merge or explicit deployment. Existing live preview and sandbox task unchanged. This is manual design acceptance of the approved Shared meaning; automated model/browser tests already pass separately.
