@@ -1665,3 +1665,12 @@ Date: 2026-10-17, America/New_York. User screenshot shows dedicated preview sign
 Next single user action: leave Mac A session open, open the same immutable HTTPS preview URL on phone. If hosting protection requests login, user signs into their own hosting account privately. Expected application sign-in form; report form/status before entering testB. No public key/password in chat. Do not refresh Mac browser (in-memory session would require re-login), sign out A, or add tasks yet.
 
 No new fixture write instructed, no DELETE/cleanup, no assistant database access, production/personal-record operation, membership/policy change, stable-index edit, merge or deployment. Next actual two-device acceptance will use only a clearly fictional new preview task; its exact ID and scope must be recorded and future cleanup separately approved. Existing cleaned security fixtures must not be recreated. Completed security suite not repeated.
+
+
+## Entry 235 — Phone sign-in form reported visible; authenticate fictional B
+
+Date: 2026-10-17, America/New_York. User reports I see it in response to opening the dedicated preview sign-in form on phone. Evidence is user report, not screenshot or browser telemetry. This establishes reported phone navigation/rendering, not authentication or cross-device data propagation. Existing MacA session remains intended open.
+
+Next single user operation on PHONE: enter sandbox public publishable key in labeled field, select AccountB, enter ORIGINAL saved fictionalB password privately, click Sign in. Expected signed in as accountB and same preserved read-only shared baseline seen by MacA. Report signed-in account/list or non-secret error, never key/password. Do not use real production credentials, switch MacA identity, create/rename/complete a task yet, or request a reset if sign-in fails; preserve exact status and inspect first.
+
+Ordinary Auth session metadata plus membership/shared reads are expected; no task-table mutation, deletion or cleanup instructed. No assistant database query, production/personal-data access, stable-index edit, policy/membership change, merge or deployment this turn. Completed API security evidence remains separate. Actual phoneB authentication and real cross-account sharing pending. Reload requires reauthentication because preview token remains in memory; no browser data migration involved.
