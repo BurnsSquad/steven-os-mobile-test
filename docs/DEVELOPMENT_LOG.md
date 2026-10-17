@@ -1360,3 +1360,19 @@ Run command once. First hidden prompt requests sandbox public sb_publishable_ ke
 Reviewed execution scope remains 27 UPDATE-only assertions: ordinary sign-in and identity checks, baseline reads, allowed disposable A/B edits, denied identity-field edits, unrelated-target filtering, exact known-state restoration and final client baselines. No INSERT/DELETE test or cleanup. Expected successful client status UPDATE_CLIENT_CHECKS_PASSED_ADMIN_VERIFICATION_PENDING still needs independent post-snapshot verification. Actual live execution remains PENDING.
 
 Rollback: runner restores only known disposable title/completed states; interrupted/error results require exact admin inspection, not blind reset. Protected baselines, private tasks, household memberships, policies, production and personal data unchanged by this read-only preparatory turn. No password rotation, stable-v122 edit, merge or deployment. No destructive authorization inferred.
+
+
+## Entry 212 — Live UPDATE client success reported; independent post-state unchanged
+
+Date: 2026-10-17 (UTC). New user screenshot shows successful progression through public-key and A/B/C hidden prompts in the corrected source, with session ff8e5722c823f6eae48e2bbd5446100175b283e9. Output explicitly reports status UPDATE_CLIENT_CHECKS_PASSED_ADMIN_VERIFICATION_PENDING, cases 27, artifact under work/security/2026-10-17T14-09-16.658Z/client-report.json, followed by evidence directory, no cleanup notice and ordinary shell prompt. No credentials visible. This is screenshot evidence of client success; individual case contents, transport marker, timestamp ordering and starting digest are not yet verified from the actual report file. Do not equate screenshot status alone with completed independent verification.
+
+Immediately captured independent post-test state using the same snapshotSQL SELECT through execute_sql on the allowlisted sandbox only. Captured 2026-10-17T14:10:02.084814+00:00; digest 510c7063c64ca3902609bf65e17d900243fa834275d94cb83bb9866253e68df3. Saved ignored work/security/after212.json. validateSnapshot passed expected counts/fixture values/identities/RLS/policies/grants. Canonical comparison with snapshot211.json, excluding only captured_at, returned unchanged=true. This independently confirms the final disposable values, protected baselines, memberships, policy expressions and permissions match the pre-run state. No production access or database mutation by the assistant.
+
+Next user operation: open the local evidence directory in Finder using:
+open "$HOME/Downloads/burns-security-fix-be041313/steven-os-mobile-test-be0413139213fd8563054f1ac8ba0b9daee82267/work/security/2026-10-17T14-09-16.658Z"
+
+Then provide only client-report.json through chat attachment for case-level independent verification. This report is designed to omit keys/passwords/tokens; do not attach password-manager exports, env files or unrelated local data. The file itself remains pending. Expected verification is finalize(before,after,report,ids), including real-network marker, exact 27 cases, starting digest, timing and unchanged full state. UPDATE verification cannot authorize cleanup; separate exact DELETE-denial approval and later cleanup approval remain required.
+
+Teaching: the application reports its own assertions; a separate database snapshot confirms resulting state. Both are needed, because a green message alone does not prove each intended test ran or that unrelated state stayed intact. Offline tests remain separate from these live-client observations.
+
+Rollback/status: known-state restoration appears successful based on independent final state; no recovery mutation needed. No INSERT/DELETE test or cleanup in this run. Full third-account isolation and DELETE tests are still pending. No password changes, stable-v122 edit, merge or deployment. Original production/personal records untouched.
