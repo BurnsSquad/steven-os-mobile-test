@@ -4,7 +4,7 @@
   "policy_reviewed": true,
   "source": {
     "method": "Supabase execute_sql, target independently verified with get_project",
-    "captured_at": "2026-10-17T14:00:05.089748+00:00",
+    "captured_at": "2026-10-17T14:06:51.868934+00:00",
     "credentials_included": false
   },
   "snapshot": {
@@ -492,7 +492,7 @@
         "operation": "UPDATE"
       }
     ],
-    "captured_at": "2026-10-17T14:00:05.089748+00:00",
+    "captured_at": "2026-10-17T14:06:51.868934+00:00",
     "project_ref": "wozynsftofkjqwlflosv",
     "member_count": 2,
     "shared_count": 4,
