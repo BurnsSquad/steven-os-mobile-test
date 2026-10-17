@@ -1,0 +1,565 @@
+{
+  "schema": 1,
+  "project_ref": "wozynsftofkjqwlflosv",
+  "policy_reviewed": true,
+  "source": {
+    "method": "Supabase execute_sql, target independently verified with get_project",
+    "captured_at": "2026-10-17T13:29:02.912966+00:00",
+    "credentials_included": false
+  },
+  "snapshot": {
+    "auth": [
+      {
+        "id": "6fe4e705-a92f-44ea-9898-d0eebf1f95d5",
+        "email": "burns-security-a@example.test"
+      },
+      {
+        "id": "bb0bed90-1037-419f-a385-90e543575864",
+        "email": "burns-security-c@example.test"
+      },
+      {
+        "id": "fd9810b3-6190-4587-b33c-81de6564a5dc",
+        "email": "burns-security-b@example.test"
+      }
+    ],
+    "shared": [
+      {
+        "id": "bba30000-0000-4000-8000-000000000001",
+        "title": "TEST ONLY - Organize fictional family game night",
+        "completed": false,
+        "created_at": "2026-10-16T17:33:24.963725+00:00",
+        "created_by": "6fe4e705-a92f-44ea-9898-d0eebf1f95d5",
+        "household_id": "bba20000-0000-4000-8000-000000000001"
+      },
+      {
+        "id": "bba60000-0000-4000-8000-000000000001",
+        "title": "TEST ONLY - A fictional shared UPDATE check",
+        "completed": false,
+        "created_at": "2026-10-16T17:33:24.963725+00:00",
+        "created_by": "6fe4e705-a92f-44ea-9898-d0eebf1f95d5",
+        "household_id": "bba20000-0000-4000-8000-000000000001"
+      },
+      {
+        "id": "bba60000-0000-4000-8000-000000000002",
+        "title": "TEST ONLY - B fictional shared UPDATE check",
+        "completed": false,
+        "created_at": "2026-10-16T17:33:24.963725+00:00",
+        "created_by": "fd9810b3-6190-4587-b33c-81de6564a5dc",
+        "household_id": "bba20000-0000-4000-8000-000000000001"
+      },
+      {
+        "id": "bba60000-0000-4000-8000-000000000099",
+        "title": "TEST ONLY - Unrelated household UPDATE target",
+        "completed": false,
+        "created_at": "2026-10-16T17:33:24.963725+00:00",
+        "created_by": "6fe4e705-a92f-44ea-9898-d0eebf1f95d5",
+        "household_id": "bba20000-0000-4000-8000-000000000099"
+      }
+    ],
+    "members": [
+      {
+        "role": "owner",
+        "user_id": "6fe4e705-a92f-44ea-9898-d0eebf1f95d5",
+        "created_at": "2026-10-16T17:33:24.963725+00:00",
+        "household_id": "bba20000-0000-4000-8000-000000000001"
+      },
+      {
+        "role": "member",
+        "user_id": "fd9810b3-6190-4587-b33c-81de6564a5dc",
+        "created_at": "2026-10-16T17:33:24.963725+00:00",
+        "household_id": "bba20000-0000-4000-8000-000000000001"
+      }
+    ],
+    "private": [
+      {
+        "id": "bba10000-0000-4000-8000-000000000001",
+        "title": "TEST ONLY - Organize fictional workspace",
+        "owner_id": "6fe4e705-a92f-44ea-9898-d0eebf1f95d5",
+        "completed": false,
+        "created_at": "2026-10-16T17:33:24.963725+00:00"
+      },
+      {
+        "id": "bba10000-0000-4000-8000-000000000002",
+        "title": "TEST ONLY - Plan fictional family activity",
+        "owner_id": "fd9810b3-6190-4587-b33c-81de6564a5dc",
+        "completed": false,
+        "created_at": "2026-10-16T17:33:24.963725+00:00"
+      }
+    ],
+    "metadata": [
+      {
+        "rls": true,
+        "owner": "postgres",
+        "table": "bb_test_household_members"
+      },
+      {
+        "rls": true,
+        "owner": "postgres",
+        "table": "bb_test_private_tasks"
+      },
+      {
+        "rls": true,
+        "owner": "postgres",
+        "table": "bb_test_shared_tasks"
+      }
+    ],
+    "policies": [
+      {
+        "cmd": "SELECT",
+        "qual": "(user_id = ( SELECT auth.uid() AS uid))",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "bb_test_household_members",
+        "permissive": "PERMISSIVE",
+        "policyname": "member_select",
+        "schemaname": "public",
+        "with_check": null
+      },
+      {
+        "cmd": "DELETE",
+        "qual": "(owner_id = ( SELECT auth.uid() AS uid))",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "bb_test_private_tasks",
+        "permissive": "PERMISSIVE",
+        "policyname": "private_delete",
+        "schemaname": "public",
+        "with_check": null
+      },
+      {
+        "cmd": "INSERT",
+        "qual": null,
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "bb_test_private_tasks",
+        "permissive": "PERMISSIVE",
+        "policyname": "private_insert",
+        "schemaname": "public",
+        "with_check": "(owner_id = ( SELECT auth.uid() AS uid))"
+      },
+      {
+        "cmd": "SELECT",
+        "qual": "(owner_id = ( SELECT auth.uid() AS uid))",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "bb_test_private_tasks",
+        "permissive": "PERMISSIVE",
+        "policyname": "private_select",
+        "schemaname": "public",
+        "with_check": null
+      },
+      {
+        "cmd": "UPDATE",
+        "qual": "(owner_id = ( SELECT auth.uid() AS uid))",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "bb_test_private_tasks",
+        "permissive": "PERMISSIVE",
+        "policyname": "private_update",
+        "schemaname": "public",
+        "with_check": "(owner_id = ( SELECT auth.uid() AS uid))"
+      },
+      {
+        "cmd": "INSERT",
+        "qual": null,
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "bb_test_shared_tasks",
+        "permissive": "PERMISSIVE",
+        "policyname": "shared_insert",
+        "schemaname": "public",
+        "with_check": "((created_by = ( SELECT auth.uid() AS uid)) AND (EXISTS ( SELECT 1\n   FROM bb_test_household_members m\n  WHERE ((m.household_id = bb_test_shared_tasks.household_id) AND (m.user_id = ( SELECT auth.uid() AS uid))))))"
+      },
+      {
+        "cmd": "SELECT",
+        "qual": "(EXISTS ( SELECT 1\n   FROM bb_test_household_members m\n  WHERE ((m.household_id = bb_test_shared_tasks.household_id) AND (m.user_id = ( SELECT auth.uid() AS uid)))))",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "bb_test_shared_tasks",
+        "permissive": "PERMISSIVE",
+        "policyname": "shared_select",
+        "schemaname": "public",
+        "with_check": null
+      },
+      {
+        "cmd": "UPDATE",
+        "qual": "(EXISTS ( SELECT 1\n   FROM bb_test_household_members m\n  WHERE ((m.household_id = bb_test_shared_tasks.household_id) AND (m.user_id = ( SELECT auth.uid() AS uid)))))",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "bb_test_shared_tasks",
+        "permissive": "PERMISSIVE",
+        "policyname": "shared_update",
+        "schemaname": "public",
+        "with_check": "(EXISTS ( SELECT 1\n   FROM bb_test_household_members m\n  WHERE ((m.household_id = bb_test_shared_tasks.household_id) AND (m.user_id = ( SELECT auth.uid() AS uid)))))"
+      }
+    ],
+    "auth_count": 3,
+    "privileges": [
+      {
+        "actor": "anon",
+        "table": "bb_test_household_members",
+        "allowed": false,
+        "operation": "DELETE"
+      },
+      {
+        "actor": "anon",
+        "table": "bb_test_household_members",
+        "allowed": false,
+        "operation": "INSERT"
+      },
+      {
+        "actor": "anon",
+        "table": "bb_test_household_members",
+        "allowed": false,
+        "operation": "MAINTAIN"
+      },
+      {
+        "actor": "anon",
+        "table": "bb_test_household_members",
+        "allowed": false,
+        "operation": "REFERENCES"
+      },
+      {
+        "actor": "anon",
+        "table": "bb_test_household_members",
+        "allowed": false,
+        "operation": "SELECT"
+      },
+      {
+        "actor": "anon",
+        "table": "bb_test_household_members",
+        "allowed": false,
+        "operation": "TRIGGER"
+      },
+      {
+        "actor": "anon",
+        "table": "bb_test_household_members",
+        "allowed": false,
+        "operation": "TRUNCATE"
+      },
+      {
+        "actor": "anon",
+        "table": "bb_test_household_members",
+        "allowed": false,
+        "operation": "UPDATE"
+      },
+      {
+        "actor": "authenticated",
+        "table": "bb_test_household_members",
+        "allowed": false,
+        "operation": "DELETE"
+      },
+      {
+        "actor": "authenticated",
+        "table": "bb_test_household_members",
+        "allowed": false,
+        "operation": "INSERT"
+      },
+      {
+        "actor": "authenticated",
+        "table": "bb_test_household_members",
+        "allowed": false,
+        "operation": "MAINTAIN"
+      },
+      {
+        "actor": "authenticated",
+        "table": "bb_test_household_members",
+        "allowed": false,
+        "operation": "REFERENCES"
+      },
+      {
+        "actor": "authenticated",
+        "table": "bb_test_household_members",
+        "allowed": true,
+        "operation": "SELECT"
+      },
+      {
+        "actor": "authenticated",
+        "table": "bb_test_household_members",
+        "allowed": false,
+        "operation": "TRIGGER"
+      },
+      {
+        "actor": "authenticated",
+        "table": "bb_test_household_members",
+        "allowed": false,
+        "operation": "TRUNCATE"
+      },
+      {
+        "actor": "authenticated",
+        "table": "bb_test_household_members",
+        "allowed": false,
+        "operation": "UPDATE"
+      },
+      {
+        "actor": "anon",
+        "table": "bb_test_private_tasks",
+        "allowed": false,
+        "operation": "DELETE"
+      },
+      {
+        "actor": "anon",
+        "table": "bb_test_private_tasks",
+        "allowed": false,
+        "operation": "INSERT"
+      },
+      {
+        "actor": "anon",
+        "table": "bb_test_private_tasks",
+        "allowed": false,
+        "operation": "MAINTAIN"
+      },
+      {
+        "actor": "anon",
+        "table": "bb_test_private_tasks",
+        "allowed": false,
+        "operation": "REFERENCES"
+      },
+      {
+        "actor": "anon",
+        "table": "bb_test_private_tasks",
+        "allowed": false,
+        "operation": "SELECT"
+      },
+      {
+        "actor": "anon",
+        "table": "bb_test_private_tasks",
+        "allowed": false,
+        "operation": "TRIGGER"
+      },
+      {
+        "actor": "anon",
+        "table": "bb_test_private_tasks",
+        "allowed": false,
+        "operation": "TRUNCATE"
+      },
+      {
+        "actor": "anon",
+        "table": "bb_test_private_tasks",
+        "allowed": false,
+        "operation": "UPDATE"
+      },
+      {
+        "actor": "authenticated",
+        "table": "bb_test_private_tasks",
+        "allowed": true,
+        "operation": "DELETE"
+      },
+      {
+        "actor": "authenticated",
+        "table": "bb_test_private_tasks",
+        "allowed": true,
+        "operation": "INSERT"
+      },
+      {
+        "actor": "authenticated",
+        "table": "bb_test_private_tasks",
+        "allowed": false,
+        "operation": "MAINTAIN"
+      },
+      {
+        "actor": "authenticated",
+        "table": "bb_test_private_tasks",
+        "allowed": false,
+        "operation": "REFERENCES"
+      },
+      {
+        "actor": "authenticated",
+        "table": "bb_test_private_tasks",
+        "allowed": true,
+        "operation": "SELECT"
+      },
+      {
+        "actor": "authenticated",
+        "table": "bb_test_private_tasks",
+        "allowed": false,
+        "operation": "TRIGGER"
+      },
+      {
+        "actor": "authenticated",
+        "table": "bb_test_private_tasks",
+        "allowed": false,
+        "operation": "TRUNCATE"
+      },
+      {
+        "actor": "authenticated",
+        "table": "bb_test_private_tasks",
+        "allowed": true,
+        "operation": "UPDATE"
+      },
+      {
+        "actor": "anon",
+        "table": "bb_test_shared_tasks",
+        "allowed": false,
+        "operation": "DELETE"
+      },
+      {
+        "actor": "anon",
+        "table": "bb_test_shared_tasks",
+        "allowed": false,
+        "operation": "INSERT"
+      },
+      {
+        "actor": "anon",
+        "table": "bb_test_shared_tasks",
+        "allowed": false,
+        "operation": "MAINTAIN"
+      },
+      {
+        "actor": "anon",
+        "table": "bb_test_shared_tasks",
+        "allowed": false,
+        "operation": "REFERENCES"
+      },
+      {
+        "actor": "anon",
+        "table": "bb_test_shared_tasks",
+        "allowed": false,
+        "operation": "SELECT"
+      },
+      {
+        "actor": "anon",
+        "table": "bb_test_shared_tasks",
+        "allowed": false,
+        "operation": "TRIGGER"
+      },
+      {
+        "actor": "anon",
+        "table": "bb_test_shared_tasks",
+        "allowed": false,
+        "operation": "TRUNCATE"
+      },
+      {
+        "actor": "anon",
+        "table": "bb_test_shared_tasks",
+        "allowed": false,
+        "operation": "UPDATE"
+      },
+      {
+        "actor": "authenticated",
+        "table": "bb_test_shared_tasks",
+        "allowed": false,
+        "operation": "DELETE"
+      },
+      {
+        "actor": "authenticated",
+        "table": "bb_test_shared_tasks",
+        "allowed": true,
+        "operation": "INSERT"
+      },
+      {
+        "actor": "authenticated",
+        "table": "bb_test_shared_tasks",
+        "allowed": false,
+        "operation": "MAINTAIN"
+      },
+      {
+        "actor": "authenticated",
+        "table": "bb_test_shared_tasks",
+        "allowed": false,
+        "operation": "REFERENCES"
+      },
+      {
+        "actor": "authenticated",
+        "table": "bb_test_shared_tasks",
+        "allowed": true,
+        "operation": "SELECT"
+      },
+      {
+        "actor": "authenticated",
+        "table": "bb_test_shared_tasks",
+        "allowed": false,
+        "operation": "TRIGGER"
+      },
+      {
+        "actor": "authenticated",
+        "table": "bb_test_shared_tasks",
+        "allowed": false,
+        "operation": "TRUNCATE"
+      },
+      {
+        "actor": "authenticated",
+        "table": "bb_test_shared_tasks",
+        "allowed": false,
+        "operation": "UPDATE"
+      }
+    ],
+    "captured_at": "2026-10-17T13:29:02.912966+00:00",
+    "project_ref": "wozynsftofkjqwlflosv",
+    "member_count": 2,
+    "shared_count": 4,
+    "private_count": 2,
+    "execution_role": "postgres",
+    "shared_columns": [
+      {
+        "actor": "anon",
+        "column": "completed",
+        "allowed": false
+      },
+      {
+        "actor": "anon",
+        "column": "created_at",
+        "allowed": false
+      },
+      {
+        "actor": "anon",
+        "column": "created_by",
+        "allowed": false
+      },
+      {
+        "actor": "anon",
+        "column": "household_id",
+        "allowed": false
+      },
+      {
+        "actor": "anon",
+        "column": "id",
+        "allowed": false
+      },
+      {
+        "actor": "anon",
+        "column": "title",
+        "allowed": false
+      },
+      {
+        "actor": "authenticated",
+        "column": "completed",
+        "allowed": true
+      },
+      {
+        "actor": "authenticated",
+        "column": "created_at",
+        "allowed": false
+      },
+      {
+        "actor": "authenticated",
+        "column": "created_by",
+        "allowed": false
+      },
+      {
+        "actor": "authenticated",
+        "column": "household_id",
+        "allowed": false
+      },
+      {
+        "actor": "authenticated",
+        "column": "id",
+        "allowed": false
+      },
+      {
+        "actor": "authenticated",
+        "column": "title",
+        "allowed": true
+      }
+    ],
+    "public_table_count": 3
+  }
+}
