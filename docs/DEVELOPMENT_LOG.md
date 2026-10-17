@@ -1770,3 +1770,14 @@ Added docs/FOUR_MEMBER_HOUSEHOLD_PLAN.md with confirmed scope, ordinary sign-in 
 Next single clarification: of the four accounts, how many are adults and how many children? Ask counts only, not names/emails/ages/passwords. This determines whether equal task capabilities suffice or child-specific administrative/data restrictions require design and new tests. Do not assume age/role authority, promise restrictions without implementation, or grant roles from editable client metadata.
 
 No database/hosting operation, invitation, account/member/policy change, secret handling, personal-data migration/sync/erasure, stable-index edit, merge or deployment this turn. Core fictional Mac/phone acceptance and completed API security evidence retained without rerun. Retained preview task remains unapproved for cleanup. Repository plan/log changes only; rollback is a targeted documentation revert if requested.
+
+
+## Entry 244 — Two parents/two children; children may add their own day-planning tasks
+
+Date: 2026-10-17, America/New_York. User confirmed four accounts are two parents and two children. Proposed both parents manage household settings/assign tasks, children see/complete assigned tasks. User approved with explicit extension: kids should be able to add tasks they want to fill their days. Preserve that extension as required behavior; do not design children as read-only/completion-only users.
+
+Updated FOUR_MEMBER_HOUSEHOLD_PLAN.md: parent administration/assignment, child self-planning and assigned-task completion are confirmed requirements. Child-created task initializes self-assignment; no sibling assignment, account/role escalation, deletion or universal household administration follows from create permission. Existing owner-private policies/personal records remain unchanged. Current A/B/C shared-task preview has no tested parent/child role matrix and must not be marketed as implementing this requirement.
+
+Next single clarification: visibility of a child's self-added tasks. Ask whether each child plus both parents should see them while the sibling does not; user may choose household-wide or child-only instead. Visibility, edits, scheduling and deletion are separate capabilities. Do not infer surveillance or sibling visibility. After this answer prepare explicit permission matrix and new fictional-role test scope before schema/permission mutations. Any new model must avoid widening existing private-task security.
+
+No accounts, invitations, memberships, policies, schemas or UI capabilities changed. No database/hosting operation, personal-record migration/sync/erasure, stable-index edit, merge or deployment. Requirements/documentation only; no rollback needed beyond targeted docs revert. Prior security/preview work remains complete for its earlier scope and is not repeated.
