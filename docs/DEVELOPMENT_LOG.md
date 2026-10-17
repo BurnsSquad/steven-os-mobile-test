@@ -1613,3 +1613,12 @@ Date: 2026-10-17, America/New_York. User supplied the next authorization-screen 
 Selecting a row in the consent UI is not deployment or production modification and does not prove completed authorization. After actual consent and provider verification, preserve the original isolation requirement: deploy only the reviewed three-file preview, without replacing stable files or changing an existing production target. Do not infer authorization to create/manage arbitrary projects from provider-granted capabilities. If a separate preview project requires a different consent selection, review that concrete target before deployment.
 
 No hosting mutation, provider retry, database operation, personal-data action, migration, stable-index change, merge or deployment this turn. Preview hosting and real two-device acceptance remain pending; completed sandbox tests not repeated.
+
+
+## Entry 231 — User confirms single selection; complete deliberate connection authorization
+
+Date: 2026-10-17, America/New_York. User reports selected after the instructed single listed-target selection. Next single user action: keep broad all-project access unchecked and click Authorize for that selection. Explain that provider authorization grants management capability, not a deployment, database mutation or permission to modify the stable site. Request connected/returned status or non-secret error; no passwords/tokens/OAuth URL.
+
+Provider permission/access identifiers and inventories remain omitted from public log under the prior publication boundary. Actual authorization completion and restored access are unverified until user reports and scoped provider reads confirm. Do not retry provider calls before that changed state. Selected-project consent does not imply arbitrary new-project creation rights or authorize widening access if later blocked.
+
+Continue only the prepared isolated preview scope once target access is verified; do not replace existing production deployment, stable HTML or local files. Separate-project creation may require target-specific setup/authorization. No need to repeat completed security tests. No hosting/database mutation, production/personal-data action, migration, merge or deployment this turn. Connection consent must be performed privately by the user; no secret requested in chat.
