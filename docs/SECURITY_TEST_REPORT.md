@@ -181,3 +181,12 @@ Implemented fictional in-memory Task/Activity controls, role-view simulation, ow
 5 new model tests pass; offline Playwright UI checks pass at390px/1280px, external requests0: child Activities/no Task form, sibling view without edit, Shared contribution aggregation, household completion once, adult edit modal, literal text/XSS behavior, no storage/overflow. Model completion checks are sequential, not real concurrent transaction/RLS proof. Original live38-case sandbox evidence is unchanged and not rerun.
 
 docs/PLANNER_SERVER_DESIGN_PROPOSAL.md describes required additive membership/item/assignment/completion/audit model and server-side atomic enforcement. It is not executed SQL or permission approval. New role-specific server security, real-user onboarding, persistent/refresh sessions and actual new-UI cross-device use remain pending. No database mutation, private-policy widening, task cleanup, personal-data migration, stable-v122 edit or merge.
+
+
+## Manual Tasks/Activities design walkthrough — Entries248–257
+
+User screenshots verify child Task view without creation/edit controls; own Activity creation/edit controls; new fictional Activity visibility to sibling without ownership actions; Shared partial1/2 then complete2/2 with separate actor attribution. User reports confirm creation and household-once completion, including subsequent alternate-view completion state. Latest report is brief and does not independently screenshot every count/button/attribution detail. Automated offline checks separately cover those UI/model transitions.
+
+Core design review is sufficient to proceed to concrete server proposal; no need to repeat completed API security setup. New role/type/assignment rules are still NOT enforced or tested in the database. v133 has no persistence or cross-device sync. The earlier actual v132 Mac/phone sharing proof applies only to its generic-member model. Partial-Shared fallback wording is a known pending UI correction.
+
+Next gate: exact additive isolated schema/policies/transactional completion/bootstrap/test/rollback review before mutation. No production, stable-index, private-policy/member or personal-record changes made by this review. Retained earlier browser acceptance row not deleted. Scheduling/delete/reopen semantics, normal account onboarding, sessions and production release remain future work.
