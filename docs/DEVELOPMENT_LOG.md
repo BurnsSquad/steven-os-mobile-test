@@ -1595,3 +1595,12 @@ Date: 2026-10-17, America/New_York. User screenshot shows ChatGPT Connect Vercel
 Next single user action: click Connect Vercel in the modal to open provider sign-in/authorization. Expected Vercel account/team selection or permission/consent screen, or status/error. Request displayed team/permission labels only; hide any OAuth URL, token, password or private values. If provider login is necessary, user signs in privately there. Do not blindly approve new scope or change production access. No additional application deployment, database operation or secret sharing is authorized by clicking through the connection notice.
 
 No provider retry, account removal, permission change, database mutation, personal-data migration, production operation, stable-index modification, merge or deployment this turn. Existing preview preparation and completed security evidence retained. Authorization remains pending; connection UI is not proof that burns6-scope403 is fixed.
+
+
+## Entry 229 — Authorization review checkpoint; detailed provider metadata withheld
+
+Date: 2026-10-17, America/New_York. User supplied authorization-screen screenshots for the current hosting connection. Inspect available selection controls before completing consent. Authorization completion and deployment remain pending. No credentials requested in chat.
+
+An attempted detailed public log update was rejected by automatic approval review because its provider account/access metadata lacked specific public-publication authorization. That detailed content was not published. This replacement records procedural status only; it omits account/team identities, permission inventories, capabilities and screenshots. Preserve the detailed evidence privately in this conversation unless the user specifically approves publishing it. No alternate publication route or indirect disclosure used.
+
+No deployment, database operation, production/personal-data change, migration, stable-index modification or PR merge this turn. Completed security verification and prepared preview retained. No rollback needed for navigation.
