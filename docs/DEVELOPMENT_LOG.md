@@ -1737,3 +1737,12 @@ Next single user action: on PHONEB tap Sign out. Expected task list disappears a
 Subsequent expected C screen: authenticatedC, no household membership, empty tasks, no add-task form. No C insert/update/delete attempt is necessary for this UI check; those were independently verified in the earlier API suite. Record user-observed results separately from independent database evidence.
 
 Scope: existing isolated preview only, retained one fictional bba80000 acceptance row, original baselines unchanged. No new task, cleanup, production access/permissions, account/member creation, personal-record migration or stable-index replacement authorized by this navigation step. Real household onboarding is a later concrete plan requiring verified environment and review of any production-permission changes; do not infer permission to register real people or use personal records from lets continue. No assistant DB query/mutation, deployment, merge or secret handling this turn. No rollback needed beyond ordinary sign-in if user resumes B.
+
+
+## Entry 241 — Phone B signed out; fictional C read-only UI check next
+
+Date: 2026-10-17, America/New_York. User reports signed out following instructed phoneB Sign out. This is user-reported logout completion; no screenshot or independent browser telemetry. Does not establish server-side revocation of every access token or other devices. Keep MacA session intact.
+
+Next single user operation on PHONE: enter sandbox public publishable key, select AccountC, privately enter original saved fictionalC password and tap Sign in. Expected signed in as accountC, no-household-membership message, empty task list, no New fictional task/Add shared task form. Ask for visible message/control state only, never credentials. If any household task appears, stop and report without editing it. No creation/update/delete attempts, account changes, resets or policy changes are needed to inspect this screen.
+
+Ordinary Auth login/session metadata and membership/shared SELECTs only. No assistant DB access, personal/production-data operation, membership/policy change, stable-index edit, merge or deployment this turn. Retained fictional acceptance row remains unchanged and unapproved for cleanup. Completed API isolation proof remains separate from this new actual phone UI check; C result pending user observation.
