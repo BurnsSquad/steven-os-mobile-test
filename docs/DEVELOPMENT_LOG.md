@@ -2062,3 +2062,12 @@ Date: 2026-10-17, America/New_York. User confirms the requested phone Account C 
 Next single scoped operation on Mac Account A: create Fictional v134 household tidy-up as a Task, select Household — complete once, ensure participants B and C are selected, then Add Task once. Keep phone C signed in. Inspect creation/visibility before requesting completion; Shared per-person live acceptance remains pending. Preserve all fictional acceptance records until separately approved cleanup.
 
 Generic log-only progress update. No code/schema/policy/Auth/billing change, personal data, cleanup, merge or production promotion. Existing Individual Task round-trip and child Activity sharing checks are not repeated.
+
+
+## Entry 271 — Household-once completion saved by C; second-child view next
+
+Date: 2026-10-17, America/New_York. User reports the fictional Household tidy-up Task visible on phone Account C, then reports completion after the instruction to complete as C and check Mac A. Independent read-only provider inspection confirms Household mode, B/C assignments, revision2, exactly one completion attributed to C as both actual actor and effective assignee, and exactly one completed event. User's brief completion response does not separately identify the Mac display; retain that observation as not independently specified.
+
+Next scoped check: sign out C on the phone and sign in B using its saved password only on the website. The same Household Task should already show Complete without another Mark complete action. Do not attempt another completion. This checks the second eligible child's visible state; Shared per-person live acceptance remains pending. Preserve retained fictional acceptance rows; no cleanup.
+
+Generic log-only append under existing authorization. Database inspection was read-only. No code/schema/policy/account/Auth setting/billing/personal-data/merge/production changes.
