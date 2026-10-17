@@ -2010,3 +2010,12 @@ User reports Account A signed in successfully on Mac. An independent provider re
 Correction: leaked-password protection is an optional recommended safeguard, not a technical requirement for household use or a mandatory paid upgrade. Earlier assistant wording calling it a requirement was overstated. The feature needs Pro or higher, and the user chose to remain on Free. Actual sign-in, sharing and permission checks are separate readiness checks. This entry corrects that guidance. Matching handoff/source revisions are prepared locally; automatic approval review blocked their combined publication as beyond the explicit existing-log approval. No billing or Auth setting change.
 
 Earlier full-file log publication was rejected by automatic approval review. User now explicitly approved republishing the existing already-public history, including its historical household/test metadata, solely to append this generic status entry. The previous log content is unchanged. Detailed rejected report update remains local. Existing application/private records unchanged; no production promotion, merge or cleanup.
+
+
+## Entry 265 — Phone Account B sign-in verified; first connected sharing check next
+
+Date: 2026-10-17, America/New_York. User phone screenshot shows the exact connected v134 preview, Account B · Child, planner-ready message, empty Household Tasks and no Task creation form. Independent provider read confirms a fresh Account B sign-in, matching child planner membership and zero planner items. Account A's earlier Mac sign-in was independently confirmed in Entry264. These are actual sign-ins on separate user devices, not the mock-browser test.
+
+No cross-device item-sharing PASS yet: there are no items to compare. Next scoped user operation on Mac as A: add Fictional v134 picnic preparation under Tasks, keep One assigned person, choose Account B, click Add Task once. Then inspect phone B's list on its next refresh before requesting completion. Use fictional text only and preserve new acceptance rows until any separately approved cleanup. No password is needed in chat.
+
+This checkpoint adds generic status to the existing approved public log only. No app/schema/policy/Auth setting change, personal record operation, cleanup, merge or production promotion. Free-plan optional password-protection decision remains as clarified in Entry264.
