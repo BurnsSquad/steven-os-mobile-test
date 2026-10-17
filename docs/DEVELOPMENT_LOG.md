@@ -1236,3 +1236,18 @@ Privacy/teaching: invisible input is the intended behavior at the program's labe
 Freshness note: session snapshot time is 09:29:02 EDT and the launcher rechecks freshness after all inputs; it will refuse expired evidence before sign-in/writes. If expiry occurs, stop/report and obtain a new snapshot instead of weakening guards or automatically rerunning mutations.
 
 Actual status: private key prompt reached, user input/result PENDING. No ordinary-user Auth/login/UPDATE result or DELETE/C-isolation/cleanup run established. No assistant database mutation this turn. Production/personal records, stable v122, memberships/policies and PR merge/deployment remain unchanged. No cleanup/rollback applies before sign-in/write. Repository action: append Entry 203 only using fetched current log blob SHA and preserve history.
+
+
+## Entry 204 — Private A-password prompt confirmed; complete local credential entry
+
+Timestamp: 2026-10-17 09:35 EDT (13:35 UTC), America/New_York.
+
+User initially said I got this without attached output; requested only non-secret prompt/error, not credentials. User then reported Saved fictional A password. This confirms the launcher progressed beyond the public-key format check into A's hidden prompt. It does not validate the API key against Supabase or establish any Auth login, password correctness or security test result.
+
+Next single private-input operation: at the labeled Terminal prompt enter/paste the privately saved Test A password and press Return; at the following Test B and Test C prompts enter the corresponding saved passwords and Return. All characters remain hidden. Complete this one input sequence directly rather than sending any credential values or each intermediate prompt to chat. Expected after the third entry: the launcher rechecks freshness, then executes the previously authorized UPDATE-only ordinary-user tests. No INSERT/DELETE test or cleanup in this mode.
+
+Expected final successful client status UPDATE_CLIENT_CHECKS_PASSED_ADMIN_VERIFICATION_PENDING with 27 cases. Ask only final status/output (or error), never passwords or key. If expired/failed/stopped, preserve output and stop; do not rerun or weaken freshness. Session captured 09:29:02 EDT; current record 09:35 EDT. The runner still performs its own ten-minute checks after input and before requests; this log does not override them.
+
+Safety/teaching: correct prompt progression proves local input handling, not remote authentication. Actual key/identity/login validation occurs only when ordinary Auth calls execute. Passwords go only to the reviewed local process/environment and the fixed sandbox Auth endpoint; no chat, shell-argument/history or file entry. Unknown test state on failure requires evidence and admin inspection, not blind fixture reset or password/account deletion.
+
+Actual status: A prompt confirmed by user report; A/B/C entries, Auth and client results PENDING. No assistant database mutation this turn, production access, new memberships/policies/grants, protected-baseline write, DELETE/cleanup, stable-v122 edit, merge or deployment. Separate exact destructive approvals remain intact. Repository action: append Entry 204 only with fetched current blob SHA and preserve history.
