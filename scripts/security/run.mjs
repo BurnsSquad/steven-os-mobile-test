@@ -35,7 +35,7 @@ async function main(){
  const baseline=original(f.shared[0].id);
  try{
   for(const actor of ['A','B','C']){
-   const password=process.env[`BB_TEST_${actor}_PASSWORD`];ensure(password?.length>=24,`Protected ${actor} test password missing/too short`);
+   const password=process.env[`BB_TEST_${actor}_PASSWORD`];ensure(typeof password==='string'&&password.length>0,`Protected ${actor} test password missing`);
    const r=await request('/auth/v1/token?grant_type=password',{key:cfg.key,method:'POST',body:{email:emails[actor],password}});
    ensure(r.status===200&&typeof r.body?.access_token==='string'&&r.body?.user?.id===cfg.ids[actor],`Ordinary ${actor} login failed; INCONCLUSIVE`);
    sessions[actor]=r.body.access_token;await validSession(actor);

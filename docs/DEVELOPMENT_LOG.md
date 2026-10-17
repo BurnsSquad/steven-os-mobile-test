@@ -1251,3 +1251,28 @@ Expected final successful client status UPDATE_CLIENT_CHECKS_PASSED_ADMIN_VERIFI
 Safety/teaching: correct prompt progression proves local input handling, not remote authentication. Actual key/identity/login validation occurs only when ordinary Auth calls execute. Passwords go only to the reviewed local process/environment and the fixed sandbox Auth endpoint; no chat, shell-argument/history or file entry. Unknown test state on failure requires evidence and admin inspection, not blind fixture reset or password/account deletion.
 
 Actual status: A prompt confirmed by user report; A/B/C entries, Auth and client results PENDING. No assistant database mutation this turn, production access, new memberships/policies/grants, protected-baseline write, DELETE/cleanup, stable-v122 edit, merge or deployment. Separate exact destructive approvals remain intact. Repository action: append Entry 204 only with fetched current blob SHA and preserve history.
+
+
+## Entry 205 — Diagnose existing-password rejection and correct unnecessary rotation guidance
+
+Date: 2026-10-17 (UTC). Continued sequentially after Entry 204.
+
+Observed evidence: user's Terminal screenshot showed the hidden A-password prompt followed immediately by the launcher's generic stopped message, without B/C prompts. User reported A's saved credential had 19 characters; no credential value was requested or received. Source inspection found a local minimum of 24 characters in BOTH private-run.mjs and run.mjs. The 19-character entry explains this validation stop. All three private entries must finish before child-runner creation, so this pictured attempt did not perform ordinary-user login or client-table writes. Password correctness and live RLS outcomes remain unverified.
+
+Correction to earlier guidance: the 24-character rule was an arbitrary test-harness provisioning preference incorrectly imposed on sign-in, not an established Supabase requirement. Requiring account rotation for this mismatch was unnecessary. The user was led through Apple Passwords to create a separate replacement: preserve the old A entry; add the sandbox URL and fictional A email; generate two independent approximately 20-character values and concatenate locally; save separately titled Sandbox A replacement — not applied. User reported combined/saved; its actual value and length were not inspected. Saving a password-manager entry does not update Auth. No replacement credential was applied to Supabase. Do not use the unapplied replacement for sign-in.
+
+Dashboard evidence showed A's Auth detail pane with email recovery but no direct password edit visible. Do not send recovery to the fictional example.test address, delete/recreate A, alter auth.users directly, or modify production/policies/memberships to solve local validation. User returned to Terminal. The unused replacement may remain marked not applied. No rotation, rollback or recovery email is needed for this correction.
+
+Implementation: private launcher and ordinary runner now require a nonempty existing password instead of at least 24 characters; credentials are not trimmed, transformed, printed or written to files. Supabase password-grant authentication plus /auth/v1/user identity verification remains authoritative. New empty-input diagnostic uses only a fixed allowlisted code/message before login; arbitrary errors stay redacted. Fixed project/origin, publishable-key restriction, private TTY/no-echo handling, distinct-password check, ten-minute snapshot freshness, exact fixtures and separate DELETE approval remain. This changes no server password policy or grants.
+
+Reproducible checks (from repository root):
+node scripts/security/safety.test.mjs
+node scripts/audit-html.mjs
+
+Regression coverage: hidden-input test accepts a synthetic 19-character existing password and rejects empty/undefined/null input without exposing values. UPDATE-only simulated run now uses three distinct synthetic 19-character credentials, still completes 27 assertions, performs no INSERT/DELETE test, and cannot authorize cleanup. These are offline control-flow checks, not evidence of real authentication or Supabase RLS enforcement.
+
+First verification failed 11/12 because my new synthetic label accidentally contained 20 characters while asserting 19. Corrected the test to an explicit 19-character repeated synthetic value; no real password involved. Final verification: 12 tests, 12 pass, 0 fail; 167 HTML scripts parsed. Stable index SHA-256 remains aecb177cdebe6eded90f5e5b9626e152fd677066b923e8b988ece2b83c6683f8. No HTML edited.
+
+Delivery: publish only the three corrected scripts and this append-only log on the existing draft PR branch. Next user operation is to download/extract the pinned correction; do not run the expired session command. Then obtain a new independent sandbox starting snapshot before any client mutations. Use original privately saved A/B/C credentials at hidden prompts; report status only. Authentication failures remain inconclusive and require inspection, never permission-denial PASS.
+
+Rollback: retain the prior download; the prior scripts remain available at commit 0a666d1cbbaf4b10ce4671f841ad70c01c494ec0. Reverting these three script changes restores the old local restriction but does not change any account/database state. No database rollback required because this turn performed no database operation. Production/personal records, stable v122, Auth accounts, memberships and policies unchanged; no DELETE attempt, cleanup, merge or deployment.

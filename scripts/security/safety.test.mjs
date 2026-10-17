@@ -120,7 +120,7 @@ test('UPDATE-only simulation needs no DELETE approval and cannot finalize cleanu
  try{
   const before=synthetic();before.captured_at=new Date(Date.now()-1000).toISOString();
   const path=join(dir,'before.json'),output=join(dir,'update.json');writeFileSync(path,JSON.stringify(before));
-  const r=spawnSync(process.execPath,['--import','./scripts/security/offline-transport.mjs','scripts/security/run.mjs','--mode','update','--before',path,'--out',output],{cwd:process.cwd(),encoding:'utf8',env:{...env,BB_TEST_A_PASSWORD:'OFFLINE_ONLY_A_PASSWORD_24_CHARS',BB_TEST_B_PASSWORD:'OFFLINE_ONLY_B_PASSWORD_24_CHARS',BB_TEST_C_PASSWORD:'OFFLINE_ONLY_C_PASSWORD_24_CHARS',BB_TEST_POLICY_REVIEW:ref,BB_TEST_SNAPSHOT_ATTESTATION:ref,BB_TEST_UPDATE_APPROVAL:ref,BB_TEST_OFFLINE_SIMULATION:'1'}});
+  const r=spawnSync(process.execPath,['--import','./scripts/security/offline-transport.mjs','scripts/security/run.mjs','--mode','update','--before',path,'--out',output],{cwd:process.cwd(),encoding:'utf8',env:{...env,BB_TEST_A_PASSWORD:'A'.repeat(19),BB_TEST_B_PASSWORD:'B'.repeat(19),BB_TEST_C_PASSWORD:'C'.repeat(19),BB_TEST_POLICY_REVIEW:ref,BB_TEST_SNAPSHOT_ATTESTATION:ref,BB_TEST_UPDATE_APPROVAL:ref,BB_TEST_OFFLINE_SIMULATION:'1'}});
   assert.equal(r.status,0,r.stderr);
   const report=JSON.parse(readFileSync(output,'utf8'));
   assert.equal(report.mode,'update');assert.equal(report.cases.length,27);assert.equal(report.status,'UPDATE_CLIENT_CHECKS_PASSED_ADMIN_VERIFICATION_PENDING');
@@ -135,7 +135,10 @@ test('UPDATE-only simulation needs no DELETE approval and cannot finalize cleanu
 
 test('Private launcher accepts only pinned session paths and hidden TTY input',async()=>{
  const {PassThrough}=await import('node:stream');
- const {readHidden,validateSessionURL}=await import('./private-run.mjs');
+ const {readHidden,validateSessionURL,validatePasswordEntry}=await import('./private-run.mjs');
+ const existing='x'.repeat(19);
+ assert.equal(existing.length,19);assert.equal(validatePasswordEntry(existing),existing);
+ for(const value of ['',undefined,null])assert.throws(()=>validatePasswordEntry(value),error=>error.code==='EMPTY_PRIVATE_PASSWORD'&&!error.message.includes(existing));
  const good='https://raw.githubusercontent.com/BurnsSquad/steven-os-mobile-test/'+('a'.repeat(40))+'/docs/evidence/sandbox-session.json';
  assert.equal(validateSessionURL(good),good);
  for(const url of [good.replace('raw.githubusercontent.com','evil.example'),good+'?token=bad',good.replace('a'.repeat(40),'main'),good.replace('https:','http:')])assert.throws(()=>validateSessionURL(url));

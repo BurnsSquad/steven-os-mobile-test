@@ -36,6 +36,14 @@ export function validateSessionURL(value){
  ensure(url.origin==='https://raw.githubusercontent.com'&&!url.search&&!url.hash&&/^\/BurnsSquad\/steven-os-mobile-test\/[0-9a-f]{40}\/docs\/evidence\/sandbox-session\.json$/.test(url.pathname),'Only a pinned review-repository session URL is allowed');
  return url.href;
 }
+// Sign-in checks an existing credential; account-creation strength rules do not belong here.
+export function validatePasswordEntry(password){
+ if(typeof password!=='string'||password.length===0){
+  const error=Error('Password entry was empty. No sign-in or live test was started. Use the existing saved fictional-account password; do not send it to chat.');
+  error.code='EMPTY_PRIVATE_PASSWORD';throw error;
+ }
+ return password;
+}
 const arg=name=>{const i=process.argv.indexOf(name);return i<0?null:process.argv[i+1];};
 async function main(){
  const mode=arg('--mode')||'preflight';ensure(['preflight','update','live'].includes(mode),'Invalid mode');
@@ -59,7 +67,7 @@ async function main(){
  const passwords={};
  for(const actor of ['A','B','C']){
   const password=await readHidden(`Saved fictional ${actor} password`);
-  ensure(password.length>=24,'Test password must have at least 24 characters');passwords[`BB_TEST_${actor}_PASSWORD`]=password;
+  validatePasswordEntry(password);passwords[`BB_TEST_${actor}_PASSWORD`]=password;
  }
  ensure(new Set(Object.values(passwords)).size===3,'Test passwords must be distinct');
  // Refuse expired evidence again after private input, before any sign-in or write.
@@ -82,6 +90,6 @@ async function main(){
  console.log('Return the credential-free client-report.json for independent administrator verification. No cleanup was run.');
  process.exitCode=exit;
 }
-if(import.meta.url===new URL(process.argv[1]||'','file:').href)main().catch(()=>{
- console.error('Local session stopped. Check fresh reviewed session URL, ordinary credentials and output status. Raw errors omitted; do not send passwords.');process.exitCode=1;
+if(import.meta.url===new URL(process.argv[1]||'','file:').href)main().catch(error=>{
+ console.error(error?.code==='EMPTY_PRIVATE_PASSWORD'?error.message:'Local session stopped. Check fresh reviewed session URL, ordinary credentials and output status. Raw errors omitted; do not send passwords.');process.exitCode=1;
 });
