@@ -1852,3 +1852,12 @@ Date: 2026-10-17, America/New_York. User screenshot shows v133 Tasks tab with Vi
 Next single operation: open View as dropdown currently showing Adult demo and select River · fictional child. Expected label changes accordingly, Task creation and Edit controls disappear, eligible Mark complete controls remain. Request selected label/control state without another completion/creation action. Do not infer server security or real membership changes from this simulation. No reset/reload, credentials or external service action needed.
 
 No code/database/hosting changes, real accounts/roles, personal-data operations, stable-index edit, cleanup, merge or deployment this turn. Documentation-only checkpoint; original live preview remains untouched.
+
+
+## Entry 250 — Child Task view screenshot verified; Activities tab next
+
+Date: 2026-10-17, America/New_York. User screenshot now shows fictional River selected, Tasks tab active, child-specific explanation, eligible Mark complete buttons, no Edit controls, and no Add a Task form through page footer. Original fictional items show no recorded completions yet. This verifies the expected child-view presentation on the user's browser. It does not prove authenticated server roles or persistence; v133 explicitly remains a disconnected in-memory simulation.
+
+Next single operation: click Activities while leaving fictional River selected. Expected Activities list, River's own fictional Activity with editing/completion controls, and Add an Activity form. Request that screen before adding an item. Task creation remains adult-only; no Task change or completion requested here.
+
+No credentials, real identities or private household composition involved. No app code/DB/hosting change, real account/member/policy mutation, personal-data operation, stable-index edit, cleanup or merge. Public note records approved generic role demonstration only. Existing live v132 and retained sandbox fixture unchanged; no completed security tests repeated.
