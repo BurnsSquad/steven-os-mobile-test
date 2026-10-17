@@ -2044,3 +2044,12 @@ Date: 2026-10-17, America/New_York. User reports adding the requested fictional 
 Next single operation: on Mac Account A, open Activities and press Refresh if needed. Expected B's fictional drawing Activity appears. Request visibility confirmation before moving to sibling restrictions. Previously verified Individual Task round-trip remains complete; no need to repeat it. Preserve fictional acceptance records; no cleanup authorized.
 
 Generic log append only. No code, schema, policy, account, Auth setting, billing, personal-data, merge or production change. Free-plan optional password-screening guidance unchanged.
+
+
+## Entry 269 — Child Activity visible on adult device; sibling view next
+
+Date: 2026-10-17, America/New_York. User confirms B's newly saved fictional drawing Activity appears under Activities on Mac Account A. Combined with Entry268's independent saved creator/self-assignment verification, this confirms child-created Activity sharing to the adult device. This visibility report does not itself prove sibling edit denial or live Shared/Household completion rules.
+
+Next scoped operation: on phone sign out of B, sign in as fictional Account C using its saved password entered only on the website, then open Activities. Expected B's drawing Activity remains visible with no Rename or Mark complete controls for C. Request that specific visible state; do not edit or complete B's Activity. Mac A may remain signed in. No new account or role change involved.
+
+Generic log-only checkpoint. No app, database, policy, Auth setting, billing, personal-record, cleanup, merge or production change. Earlier verified Task round-trip is not repeated.
