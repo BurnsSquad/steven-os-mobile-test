@@ -2071,3 +2071,14 @@ Date: 2026-10-17, America/New_York. User reports the fictional Household tidy-up
 Next scoped check: sign out C on the phone and sign in B using its saved password only on the website. The same Household Task should already show Complete without another Mark complete action. Do not attempt another completion. This checks the second eligible child's visible state; Shared per-person live acceptance remains pending. Preserve retained fictional acceptance rows; no cleanup.
 
 Generic log-only append under existing authorization. Database inspection was read-only. No code/schema/policy/account/Auth setting/billing/personal-data/merge/production changes.
+
+
+## Entry 272 — Live Household and Shared completion acceptance confirmed
+
+Date: 2026-10-17, America/New_York. User-provided phone screenshot shows Account B signed in with Household tidy-up Complete, attribution to C, and no second completion control. Mac A screenshot also shows that Household completion and the new Shared game-night Task at zero of two contributions with B/C participants. User then reports B's contribution recorded on B and A, followed by completion visible on both devices after C's contribution.
+
+Independent read-only database verification confirms Household mode retains exactly one contribution by C. Shared mode has exactly two contributions: B acting for B and C acting for C, matching both required assignees, revision3. Together with the user device observations this completes the scoped live Individual, child Activity sharing/read-only sibling view, Household-once and Shared-per-person acceptance walkthrough. Earlier SQL permission tests remain separate evidence; absent controls alone are not a denied-request security proof.
+
+Next phase is real-household onboarding and release preparation: provision the authorized adult/child memberships and actual sign-ins, confirm recovery and deployment configuration, and verify household separation before personal use. Current preview remains fictional sandbox only; these results do not establish full production readiness or authorize personal-data migration, cleanup, merge or production promotion. Existing Free-plan choice stands; paid leaked-password screening is optional. Preserve all fictional acceptance records.
+
+Generic log-only update under existing authorization. No application, schema, policy, Auth setting, billing or production changes; database verification was read-only.
