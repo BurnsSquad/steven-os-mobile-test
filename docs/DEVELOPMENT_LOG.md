@@ -2035,3 +2035,12 @@ Date: 2026-10-17, America/New_York. User reports phone Account B marked the assi
 Scope is Individual Task sharing only; do not infer child Activity, sibling restriction, Household-once or Shared per-person live device acceptance from this result. Next single operation on phone B: Activities → add Fictional v134 drawing activity. Then inspect visibility on Mac A before later sibling/Shared checks. Preserve acceptance rows pending separately approved cleanup.
 
 Generic log checkpoint only. No app/schema/permission/Auth/billing changes, personal records, cleanup, merge or production promotion. Optional paid-password-screening clarification remains as recorded in Entry264.
+
+
+## Entry 268 — Child Activity creation saved; adult visibility next
+
+Date: 2026-10-17, America/New_York. User reports adding the requested fictional drawing Activity on phone Account B. Independent provider read confirms exactly one matching Activity, creator B, Individual mode and sole assignee B, initial revision. This verifies saved child self-Activity creation after actual sign-in; no sibling editing/completion or adult-device visibility claimed yet.
+
+Next single operation: on Mac Account A, open Activities and press Refresh if needed. Expected B's fictional drawing Activity appears. Request visibility confirmation before moving to sibling restrictions. Previously verified Individual Task round-trip remains complete; no need to repeat it. Preserve fictional acceptance records; no cleanup authorized.
+
+Generic log append only. No code, schema, policy, account, Auth setting, billing, personal-data, merge or production change. Free-plan optional password-screening guidance unchanged.
