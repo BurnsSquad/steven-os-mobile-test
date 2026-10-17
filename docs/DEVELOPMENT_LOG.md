@@ -1784,3 +1784,16 @@ Documentation correction: an attempted public plan update containing private hou
 A first correction tool request omitted its required content argument; it did not establish successful correction. Re-fetched the current log and supplied complete corrected contents with the current SHA; require explicit success before reporting removal.
 
 No database/hosting operation, account/invitation/member/policy change, personal-record migration/sync/erasure, stable-index edit, merge or deployment. Next clarify whether planning members edit/complete only their own tasks while administrators manage all shared tasks. Retained fictional acceptance row cleanup remains separately gated.
+
+
+## Entry 245 — Approved generic specification published separately
+
+Date: 2026-10-17, America/New_York. User explicitly approved publishing the generic Tasks/Activities rules in public GitHub documentation, excluding family counts, names and personal records. Publication permission is specific to that payload/destination, not database mutations or real-account onboarding.
+
+An attempt to append the approved rules to the older plan was rejected by automatic approval review because the full replacement would include pre-existing household-count context outside that approval. The plan replacement and dependent log update did not execute. Safer correction: created a standalone generic specification with no household-count context or member identities. No indirect publication of the rejected material.
+
+Confirmed successful creation of docs/TASKS_AND_ACTIVITIES_SPECIFICATION.md in commit b18084f78fd7940fadd3f9c48811d09dfdb86f4a on existing review branch. It records the approved role/capability and item/completion-mode distinctions, unchanged private-data boundary, undecided deletion/scheduling behavior, implementation gaps and new-rule fictional test requirements. See that file for the public-approved requirements; do not republish private household configuration here.
+
+Verification: successful repository tool response established file publication; no code test is appropriate for this documentation-only action. The specification is not implementation evidence. Current preview/database behavior has not changed. Next prepare separate interface work and a concrete reviewed server authorization model before mutation; existing safeguards and approvals remain required.
+
+No new database/hosting operation, account/invitation/member/policy change, personal-record migration/sync/erasure, stable-index edit, merge or explicit deployment. Existing Git integration may generate automatic branch previews for documentation commits; no production promotion/settings change requested. Retained fictional acceptance row cleanup remains separately gated. Documentation rollback is a targeted reviewed revert if needed; no DB rollback required.
