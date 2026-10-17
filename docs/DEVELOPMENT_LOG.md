@@ -1843,3 +1843,12 @@ Next single user operation: in View as choose River · fictional child, leaving 
 No credentials, real accounts or personal records needed. Role switch simulates the view; it does not authenticate a user, change membership or prove server authorization. No item creation/completion requested in this step. Subsequent Activity creation review will be separately guided after this observation. Demo resets on reload; do not infer persistence or cross-device synchronization.
 
 No database/hosting mutation, schema/policy/account change, private-data migration/sync/erasure, stable-index edit, cleanup, merge or explicit deployment this turn. Prior automated model/UI checks retain their recorded scope. Documentation only; automatic Git previews may occur from branch commits as previously noted.
+
+
+## Entry 249 — Screenshot remains in Adult demo; child view not yet observed
+
+Date: 2026-10-17, America/New_York. User screenshot shows v133 Tasks tab with View as set to Adult demo, adult management note, completion-on-behalf/Edit controls and Add a Task section. This is expected adult UI, not evidence that child restriction failed. The role-change status text alone does not prove which role was chosen; the selected label and visible controls identify current adult state. Child-view acceptance remains pending.
+
+Next single operation: open View as dropdown currently showing Adult demo and select River · fictional child. Expected label changes accordingly, Task creation and Edit controls disappear, eligible Mark complete controls remain. Request selected label/control state without another completion/creation action. Do not infer server security or real membership changes from this simulation. No reset/reload, credentials or external service action needed.
+
+No code/database/hosting changes, real accounts/roles, personal-data operations, stable-index edit, cleanup, merge or deployment this turn. Documentation-only checkpoint; original live preview remains untouched.
