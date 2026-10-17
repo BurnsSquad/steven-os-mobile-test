@@ -1908,3 +1908,12 @@ Date: 2026-10-17, America/New_York. User screenshot shows fictional River select
 Next single scoped operation: while River remains selected, click Mark complete only under Fill the fictional bird feeder (Household mode). Expected that item Complete, one actor recorded, total2/3 complete. A later Sky view should show already complete without another completion control; verify that separately before concluding household-once acceptance. Do not click individual task, reset/reload or add more Activities.
 
 No server-side row, account/membership/policy, personal record or existing live-preview task is changed by this disconnected simulation. No database/hosting operation, stable-index edit, cleanup, merge or explicit deployment this turn. Prior automated checks remain separate evidence. Actual atomic/concurrent first-completion on the eventual server remains untested.
+
+
+## Entry 256 — Household-once completion reported; alternate child view next
+
+Date: 2026-10-17, America/New_York. User reports complete following River's scoped Mark complete on fictional household bird-feeder task. This is user report of demo completion; actor/count and alternate-view state have not yet been screenshot verified. Prior Shared2/2 state was screenshot verified separately.
+
+Next single user operation: change View as to Sky · fictional child, remain on Tasks. Expected bird-feeder task remains Complete with River attribution and no Mark complete button, overall2/3 complete; Shared game-night remains Complete. Individual picnic remains River-assigned and unavailable for Sky completion. Request expected-state confirmation or specific mismatch. Do not click other controls or reset/reload.
+
+This checks one-time household completion versus per-person Shared behavior in the fictional interface only. Real concurrent server completion, persistent sessions and new role-specific database permissions remain unimplemented. No DB/hosting mutation, real account/member/policy change, personal-data operation, stable-index edit, cleanup, merge or explicit deployment this turn. No repeat of completed API security tests.
