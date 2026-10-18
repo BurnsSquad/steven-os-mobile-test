@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {easternInstant} from '../preview/planner-pilot/calendar-ui.mjs';
+test('Eastern 12-hour time handles noon/midnight and daylight saving',()=>{assert.equal(easternInstant('2026-10-18',5,0,'PM'),'2026-10-18T21:00:00.000Z');assert.equal(easternInstant('2026-12-18',12,0,'AM'),'2026-12-18T05:00:00.000Z');assert.equal(easternInstant('2026-12-18',12,0,'PM'),'2026-12-18T17:00:00.000Z');});
+test('nonexistent spring time is refused and repeated fall time uses first occurrence',()=>{assert.throws(()=>easternInstant('2027-03-14',2,30,'AM'),/does not exist/);assert.equal(easternInstant('2026-11-01',1,30,'AM'),'2026-11-01T05:30:00.000Z');});
+test('invalid date/clock inputs are refused',()=>{assert.throws(()=>easternInstant('2026-02-30',1,0,'PM'));assert.throws(()=>easternInstant('2026-10-18',13,0,'PM'));assert.throws(()=>easternInstant('2026-10-18',1,60,'PM'));});
