@@ -2326,3 +2326,13 @@ Protected source count/fingerprint remains unchanged; zero retained plan/audit f
 Current behavior, chart/source mapping, installation and evidence limits documented in database/planner/FINANCE_CURRENT_WORKFLOW.md; previous v139 notes marked historical.
 
 Preview v144 READY: https://steven-os-mobile-test-juz96opis-burns6.vercel.app/ (dpl_8YKoeMrTF5U5vftiWzqDSZrz3DSC; eighteen generic assets; preview only, no production target/aliases).
+
+## Entry 299 — Confirmed parent Finance due dates in the calendar
+
+2026-10-18, America/New_York. v145 adds a read-only projection of current active parent-confirmed dated bills into the shared parent calendar and all five original calendar views. Entries show recorded amounts/payment state and open the current Finance source record for review. No duplicate event rows, payment execution or automatic fact confirmation. Unconfirmed/reference, uncertain, incomplete, inactive and historical records are omitted. Paid/reconciled records participate in original completion filters. Due dates use all-day Eastern boundaries through daylight-saving transitions.
+
+Children do not fetch Finance records; existing Finance RLS and defensive role filtering remain. Parent-only projections stay out of Family-only original calendar views. Original overlay is in-memory only: no shared Finance facts enter private original arrays, snapshots or recovery exports. Root index SHA256 remains aecb177cdebe6eded90f5e5b9626e152fd677066b923e8b988ece2b83c6683f8. No database migration or family financial record change.
+
+Validation passes: pure eligibility/cents/dedup/non-mutation/DST unit tests; original-OS mocked browser checks across eleven tabs/five calendar views, Finance source routing, mobile, private-backup exclusion and recovery/sign-out regressions; shared-planner mocked browser confirms child calendar makes no Finance query; existing calendar UI mock passes. These are automated/synthetic checks, not new ordinary-password or physical-device acceptance. Existing imported facts may yield no calendar entries until explicitly verified by a parent.
+
+Preview READY: https://steven-os-mobile-test-1cig9kkb5-burns6.vercel.app/ (dpl_HMMjcPJ1SMXKjdQiQSN4RKRh9VCK; nineteen generic assets; no production target or aliases). Documentation: database/planner/FINANCE_CALENDAR.md. Draft PR remains unmerged; Free unchanged. Next data-dependent step is parent review of current Finance facts and paycheck inputs, followed by reconciliation of current-plan results with the original historical charts without silently mixing their sources.

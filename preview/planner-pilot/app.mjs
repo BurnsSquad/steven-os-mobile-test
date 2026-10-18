@@ -1,3 +1,4 @@
+import {financeCalendarEvents} from './finance-calendar.mjs';
 import {financeWorkbench} from './finance-workbench.mjs';
 import {calendarUI} from './calendar-ui.mjs';
 import {originalOS} from './original-os.mjs';
@@ -10,7 +11,7 @@ let roster=[];const label=id=>roster.find(x=>x.id===id)?.label||'Household membe
 let user=null,membership=null,items=[],tab='task',busy=false,editing=null,assigning=null,generation=0;
 const adult=()=>membership?.member_role==='adult';
 const financeTransport=(command,p)=>command==='load'?Promise.all([client.finance(),client.financePlans()]).then(([records,plans])=>({records,plans})):command==='history'?client.financeHistory().then(rows=>rows.map(r=>({...r,actor_label:label(r.actor_id)}))):command==='preview'?client.financePreview(p.inputs):command==='savePlan'?client.financeSavePlan(p):command==='createBill'?client.financeCreateBill(p):client.financeRevise(p);const finance=financeWorkbench({host:$('finance-panel'),transport:financeTransport,referenceView:financeView});
-let calendar=null;const calendarContext=()=>({id:user?.id,role:membership?.member_role,people:roster});const calendarTransport=(command,payload)=>command==='list'?client.calendarList():command==='save'?client.calendarSave(payload):client.calendarCancel(payload);
+let calendar=null;const calendarContext=()=>({id:user?.id,role:membership?.member_role,people:roster});const calendarTransport=(command,payload)=>command==='list'?Promise.all([client.calendarList(),adult()?client.finance():Promise.resolve([])]).then(([events,records])=>events.concat(financeCalendarEvents(records))):command==='save'?client.calendarSave(payload):client.calendarCancel(payload);
 $('os-calendar').onclick=()=>{showSection('calendar');if(calendar)calendar.load();};
 const original=originalOS({client,calendarTransport,calendarContext,financeTransport,onError:errorMessage,onStatus:message,onView:name=>{if(name==='finance')$('os-finance').click();else showSection('planner');}});
 $('os-original').onclick=()=>original.open();
@@ -75,7 +76,7 @@ function render(){
 }
 $('login').addEventListener('submit',event=>{event.preventDefault();action(async()=>{
  const password=$('password').value,key=PUBLISHABLE_KEY||$('key').value.trim(),account=$('email').value.trim();$('password').value='';
- try{user=await client.signIn(account,key,password);await client.checkExposure();generation++;membership=await client.membership();buildRoster(await client.roster());$('identity').textContent=`${label(user.id)} · ${membership.member_role==='adult'?'Adult':'Child'}`;await load();calendar=calendarUI({host:$('calendar-panel'),transport:calendarTransport,context:calendarContext});$('os-navigation').hidden=false;$('os-finance').hidden=!adult();if(adult()){if(await original.load()){$('os-original').hidden=false;original.open();}await routines.load();$('routine-settings').hidden=false;$('routine-panel').hidden=false;}else $('routine-settings').hidden=true;$('signin').hidden=true;$('recovery-request').hidden=true;$('workspace').hidden=false;$('key').value='';message('Your shared planner is ready.');}catch(error){clear();throw error;}
+ try{user=await client.signIn(account,key,password);await client.checkExposure();generation++;membership=await client.membership();buildRoster(await client.roster());$('identity').textContent=`${label(user.id)} · ${membership.member_role==='adult'?'Adult':'Child'}`;await load();calendar=calendarUI({host:$('calendar-panel'),transport:calendarTransport,context:calendarContext,openFinance:async id=>{showSection('finance');await finance.load();finance.openFact(id);}});$('os-navigation').hidden=false;$('os-finance').hidden=!adult();if(adult()){if(await original.load()){$('os-original').hidden=false;original.open();}await routines.load();$('routine-settings').hidden=false;$('routine-panel').hidden=false;}else $('routine-settings').hidden=true;$('signin').hidden=true;$('recovery-request').hidden=true;$('workspace').hidden=false;$('key').value='';message('Your shared planner is ready.');}catch(error){clear();throw error;}
 });});
 $('recover-form').addEventListener('submit',event=>{event.preventDefault();action(async()=>{
  const key=PUBLISHABLE_KEY||$('key').value.trim();
