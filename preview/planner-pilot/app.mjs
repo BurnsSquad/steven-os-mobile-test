@@ -1,3 +1,4 @@
+import {financeWorkbench} from './finance-workbench.mjs';
 import {calendarUI} from './calendar-ui.mjs';
 import {originalOS} from './original-os.mjs';
 import {financeView} from './finance.mjs';
@@ -8,13 +9,13 @@ const $=id=>document.getElementById(id),client=createClient();
 let roster=[];const label=id=>roster.find(x=>x.id===id)?.label||'Household member';
 let user=null,membership=null,items=[],tab='task',busy=false,editing=null,assigning=null,generation=0;
 const adult=()=>membership?.member_role==='adult';
-const finance=financeView($('finance-panel'));
+const financeTransport=(command,p)=>command==='load'?Promise.all([client.finance(),client.financePlans()]).then(([records,plans])=>({records,plans})):command==='history'?client.financeHistory().then(rows=>rows.map(r=>({...r,actor_label:label(r.actor_id)}))):command==='preview'?client.financePreview(p.inputs):command==='savePlan'?client.financeSavePlan(p):command==='createBill'?client.financeCreateBill(p):client.financeRevise(p);const finance=financeWorkbench({host:$('finance-panel'),transport:financeTransport,referenceView:financeView});
 let calendar=null;const calendarContext=()=>({id:user?.id,role:membership?.member_role,people:roster});const calendarTransport=(command,payload)=>command==='list'?client.calendarList():command==='save'?client.calendarSave(payload):client.calendarCancel(payload);
 $('os-calendar').onclick=()=>{showSection('calendar');if(calendar)calendar.load();};
-const original=originalOS({client,calendarTransport,calendarContext,onError:errorMessage,onStatus:message,onView:name=>{if(name==='finance')$('os-finance').click();else showSection('planner');}});
+const original=originalOS({client,calendarTransport,calendarContext,financeTransport,onError:errorMessage,onStatus:message,onView:name=>{if(name==='finance')$('os-finance').click();else showSection('planner');}});
 $('os-original').onclick=()=>original.open();
 function showSection(name){$('planner-area').hidden=name!=='planner';$('calendar-panel').hidden=name!=='calendar';$('os-calendar').setAttribute('aria-pressed',String(name==='calendar'));$('finance-panel').hidden=name!=='finance';$('os-finance').setAttribute('aria-pressed',String(name==='finance'));$('os-planner').setAttribute('aria-pressed',String(name==='planner'));}
-$('os-planner').onclick=()=>showSection('planner');$('os-finance').onclick=()=>action(async()=>{if(!adult())return;finance.set(await client.finance());showSection('finance');});
+$('os-planner').onclick=()=>showSection('planner');$('os-finance').onclick=()=>action(async()=>{if(!adult())return;showSection('finance');await finance.load();});
 const routines=routineControls({client,host:$('routine-panel'),people:()=>roster,onError:errorMessage,onSaved:message});
 function message(text,error=false){$('status').textContent=text;$('status').dataset.error=String(error);}
 function clear(){calendar?.clear();calendar=null;original.clear();$('os-original').hidden=true;finance.clear();showSection('planner');$('os-navigation').hidden=true;routines.clear();$('routine-settings').hidden=true;generation++;client.clear();user=null;membership=null;items=[];roster=[];editing=null;assigning=null;for(const id of ['edit-dialog','assign-dialog'])$(id).close();$('workspace').hidden=true;$('recovery-request').hidden=false;$('signin').hidden=false;$('password').value='';$('key').value='';$('title').value='';$('identity').textContent='';$('sync').textContent='';$('items').replaceChildren();for(const id of ['username','username-password'])$(id).value='';for(const id of ['assignee','assign-person','participant-options','assign-participants'])$(id).replaceChildren();}

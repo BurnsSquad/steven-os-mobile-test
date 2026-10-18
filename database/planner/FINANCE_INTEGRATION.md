@@ -1,3 +1,11 @@
+# Finance integration — current status v144
+
+The parent-only manual current-plan workflow is installed and connected inside the original Finance tab and shared Finance Center. See [FINANCE_CURRENT_WORKFLOW.md](FINANCE_CURRENT_WORKFLOW.md) for current behavior, source revisions, approvals, chart mapping, verification and limits. Original private charts and imported source values are preserved.
+
+The v139 notes below are retained as historical implementation context; their then-remaining parent editing/revision work is implemented by v144. Bank linking, full transaction imports and longer-range forecasting still require separate verified data/work.
+
+## Historical v139 reference stage
+
 # Finance handoff integration — v139 review stage
 
 The supplied October 17 developer handoff is a model and dated reference, not application/backend source or a bank export. It defines four workspaces: Command Center, Current Check Plan, Reference Library, Monthly + Annual. Paycheck-window obligations precede realistic living, buffers, debt minimums and optional allocations. Expected deposits, available credit, earmarked funds and unreleased savings are not usable cash.
