@@ -1,4 +1,6 @@
-# Original Steven OS integration review — v140
+# Original Steven OS integration review — current through v148
+
+See [ORIGINAL_OS_COMPATIBILITY.md](ORIGINAL_OS_COMPATIBILITY.md) for the current eleven-tab map, tested integrations and remaining boundaries. Earlier v140 evidence below remains historical.
 
 The owner's uploaded HTML is the actual interface, including its original scripts/styles. It is not recreated in a simplified layout. Original source and uploaded JSON are stored immutably in owner-only RLS sources; working state is a separate versioned private workspace. Neither source, embedded personal defaults, backup nor generated private document is in public repository/deployment assets.
 
@@ -6,11 +8,11 @@ The owner's uploaded HTML is the actual interface, including its original script
 
 The uploaded HTML has more starter calendar records than the newer backup. Working state uses the supplied backup as authoritative, including explicit empty collections; it does not silently restore historical starter events that may have been deleted. Original HTML starter records remain preserved in the immutable source. Later optional backup fields are absent, not assumed to contain saved data. The supplied export filename/version is older than some features in the HTML; use a fresh export from the original browser later if additional school/opportunity/reflection/spending-budget records exist there.
 
-The original Finance data remains historical in this private workspace. Newer Finance handoffs/rules are separate protected references, not silently mixed into legacy recurring amounts or chart totals. No shared planner tasks, routines or completion history are replaced. Current Finance and Shared Tasks links connect the private original interface to the existing working modules. Full canonical cross-module transaction/calendar/Finance synchronization and financial editing/scenario generation are still separate pending work.
+The original Finance data remains historical in this private workspace. Newer Finance handoffs/rules are separate protected references, not silently mixed into legacy recurring amounts or chart totals. No shared planner tasks, routines or completion history are replaced. Current Finance and Shared Tasks links connect the private original interface to the existing working modules. Connected calendar overlays, parent Finance fact revisions, manual paycheck calculation/approval and Overview summary are now implemented (v142–v147). Transaction ingest, complete forecasting and broader sharing of legacy private collections remain separate pending work.
 
 ## Privacy and isolation
 
-- Imported personal calendar, business, goals and financial records default to the uploader's private owner account. Other adults, children, outsiders and anonymous callers cannot read them. Sharing selected calendar categories/records requires a later explicit rule; this import does not make all personal records household-shared.
+- Imported personal calendar, business, goals and financial records default to the uploader's private owner account. Other adults, children, outsiders and anonymous callers cannot read them. Connected calendar events support explicit Family/Parents/Private audiences; this does not make imported private records household-shared.
 - The original HTML runs in an opaque-origin sandbox without parent-session access or direct network access. A separate generic loader has an isolated CSP; the authenticated parent retains strict script policy. Original inline application scripts execute only inside that sandbox.
 - Browser storage calls are adapted to per-frame memory. This avoids leaving private imported data readable by the next account through same-origin localStorage. Bound source-window/origin/nonce messages request versioned saves through the ordinary authenticated parent client. No token is sent into the original application.
 - Saves serialize and check a version. Each accepted change preserves the prior snapshot. Stale saves stop rather than overwrite another device. On uncertainty/conflict, download an original OS backup before leaving/reloading. The immutable uploads remain recovery sources. An external backup is still advisable; source preservation is not a claim of paid point-in-time database recovery.

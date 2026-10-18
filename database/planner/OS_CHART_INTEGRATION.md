@@ -1,3 +1,9 @@
+# Current status through v148
+
+The original uploaded HTML and supplied JSON backup are installed in an owner-only workspace. The actual original layout, charts and tabs run there; connected calendar views, planner panels, parent Finance workbench and Overview summary have been added. See [ORIGINAL_OS_COMPATIBILITY.md](ORIGINAL_OS_COMPATIBILITY.md) for the current map. The v139-era mapping below is historical and is not a request to repeat an already completed import. Current financial figures still require parent confirmation; spending history cannot be inferred from a planning PDF.
+
+## Historical chart mapping (v139)
+
 # Original Steven OS chart preservation and mapping
 
 The retained v122 `index.html` remains unchanged. It is the visual/feature baseline, not a discarded prototype. Its old browser data is not accessible from a new preview origin.
