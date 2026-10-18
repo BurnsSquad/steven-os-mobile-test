@@ -25,3 +25,11 @@ Hosted rollback SQL-role tests verify owner read/save, prior revision retention,
 ## Next acceptance
 
 Owner signs in to the new preview and compares the actual original layout/tabs/calendar/charts. Confirm expected records before any starter-source reconciliation or cross-member calendar sharing. Resolve absent optional backup data via a fresh export if needed. Current Finance and Shared planner remain separate source-of-truth modules during this review; no production promotion, original-file replacement or merge.
+
+## Owner recovery downloads
+
+Save HTML copy and Save JSON backup in the private OS toolbar each fetch the latest saved owner workspace through normal authenticated reads. Save form edits and wait for the saved message before exporting. These are private client-generated downloads; no personal static files are published. The HTML embeds the saved original OS state and uses an independent local-storage namespace, so it can open offline without replacing other original-file storage. The JSON includes compatible main records, preferences, household routines, available optional collections and a complete originalOSStorage map plus source/version provenance. Filenames use Eastern calendar date.
+
+Scope: original private OS workspace only. Shared Tasks/Activities/routine database and the current protected Finance reference are separate online datasets and are not included in these two files. Offline edits stay local and do not synchronize automatically. Retain both files and do not upload them into public repositories.
+
+Verification: three recovery unit checks cover state/provenance, optional collections, Eastern date, literal script/dollar escaping, independent storage and invalid-data refusal. Mock browser downloads both files, verifies JSON record preservation, opens the HTML independently and verifies original tabs/event count. These checks do not claim to have saved files on the owner's device; the owner clicks each download button.
