@@ -1,0 +1,45 @@
+-- Private original sources and owner-only review workspace; no public personal data.
+CREATE TABLE public.bb_os_sources(id uuid PRIMARY KEY DEFAULT gen_random_uuid(),household_id uuid NOT NULL,owner_id uuid NOT NULL,html text NOT NULL,backup jsonb NOT NULL,html_sha256 text NOT NULL,backup_sha256 text NOT NULL,created_at timestamptz NOT NULL DEFAULT now(),FOREIGN KEY(household_id,owner_id) REFERENCES public.bb_planner_members(household_id,user_id),UNIQUE(owner_id,html_sha256,backup_sha256));
+CREATE TABLE public.bb_os_workspaces(id uuid PRIMARY KEY DEFAULT gen_random_uuid(),source_id uuid NOT NULL REFERENCES public.bb_os_sources(id),household_id uuid NOT NULL,owner_id uuid NOT NULL,storage jsonb NOT NULL CHECK(jsonb_typeof(storage)='object'),version bigint NOT NULL DEFAULT 1,updated_at timestamptz NOT NULL DEFAULT now(),FOREIGN KEY(household_id,owner_id) REFERENCES public.bb_planner_members(household_id,user_id),UNIQUE(source_id));
+CREATE TABLE public.bb_os_revisions(workspace_id uuid NOT NULL REFERENCES public.bb_os_workspaces(id),version bigint NOT NULL,storage jsonb NOT NULL,actor_id uuid NOT NULL,created_at timestamptz NOT NULL DEFAULT now(),PRIMARY KEY(workspace_id,version));
+CREATE INDEX os_sources_owner ON public.bb_os_sources(owner_id,household_id);
+CREATE INDEX os_workspaces_owner ON public.bb_os_workspaces(owner_id,household_id);
+ALTER TABLE public.bb_os_sources ENABLE ROW LEVEL SECURITY;ALTER TABLE public.bb_os_workspaces ENABLE ROW LEVEL SECURITY;ALTER TABLE public.bb_os_revisions ENABLE ROW LEVEL SECURITY;
+REVOKE ALL ON public.bb_os_sources,public.bb_os_workspaces,public.bb_os_revisions FROM PUBLIC,anon,authenticated,service_role;
+GRANT SELECT ON public.bb_os_sources,public.bb_os_workspaces,public.bb_os_revisions TO authenticated;
+CREATE POLICY os_source_owner ON public.bb_os_sources FOR SELECT TO authenticated USING(owner_id=(SELECT auth.uid()) AND household_id IN(SELECT household_id FROM public.bb_planner_members WHERE user_id=(SELECT auth.uid()) AND member_role='adult'));
+CREATE POLICY os_workspace_owner ON public.bb_os_workspaces FOR SELECT TO authenticated USING(owner_id=(SELECT auth.uid()) AND household_id IN(SELECT household_id FROM public.bb_planner_members WHERE user_id=(SELECT auth.uid()) AND member_role='adult'));
+CREATE POLICY os_revision_owner ON public.bb_os_revisions FOR SELECT TO authenticated USING(workspace_id IN(SELECT id FROM public.bb_os_workspaces WHERE owner_id=(SELECT auth.uid())));
+CREATE ROLE bb_os_workspace_writer NOLOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT NOBYPASSRLS;
+GRANT bb_os_workspace_writer TO postgres;
+GRANT USAGE ON SCHEMA bb_planner_private,public TO bb_os_workspace_writer;
+GRANT SELECT ON public.bb_os_workspaces,public.bb_planner_members TO bb_os_workspace_writer;
+GRANT UPDATE(storage,version,updated_at) ON public.bb_os_workspaces TO bb_os_workspace_writer;
+GRANT INSERT ON public.bb_os_revisions TO bb_os_workspace_writer;
+CREATE POLICY os_writer_read ON public.bb_os_workspaces FOR SELECT TO bb_os_workspace_writer USING(true);
+CREATE POLICY os_writer_update ON public.bb_os_workspaces FOR UPDATE TO bb_os_workspace_writer USING(true) WITH CHECK(true);
+CREATE POLICY os_writer_member ON public.bb_planner_members FOR SELECT TO bb_os_workspace_writer USING(true);
+CREATE POLICY os_writer_revision ON public.bb_os_revisions FOR INSERT TO bb_os_workspace_writer WITH CHECK(true);
+GRANT EXECUTE ON FUNCTION bb_planner_private.actor_uid(),bb_planner_private.require_member(uuid) TO bb_os_workspace_writer;
+CREATE FUNCTION bb_planner_private.os_save(i uuid,v bigint,s jsonb) RETURNS jsonb LANGUAGE plpgsql SECURITY DEFINER SET search_path='' AS $$
+DECLARE w public.bb_os_workspaces;
+BEGIN
+ SELECT * INTO w FROM public.bb_os_workspaces WHERE id=i FOR UPDATE;
+ IF NOT FOUND THEN RAISE EXCEPTION 'Workspace unavailable' USING ERRCODE='42501';END IF;
+ IF w.owner_id IS DISTINCT FROM bb_planner_private.actor_uid() OR bb_planner_private.require_member(w.household_id)<>'adult' THEN RAISE EXCEPTION 'Private workspace denied' USING ERRCODE='42501';END IF;
+ IF v IS NULL OR v<>w.version THEN RAISE EXCEPTION 'Workspace changed elsewhere' USING ERRCODE='40001';END IF;
+ IF s IS NULL OR jsonb_typeof(s)<>'object' OR octet_length(s::text)>5000000 OR NOT(s?'steven-os-v60-data') OR EXISTS(SELECT FROM jsonb_each(s) x WHERE jsonb_typeof(x.value)<>'string' OR x.key !~ '^steven-os-[a-zA-Z0-9_-]{1,100}$') THEN RAISE EXCEPTION 'Invalid workspace snapshot' USING ERRCODE='22023';END IF;
+ IF s=w.storage THEN RETURN jsonb_build_object('id',i,'version',v);END IF;
+ INSERT INTO public.bb_os_revisions(workspace_id,version,storage,actor_id) VALUES(i,w.version,w.storage,w.owner_id);
+ UPDATE public.bb_os_workspaces SET storage=s,version=version+1,updated_at=clock_timestamp() WHERE id=i;
+ RETURN jsonb_build_object('id',i,'version',v+1);
+END $$;
+GRANT CREATE ON SCHEMA bb_planner_private TO bb_os_workspace_writer;
+ALTER FUNCTION bb_planner_private.os_save(uuid,bigint,jsonb) OWNER TO bb_os_workspace_writer;
+REVOKE CREATE ON SCHEMA bb_planner_private FROM bb_os_workspace_writer;
+REVOKE ALL ON FUNCTION bb_planner_private.os_save(uuid,bigint,jsonb) FROM PUBLIC,anon,authenticated,service_role;
+GRANT EXECUTE ON FUNCTION bb_planner_private.os_save(uuid,bigint,jsonb) TO authenticated;
+CREATE FUNCTION public.bb_os_save(i uuid,v bigint,s jsonb) RETURNS jsonb LANGUAGE sql SECURITY INVOKER SET search_path='' AS $$ SELECT bb_planner_private.os_save(i,v,s) $$;
+REVOKE ALL ON FUNCTION public.bb_os_save(uuid,bigint,jsonb) FROM PUBLIC,anon,authenticated,service_role;
+GRANT EXECUTE ON FUNCTION public.bb_os_save(uuid,bigint,jsonb) TO authenticated;
+NOTIFY pgrst,'reload schema';
