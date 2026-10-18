@@ -22,14 +22,32 @@ export function createHandler({base,publicKey,adminKey,fetcher=fetch,clock=Date.
    const chunks=[];let size=0;while(true){const {done,value}=await reader.read();if(done)break;size+=value.length;if(size>4096){await reader.cancel();return reply({code:'REQUEST'},413);}chunks.push(value);}
    const bytes=new Uint8Array(size);let offset=0;for(const v of chunks){bytes.set(v,offset);offset+=v.length;}
    const body=JSON.parse(new TextDecoder().decode(bytes));
-   if(!['signin','rename'].includes(body.action))return reply({code:'REQUEST'},400);
+   if(!['signin','rename','recover'].includes(body.action))return reply({code:'REQUEST'},400);
    // Best-effort isolate throttling supplements Auth's provider-wide controls.
    // It is not a claim of a globally coordinated rate limiter.
-   const bucket=body.action==='signin'?String(body.username||'').toLowerCase():req.headers.get('authorization')||'anonymous';
+   const bucket=body.action==='rename'?req.headers.get('authorization')||'anonymous':body.action+':'+String(body.username||'').toLowerCase();
    const now=clock();for(const [k,v] of attempts)if(v.until<now)attempts.delete(k);
    if(attempts.size>10000)return reply({code:'RATE_LIMIT'},429);
-   const count=attempts.get(bucket)||{n:0,until:now+600000};count.n++;attempts.set(bucket,count);
-   if(count.n>20)return reply({code:'RATE_LIMIT'},429);
+   const count=attempts.get(bucket)||{n:0,until:now+(body.action==='recover'?3600000:600000)};count.n++;attempts.set(bucket,count);
+   if(count.n>(body.action==='recover'?3:20))return reply({code:'RATE_LIMIT'},429);
+   if(body.action==='recover'){
+    if(!validName(body.username))return reply({code:'USERNAME'},400);
+    let target;try{target=new URL(body.redirectTo);}catch{return reply({code:'REQUEST'},400);}
+    if(!trustedOrigin(target.origin)||target.pathname!=='/recovery.html'||target.search||target.hash||target.username||target.password||(origin&&target.origin!==origin))return reply({code:'REQUEST'},400);
+    const found=await send('/rest/v1/bb_planner_profiles?'+new URLSearchParams({select:'user_id',username_key:`eq.${body.username.toLowerCase()}`}),{admin:true});
+    if(!found.ok)return reply({code:'UNAVAILABLE'},503);
+    const profile=Array.isArray(found.data)&&found.data.length===1?found.data[0]:null;
+    const identity=profile?await send('/auth/v1/admin/users/'+encodeURIComponent(profile.user_id),{admin:true}):null;
+    if(identity?.ok&&typeof identity.data?.email==='string'){
+     // Only the email already bound to this Auth identity is used. The caller
+     // cannot select an inbox, supply email content or mint a recovery token.
+     const delivery=await send('/auth/v1/recover?'+new URLSearchParams({redirect_to:target.href}),{method:'POST',body:{email:identity.data.email}});
+     // Status only: never log the provider response, recipient or link.
+     if(!delivery.ok)console.warn('planner_recovery_delivery_failed_status',delivery.status);
+    }
+    // Do not reveal account existence, address or provider delivery status.
+    return reply({accepted:true});
+   }
    if(body.action==='signin'){
     if(!validName(body.username)||typeof body.password!=='string'||!body.password||body.password.length>256)return reply({code:'SIGNIN'},401);
     const name=body.username.toLowerCase();

@@ -5,7 +5,7 @@ let roster=[];const label=id=>roster.find(x=>x.id===id)?.label||'Household membe
 let user=null,membership=null,items=[],tab='task',busy=false,editing=null,assigning=null,generation=0;
 const adult=()=>membership?.member_role==='adult';
 function message(text,error=false){$('status').textContent=text;$('status').dataset.error=String(error);}
-function clear(){generation++;client.clear();user=null;membership=null;items=[];roster=[];editing=null;assigning=null;for(const id of ['edit-dialog','assign-dialog'])$(id).close();$('workspace').hidden=true;$('signin').hidden=false;$('password').value='';$('key').value='';$('title').value='';$('identity').textContent='';$('sync').textContent='';$('items').replaceChildren();for(const id of ['username','username-password'])$(id).value='';for(const id of ['assignee','assign-person','participant-options','assign-participants'])$(id).replaceChildren();}
+function clear(){generation++;client.clear();user=null;membership=null;items=[];roster=[];editing=null;assigning=null;for(const id of ['edit-dialog','assign-dialog'])$(id).close();$('workspace').hidden=true;$('recovery-request').hidden=false;$('signin').hidden=false;$('password').value='';$('key').value='';$('title').value='';$('identity').textContent='';$('sync').textContent='';$('items').replaceChildren();for(const id of ['username','username-password'])$(id).value='';for(const id of ['assignee','assign-person','participant-options','assign-participants'])$(id).replaceChildren();}
 function errorMessage(error){
  if(['SESSION','MEMBERSHIP','ISOLATION','EXPOSURE'].includes(error.code)){clear();message(error.code==='MEMBERSHIP'?'This account has no access to this planner.':['ISOLATION','EXPOSURE'].includes(error.code)?'The API configuration could not be verified. The page stopped; contact the developer.':'Your session ended. Sign in again.',true);}
  else if(error.code==='SIGNIN')message('Sign-in failed. Check the email or username and password.',true);
@@ -62,7 +62,12 @@ function render(){
 }
 $('login').addEventListener('submit',event=>{event.preventDefault();action(async()=>{
  const password=$('password').value,key=PUBLISHABLE_KEY||$('key').value.trim(),account=$('email').value.trim();$('password').value='';
- try{user=await client.signIn(account,key,password);await client.checkExposure();generation++;membership=await client.membership();buildRoster(await client.roster());$('identity').textContent=`${label(user.id)} · ${membership.member_role==='adult'?'Adult':'Child'}`;await load();$('signin').hidden=true;$('workspace').hidden=false;$('key').value='';message('Your shared planner is ready.');}catch(error){clear();throw error;}
+ try{user=await client.signIn(account,key,password);await client.checkExposure();generation++;membership=await client.membership();buildRoster(await client.roster());$('identity').textContent=`${label(user.id)} · ${membership.member_role==='adult'?'Adult':'Child'}`;await load();$('signin').hidden=true;$('recovery-request').hidden=true;$('workspace').hidden=false;$('key').value='';message('Your shared planner is ready.');}catch(error){clear();throw error;}
+});});
+$('recover-form').addEventListener('submit',event=>{event.preventDefault();action(async()=>{
+ const key=PUBLISHABLE_KEY||$('key').value.trim();
+ await client.recover($('recover-username').value.trim(),key,new URL('recovery.html',location.href).href);
+ $('recover-status').textContent='Request received. If the username matches an account, check its recovery inbox for a reset link. Wait before requesting another.';
 });});
 $('username-form').addEventListener('submit',event=>{event.preventDefault();action(async()=>{
  const name=$('username').value.trim(),password=$('username-password').value;$('username-password').value='';
