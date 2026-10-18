@@ -36,7 +36,7 @@ async function action(work){if(busy)return;busy=true;lock();try{await work();}ca
 async function load(){const current=generation;if(!user)return;const m=await client.membership();const rows=await client.list();const people=await client.roster(),profiles=await client.profiles();if(current!==generation||!user)return;membership=m;items=rows;if(roster.map(x=>x.id).join()!==people.map(x=>x.user_id).join())buildRoster(people);applyNames(profiles);$('sync').textContent=`Last checked ${new Date().toLocaleTimeString()}. Updates every 15 seconds while visible.`;render();}
 function participants(container,prefix){for(const person of roster){const row=document.createElement('label');row.className='participant';const check=document.createElement('input');check.type='checkbox';check.value=person.id;check.id=prefix+person.id;row.append(check,document.createTextNode(person.label));container.append(row);}}
 function buildRoster(rows){
- roster=rows.map((p,i)=>({id:p.user_id,label:`${p.member_role==='adult'?'Adult':'Child'} ${i+1}`,fallback:`${p.member_role==='adult'?'Adult':'Child'} ${i+1}`}));
+ roster=rows.map((p,i)=>({id:p.user_id,role:p.member_role,label:`${p.member_role==='adult'?'Adult':'Child'} ${i+1}`,fallback:`${p.member_role==='adult'?'Adult':'Child'} ${i+1}`}));
  for(const id of ['assignee','assign-person']){$(id).replaceChildren();for(const person of roster){const option=document.createElement('option');option.value=person.id;option.textContent=person.label;$(id).append(option);}}
  $('participant-options').replaceChildren();$('assign-participants').replaceChildren();participants($('participant-options'),'create-');participants($('assign-participants'),'assign-');$('assignee').value=user.id;for(const p of roster)$('create-'+p.id).checked=true;
 }
