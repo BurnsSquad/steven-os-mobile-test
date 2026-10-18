@@ -1,6 +1,6 @@
 ## Shared calendar — v141
 
-The connected calendar is an agenda and event editor inside the original Calendar tab. Accounts without the private original workspace use the Calendar navigation button. The original private calendar and its five views are preserved; connected events are not yet drawn onto the legacy week/month/year grids. The original private exports do not include shared calendar records.
+The connected calendar includes an agenda and event editor inside the original Calendar tab. Connected events also overlay its week, month, year, timeline and table views, labeled Connected. Multi-day events appear on each occupied Eastern date. Selecting a connected entry opens the connected editor; legacy drag/copy/delete actions do not apply to these entries. Accounts without the private original workspace use the Calendar navigation button. The original private calendar and its five views are preserved; connected rows are overlaid in memory without modifying original private event records. The original private exports do not include shared calendar records.
 
 Adults create Private (creator only), Parents-only or Family events. Children create Family events and edit/cancel their own. Other children can view family events. Adults may edit/cancel visible shared events; only the creator changes audience. Backend membership and row policies enforce these rules. Cancelling retains the event and private change history. Direct browser table writes and history reads are denied.
 
