@@ -1,12 +1,12 @@
 // Self-contained UI for the original opaque frame; all writes use the parent's authenticated client.
-export function plannerPanel({host,transport,context}){
+export function plannerPanel({host,transport,context,initialKind='all'}){
  let rows=[],busy=false,epoch=0,editing=null;const adult=()=>context().role==='adult',el=(tag,text)=>{const x=document.createElement(tag);if(text!==undefined)x.textContent=text;return x;},name=id=>context().people.find(p=>p.id===id)?.label||'Household member';
  const button=(text,fn)=>{const b=el('button',text);b.type='button';b.className='btn';b.onclick=fn;return b;};
  const field=(label,input,parent)=>{const l=el('label',label);input.setAttribute('aria-label',label);l.append(input);parent.append(l);return input;};
  const select=(options,value)=>{const s=el('select');for(const [v,t]of options){const o=el('option',t);o.value=v;s.append(o);}s.value=value;return s;};
  host.replaceChildren();host.append(el('h2','Shared Tasks & Activities'),el('p','Saved to your household planner and shared across devices. Your original private planner entries remain below.'));
  const status=el('p');status.setAttribute('role','status');status.setAttribute('aria-live','polite');const summary=el('p'),tools=el('div');tools.className='toolbar';
- const kind=field('Show shared items',select([['all','Tasks and Activities'],['task','Tasks'],['activity','Activities']],'all'),tools),person=field('Household member',select([['all','Everyone'],...context().people.map(p=>[p.id,p.label])],'all'),tools);tools.append(button('Refresh shared planner',()=>load()));host.append(status,summary,tools);const list=el('div');host.append(list);
+ const kind=field('Show shared items',select([['all','Tasks and Activities'],['task','Tasks'],['activity','Activities']],['all','task','activity'].includes(initialKind)?initialKind:'all'),tools),person=field('Household member',select([['all','Everyone'],...context().people.map(p=>[p.id,p.label])],'all'),tools);tools.append(button('Refresh shared planner',()=>load()));host.append(status,summary,tools);const list=el('div');host.append(list);
  const form=el('form');form.className='connected-planner-form';const heading=el('h3');form.append(heading);const input=el('input');input.required=true;input.maxLength=160;const title=field('Shared item name',input,form);
  const type=field('Item type',select(adult()?[['task','Task'],['activity','Activity']]:[['activity','Activity']],'task'),form);if(!adult())type.value='activity';
  const assignments=el('fieldset');assignments.append(el('legend','Assignment'));const mode=field('Completion rule',select([['individual','Individual — one person'],['household','Household — complete once'],['shared','Shared — each person contributes']],'individual'),assignments);

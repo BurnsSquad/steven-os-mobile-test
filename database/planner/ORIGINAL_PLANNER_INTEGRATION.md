@@ -10,3 +10,9 @@ Architecture: generic planner-panel.mjs is serialized into the existing opaque f
 
 Validation: scripts/planner-panel-smoke.cjs simulates parent/child/sibling contexts for creation, own Activity ownership, sibling read-only controls, partial/shared completion, locked assignments, assignment updates, rename, stale edit text, literal content, filtering and mobile fit. scripts/original-os-smoke.cjs uses local private input paths and mocked transport to verify dashboard completion reflected in Kids Planner, exclusion from private snapshots, original eleven tabs/five calendar views, connected calendar routing, private saves, recovery files/offline HTML and sign-out. Existing planner/Finance mock checks also pass. Automated simulations do not claim a new real-password/device acceptance test.
 
+
+## Household tab connection — v149
+
+The same live panel is now present in the original Household tab, initially filtered to Tasks. Parents can create, rename, assign and complete shared Tasks using the existing canonical planner transport and rules. The filter can still show Activities. Overview and Kids Planner retain their all-items default. No rows are copied or migrated. Original care rules and historical checkoffs remain underneath with an explicit explanation that they do not complete connected Tasks. This does not grant other family members access to the owner-only original workspace.
+
+Mock original-source browser checks complete a Task from Household and observe the same completion in Overview/Kids, verify the Task filter and preserve original rule counts/private snapshots. Existing parent/child/sibling panel mock checks pass. No new real-device acceptance is claimed.
