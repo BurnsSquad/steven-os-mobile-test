@@ -1,6 +1,6 @@
 # Start here — current Steven OS handoff
 
-Current preview v152: https://steven-os-mobile-test-m9zn2omxd-burns6.vercel.app/
+Current preview v153: https://steven-os-mobile-test-mxvigwz5l-burns6.vercel.app/
 
 ## Where the work is
 
@@ -16,6 +16,7 @@ Generic development updates 302 onward live under `docs/development-updates/`. T
 - Family/Parents/Private calendar events projected into all five original calendar views without copying them into private records.
 - Parent Finance fact review, versioned revisions, paycheck drafts/calculation/approval, confirmed due-date calendar projection and an Overview summary. Current cash is parent-entered, not a bank balance query.
 - Shared groceries for family add/pick, child-own edit, parent management/archive; same list in original Groceries. Pickup is not a financial transaction.
+- Shared phone navigation remains visible while scrolling, labels the current section and keeps Task/Activity controls out of Groceries/Calendar/Finance. The original toolbar has a Shared groceries shortcut.
 - A shared client refresh guard preventing simultaneous token refreshes or late old-session failures from clearing a newer session.
 
 ## Boundaries that must remain
@@ -26,11 +27,11 @@ Original legacy goals, businesses, flexible priorities and historical household/
 
 ## Evidence
 
-Earlier family planner/calendar acceptance was reported by the user. New work has hosted rollback SQL-role checks plus deterministic request tests and mocked multi-session/original-source browser checks. These are not fresh real-password/physical-device acceptance. Routine template edits preserve existing Task history; grocery test fixtures were rolled back. Session tests cover concurrency, delayed responses and sign-out/new-login isolation. All eleven original tabs and five calendar views are part of regression coverage, not certification of every legacy control.
+Earlier family planner/calendar acceptance was reported by the user. On v152 the user also confirmed cross-device shared grocery pickup and the correct pickup attribution. New work has hosted rollback SQL-role checks plus deterministic request tests and mocked multi-session/original-source browser checks. These are not fresh real-password/physical-device acceptance. Routine template edits preserve existing Task history; grocery test fixtures were rolled back. Session tests cover concurrency, delayed responses and sign-out/new-login isolation. All eleven original tabs and five calendar views are part of regression coverage, not certification of every legacy control.
 
 ## Next actions requiring the family
 
-1. Open the current preview on two devices with different saved family accounts. Add a clearly labelled test grocery on one; mark it picked up on the other; verify attribution back on the first after refresh. Keep passwords on the website.
+1. The v152 real-device grocery add/pick/attribution check is complete. Do not repeat it merely to prove the same database sharing. Verify new UI changes only when needed; keep passwords on the website.
 2. Parents verify current financial sources and cash snapshot through the Finance checklist before relying on a paycheck result. Do not let a developer infer confirmation from dated documents.
 3. Resume collaborator onboarding together; confirm the collaborator can read the active branch before granting wider infrastructure access or starting parallel edits.
 4. Decide the next legacy collection to share explicitly. Do not expose private collections merely because their UI is restored.

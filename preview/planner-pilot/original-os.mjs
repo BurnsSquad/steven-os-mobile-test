@@ -31,6 +31,7 @@ export function originalOS({client,onError,onStatus,onView,calendarTransport,cal
  async function exportRecovery(kind){const current=epoch;try{say('Preparing your private recovery file…');const latest=await client.originalWorkspace();if(!latest||current!==epoch)return;const originalSource=await client.originalSource(latest.source_id);if(current!==epoch)return;const files=recoveryFiles(originalSource,latest);downloadRecoveryFile(files[kind]);say('Recovery file prepared. Check your browser downloads. Save both HTML and JSON.');}catch(error){if(current===epoch){say('Recovery download could not be prepared. Your saved workspace is unchanged.');onError(error);}}}
  document.getElementById('original-export-html').onclick=()=>exportRecovery('html');
  document.getElementById('original-export-json').onclick=()=>exportRecovery('json');
+ document.getElementById('original-groceries').onclick=()=>{shell.hidden=true;document.body.classList.remove('original-open');onView('groceries');};
  document.getElementById('original-finance').onclick=()=>{shell.hidden=true;document.body.classList.remove('original-open');onView('finance');};
  document.getElementById('original-signout').onclick=()=>document.getElementById('signout').click();
  document.getElementById('original-save').onclick=()=>save();
