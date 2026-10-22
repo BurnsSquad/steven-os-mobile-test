@@ -4,3 +4,5 @@
 fieldset,form,label{min-width:0}select,input{max-width:100%}aside a{color:inherit}#participant-options,#assign-participants{display:flex;flex-wrap:wrap;gap:8px 20px}#participants p{margin-bottom:4px}
 
 .routine{border-top:1px solid #dbe1d6;padding:20px 0}.routine-form{margin:18px 0;padding:16px;background:#f4f5ef;border-radius:12px}.routine-task{border-top:1px solid #e6ebe3;margin-top:18px;padding-top:12px}.routine-task h4{overflow-wrap:anywhere;margin-bottom:8px}summary{cursor:pointer;font-weight:600;padding:12px 0}.routine-form input[type=checkbox]{width:24px}.routine-form fieldset{display:flex;flex-wrap:wrap;gap:8px 18px}
+
+.shared-groceries label{display:block;margin:10px 0}.shared-groceries input,.shared-groceries select{max-width:100%;box-sizing:border-box}.shared-groceries .grocery-item{padding:14px 0;border-bottom:1px solid #cad5cc;overflow-wrap:anywhere}.shared-groceries .grocery-form{margin-top:20px}

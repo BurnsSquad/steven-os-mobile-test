@@ -1,4 +1,4 @@
-# Original Steven OS compatibility map — v150
+# Original Steven OS compatibility map — v151
 
 The uploaded original HTML supplies the actual eleven-tab layout and legacy behavior. Its supplied JSON backup supplies working private records. Shared modules are added beside legacy content, not copied into it. This map replaces outdated assumptions that the layout or calendar backup still needs rebuilding/importing.
 
@@ -10,7 +10,7 @@ The uploaded original HTML supplies the actual eleven-tab layout and legacy beha
 | Finance | Current parent fact review/paycheck plans above original ledger/spending charts | Current and historical values clearly separated. Actual balances/provider confirmations must come from parents. Transaction ingest and complete forecasting remain pending. |
 | Burns Base | Original records and sections | Private owner records; not implicitly shared with family. |
 | Household | Live routine controls and shared Tasks panel above original care expectations, routine rules and historic completions | Shared task assignments/completions match Overview and Kids Planner. Legacy rules/history stay private and separate; checking a legacy routine does not complete a shared Task. |
-| Groceries | Original lists/stores/spending entry and charts | Private records; shared list synchronization is not yet implemented. |
+| Groceries | Live shared household list above original lists/stores/spending entry and charts | Family can add/pick items; parents manage/archive, children edit own additions. Original records remain private. Pickup does not record a Finance expense. |
 | Kids Planner | Original child views/progress and connected Tasks/Activities panel | Original child-labelled records remain private to owner; child accounts use shared planner/calendar. Legacy history is not attributed to database identities by guessing. |
 | Goals | Original roadmaps, milestones and progress visuals | Private owner workspace. Shared goal permissions and migration require explicit design. |
 | Businesses | Original ventures and related visuals | Private owner workspace; business cash is excluded from household planning unless explicitly released/reviewed. |
