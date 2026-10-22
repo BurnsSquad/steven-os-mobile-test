@@ -1,0 +1,9 @@
+# Shared client session reliability — v152
+
+The shared planner, original-frame bridge, calendar, groceries and Finance all use the same authenticated client. Multiple panels can issue requests simultaneously near token expiry. Previously each call could refresh independently; a successful refresh changed the session object, and a second response could then clear that valid session. A delayed old-token 401 could also clear an already-refreshed session.
+
+The client now shares one in-flight refresh for the current session. A late 401 retries once with the already-refreshed session. Epoch checks prevent requests from a cleared session from retrying under a new login. Refresh/sign-in failures clear only their own still-current session, so late failures cannot erase a newer login. Clearing/sign-out invalidates pending refresh work and does not allow late tokens to restore access. Unauthorized retries still end access without a refresh loop.
+
+No browser storage, cookies, session retention or credential logging were added. Authorization still uses provider-verified identity and current database membership; no role decisions use user-editable metadata. No database/Auth configuration, password, recovery callback or existing household data changed.
+
+Eight deterministic request-level tests cover shared proactive refresh, delayed old-token 401, shared refresh failure, clear during refresh, late refresh failure/new login, old request/new login isolation, late sign-in failure and bounded unauthorized retry. Before the fix five of the initial six cases failed, including three refreshes instead of one. All cases pass after the fix. Existing identity/scope, grocery API, recovery and private export tests pass; original-source and shared-browser regressions are run separately. These simulations do not prove a physical-device session stayed signed in for its full real lifetime.

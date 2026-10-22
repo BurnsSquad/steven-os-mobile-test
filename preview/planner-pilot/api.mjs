@@ -2,8 +2,8 @@
 export const ORIGIN='https://wozynsftofkjqwlflosv.supabase.co';
 export class ClientError extends Error{constructor(code,status=0){super(code);this.code=code;this.status=status;}}
 export function createClient(fetcher=fetch){
- let session=null,epoch=0,household=null;const controllers=new Set();
- function clear(){epoch++;session=null;household=null;for(const c of controllers)c.abort();controllers.clear();}
+ let session=null,epoch=0,household=null,refreshFlight=null;const controllers=new Set();
+ function clear(){epoch++;session=null;household=null;refreshFlight=null;for(const c of controllers)c.abort();controllers.clear();}
  async function send(path,{method='GET',body,key,token,profile}={}){
   if(!/^sb_publishable_[A-Za-z0-9_-]+$/.test(key||'')||!/^\/(auth|rest|functions)\/v1\//.test(path))throw new ClientError('CONFIG');
   const controller=new AbortController();controllers.add(controller);const timer=setTimeout(()=>controller.abort(),20000);
@@ -15,15 +15,23 @@ export function createClient(fetcher=fetch){
  }
  async function mutation(name,body,id){const result=await request('/rest/v1/rpc/'+name,{method:'POST',body});if(result?.id!==id||result.household_id!==household)throw new ClientError('UNCONFIRMED');return result;}
  function tokenState(data,key,user){if(typeof data?.access_token!=='string'||typeof data?.refresh_token!=='string')throw new ClientError('SESSION');return {key,token:data.access_token,refresh:data.refresh_token,expires:Date.now()+(Number(data.expires_in)||3600)*1000,user};}
- async function refresh(){const old=session,version=epoch;if(!old)throw new ClientError('SESSION');
-  try{const data=await send('/auth/v1/token?grant_type=refresh_token',{method:'POST',body:{refresh_token:old.refresh},key:old.key});if(version!==epoch||session!==old)throw new ClientError('SESSION');session=tokenState(data,old.key,old.user);}catch(error){clear();throw new ClientError('SESSION');}
+ async function refresh(){
+  if(refreshFlight)return refreshFlight.promise;
+  const old=session,version=epoch;if(!old)throw new ClientError('SESSION');const flight={promise:null};refreshFlight=flight;
+  flight.promise=(async()=>{try{const data=await send('/auth/v1/token?grant_type=refresh_token',{method:'POST',body:{refresh_token:old.refresh},key:old.key});if(version!==epoch||session!==old)throw new ClientError('SESSION');session=tokenState(data,old.key,old.user);}catch{if(version===epoch&&session===old)clear();throw new ClientError('SESSION');}finally{if(refreshFlight===flight)refreshFlight=null;}})();
+  return flight.promise;
  }
- async function request(path,options={},retried=false){if(!session)throw new ClientError('SESSION');if(session.expires<Date.now()+30000)await refresh();const version=epoch,current=session;
-  try{const data=await send(path,{...options,key:current.key,token:current.token});if(epoch!==version)throw new ClientError('SESSION');return data;}catch(error){if(error.status===401&&session===current&&!retried){await refresh();return request(path,options,true);}if(error.status===401){clear();throw new ClientError('SESSION');}throw error;}
+ async function request(path,options={},retried=false){
+  if(!session)throw new ClientError('SESSION');const startedEpoch=epoch;if(session.expires<Date.now()+30000)await refresh();if(startedEpoch!==epoch||!session)throw new ClientError('SESSION');const version=epoch,current=session;
+  try{const data=await send(path,{...options,key:current.key,token:current.token});if(epoch!==version)throw new ClientError('SESSION');return data;}catch(error){
+   if(epoch!==version)throw new ClientError('SESSION');
+   if(error.status===401&&!retried){if(session===current)await refresh();if(epoch!==version||!session)throw new ClientError('SESSION');return request(path,options,true);}
+   if(error.status===401){if(session===current)clear();throw new ClientError('SESSION');}throw error;
+  }
  }
  return {
   async signIn(account,key,password){clear();const email=String(account).trim().toLowerCase(),byUsername=!email.includes('@');if(!(byUsername?/^[a-z][a-z0-9_]{2,23}$/:/^[^\s@]+@[^\s@]+\.[^\s@]+$/).test(email)||!password)throw new ClientError('SIGNIN');const version=epoch;
-   try{const data=await send(byUsername?'/functions/v1/planner-identity':'/auth/v1/token?grant_type=password',{method:'POST',body:byUsername?{action:'signin',username:email,password}:{email,password},key});if(epoch!==version)throw new ClientError('SESSION');const pending=tokenState(data,key,null);const user=await send('/auth/v1/user',{key,token:pending.token});if(epoch!==version||typeof user?.id!=='string'||(byUsername?user.id!==data.actor_id:user?.email?.toLowerCase()!==email))throw new ClientError('SESSION');session={...pending,user};return user;}catch(error){clear();throw new ClientError(error.status===429?'RATE_LIMIT':'SIGNIN');}
+   try{const data=await send(byUsername?'/functions/v1/planner-identity':'/auth/v1/token?grant_type=password',{method:'POST',body:byUsername?{action:'signin',username:email,password}:{email,password},key});if(epoch!==version)throw new ClientError('SESSION');const pending=tokenState(data,key,null);const user=await send('/auth/v1/user',{key,token:pending.token});if(epoch!==version||typeof user?.id!=='string'||(byUsername?user.id!==data.actor_id:user?.email?.toLowerCase()!==email))throw new ClientError('SESSION');session={...pending,user};return user;}catch(error){if(epoch===version)clear();throw new ClientError(error.status===429?'RATE_LIMIT':'SIGNIN');}
   },
   async recover(username,key,redirectTo){if(!/^[A-Za-z][A-Za-z0-9_]{2,23}$/.test(username))throw new ClientError('USERNAME');const result=await send('/functions/v1/planner-identity',{method:'POST',key,body:{action:'recover',username,redirectTo}});if(result?.accepted!==true)throw new ClientError('UNCONFIRMED');},
   async membership(){if(!session)throw new ClientError('SESSION');const rows=await request('/rest/v1/bb_planner_members?'+new URLSearchParams({select:'household_id,user_id,member_role',user_id:`eq.${session.user.id}`}));if(!Array.isArray(rows)||rows.length!==1||rows[0].user_id!==session.user.id||!['adult','child'].includes(rows[0].member_role)||typeof rows[0].household_id!=='string')throw new ClientError('MEMBERSHIP');if(household&&household!==rows[0].household_id)throw new ClientError('ISOLATION');household=rows[0].household_id;return rows[0];},
