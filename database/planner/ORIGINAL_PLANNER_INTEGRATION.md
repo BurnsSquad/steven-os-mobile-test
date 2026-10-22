@@ -16,3 +16,11 @@ Validation: scripts/planner-panel-smoke.cjs simulates parent/child/sibling conte
 The same live panel is now present in the original Household tab, initially filtered to Tasks. Parents can create, rename, assign and complete shared Tasks using the existing canonical planner transport and rules. The filter can still show Activities. Overview and Kids Planner retain their all-items default. No rows are copied or migrated. Original care rules and historical checkoffs remain underneath with an explicit explanation that they do not complete connected Tasks. This does not grant other family members access to the owner-only original workspace.
 
 Mock original-source browser checks complete a Task from Household and observe the same completion in Overview/Kids, verify the Task filter and preserve original rule counts/private snapshots. Existing parent/child/sibling panel mock checks pass. No new real-device acceptance is claimed.
+
+## Repeating routine controls — v150
+
+Original Household now includes the existing parent routine controls above the connected Tasks panel. Parents can change days, time, pause state and future Task templates without leaving the original layout. Times display in a 12-hour Eastern clock. A source/origin/nonce-bound command allowlist calls the same authenticated client methods used by the standalone routine screen. No new role grants, tables or duplicate routines are introduced.
+
+The section has local save/conflict/error feedback and an explicit refresh button. Save before changing tabs or refreshing; the routine forms do not auto-save. Original private care routines/history remain separate, and current generated Tasks/completions are not rewritten by template edits. Children retain no access to parent routine controls.
+
+Mock original-source browser checks save a 5:00 PM routine as 6:30 PM, revise a future template and verify both existing Task rows and original private routine state are unchanged. The routine panel fits mobile width; connected template labels stay out of private snapshots. Existing standalone role/schedule/template/stale-save checks pass. These are mock results, not real-device acceptance.
