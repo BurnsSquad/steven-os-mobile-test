@@ -1,6 +1,6 @@
 # Start here — current Steven OS handoff
 
-Current preview v155: https://steven-os-mobile-test-mz759zm20-burns6.vercel.app/
+Current preview v156: https://steven-os-mobile-test-17w73hdix-burns6.vercel.app/
 
 ## Where the work is
 
@@ -11,11 +11,12 @@ Generic development updates 302 onward live under `docs/development-updates/`. T
 ## What is connected
 
 - Original eleven-tab layout and private workspace/revision saves, with private HTML/JSON recovery downloads.
-- Separate parent-requested shared household JSON export for Tasks/Activities/completions, Family-visible calendar, groceries, routine settings/templates and usernames. No parent Businesses/Finance/private original data; no automatic restore or point-in-time snapshot claim.
+- Separate parent-requested shared household JSON export for Tasks/Activities/completions, Family-visible calendar, groceries, routine settings/templates and usernames. No Goals/milestones/parent Businesses/Finance/private original data; no automatic restore or point-in-time snapshot claim.
 - Canonical household Tasks/Activities, individual/household/shared completion, usernames and existing recovery workflow.
 - Parent repeating routines with 12-hour Eastern times and future-template edits, also in original Household.
 - Family/Parents/Private calendar events projected into all five original calendar views without copying them into private records.
 - Parent Finance fact review, versioned revisions, paycheck drafts/calculation/approval, confirmed due-date calendar projection and an Overview summary. Current cash is parent-entered, not a bank balance query.
+- Family-visible Goals/milestones: three milestones with four steps each, owner management, parent management of all, attributed completion/undo, progress ring and archive. Original private roadmaps remain separate.
 - Parent-only shared Businesses: ventures, project tasks, department/project progress, completion attribution, version checks and archive. Same records appear above private legacy content in original Businesses and in the shared parent navigation. No automatic import or Finance coupling.
 - Shared groceries for family add/pick, child-own edit, parent management/archive; same list in original Groceries. Pickup is not a financial transaction.
 - Shared phone navigation remains visible while scrolling, labels the current section and keeps Task/Activity controls out of Groceries/Calendar/Finance. The original toolbar has a Shared groceries shortcut.
@@ -38,10 +39,14 @@ Earlier family planner/calendar acceptance was reported by the user. On v152 the
 1. The v152 real-device grocery add/pick/attribution check is complete. Do not repeat it merely to prove the same database sharing. Verify new UI changes only when needed; keep passwords on the website.
 2. Parents verify current financial sources and cash snapshot through the Finance checklist before relying on a paycheck result. Do not let a developer infer confirmation from dated documents.
 3. Resume collaborator onboarding together; confirm the collaborator can read the active branch before granting wider infrastructure access or starting parallel edits.
-4. Businesses audience was confirmed parents-only and implemented in v155. Goals/milestones are queued next; their audience/ownership rules still need an explicit choice. Private records are not migrated automatically.
+4. Businesses audience was confirmed parents-only and implemented in v155. Goals/milestones were confirmed family-visible, manage-own, parents-manage-all and implemented in v156. Private records are not migrated automatically.
 
 See database/planner/ORIGINAL_OS_COMPATIBILITY.md, SHARED_GROCERIES.md, FINANCE_CURRENT_WORKFLOW.md and CLIENT_SESSION_RELIABILITY.md for the current implementation boundaries.
 
 ## Latest update — Entry 310
 
 Parents-only Businesses is installed in the hosted database and deployed in v155. Rollback SQL checks cover two parents, child/other-household/no-identity denials, retries, stale writes, archive, completion attribution/undo, direct-write denial and audit. Post-check found zero business fixtures retained. Two API tests and the new two-parent mocked browser flow pass; original-source/shared-shell/recovery regressions also pass. Existing security advisor findings are unchanged. No fresh physical-device business acceptance is claimed.
+
+## Latest update — Entry 311
+
+Family Goals/milestones installed and connected in v156. Hosted rollback SQL verifies family visibility, child-own writes, sibling write denial, both-parent management, 3x4 shape, preserved completion on milestone edits, attributed completion/undo, stale/idempotent writes, archive and foreign/no-identity/ACL denial. No test goals/audit fixtures retained. Two new request tests and the mocked family goal flow pass; original-source/shared-shell/recovery browser regressions and 19 targeted request/session/export tests pass. Existing advisors unchanged. A fresh physical-device goal check remains unverified.
