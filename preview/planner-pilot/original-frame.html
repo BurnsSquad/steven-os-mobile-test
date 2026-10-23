@@ -1,0 +1,3 @@
+<!doctype html><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"><title>Private original OS loader</title><script>
+window.addEventListener('message',function initialize(event){if(event.source!==parent||event.data?.type!=='original-init'||typeof event.data.html!=='string'||event.data.html.length>1500000)return;window.removeEventListener('message',initialize);document.open();document.write(event.data.html);document.close();});
+</script>

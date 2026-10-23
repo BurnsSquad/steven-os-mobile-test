@@ -1,0 +1,41 @@
+{
+  "status": "SANDBOX_PLANNER_INSTALLED_SQL_ROLE_VERIFICATION_PASSED",
+  "project_ref": "wozynsftofkjqwlflosv",
+  "verified_at": "2026-10-17T19:12:40.249342+00:00",
+  "source_commit": "eecd6e02ee2cc7fee921631fb6ad0338883efb49",
+  "local_postgres_checks": 59,
+  "hosted_smoke_status": "HOSTED_SQL_ROLE_SMOKE_PASS",
+  "old_records_auth_memberships_policies_grants_identical": true,
+  "metadata": {
+    "counts": {
+      "items": 0,
+      "events": 0,
+      "members": 3,
+      "households": 1,
+      "assignments": 0,
+      "completions": 0
+    },
+    "rls_tables": 6,
+    "public_definers": 0,
+    "bad_table_grants": 0,
+    "private_functions": 9,
+    "executor_auth_usage": false,
+    "executor_privileged": false,
+    "foreign_key_indexes": 7,
+    "authenticated_executor_membership": false,
+    "helper_executable_by_authenticated": false
+  },
+  "limitations": [
+    "Hosted smoke uses administrator-driven authenticated-role and request-claim simulation; not actual ordinary JWT/PostgREST/browser proof.",
+    "Simultaneous transaction tests passed on local PostgreSQL, not hosted connections.",
+    "Both existing website previews remain unchanged; new database is not yet connected to the demo.",
+    "Direct HTTP destination policy blocked this worker; Data API private-schema exposure remains to confirm during integration."
+  ],
+  "advisors": {
+    "planner_unindexed_foreign_keys": 0,
+    "existing_unindexed_foreign_keys": 3,
+    "unused_new_indexes": "Informational on newly installed schema; retained intentionally.",
+    "security": "Pre-existing leaked-password protection disabled; no Auth setting changed.",
+    "remediation": "https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection"
+  }
+}

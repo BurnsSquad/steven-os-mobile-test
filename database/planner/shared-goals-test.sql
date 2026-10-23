@@ -1,0 +1,58 @@
+BEGIN;
+DO $test$
+DECLARE h uuid;pa uuid;pb uuid;k1 uuid;k2 uuid;outsider uuid;i uuid:=gen_random_uuid();j uuid:=gen_random_uuid();r jsonb;n int;mi int;si int;ver bigint;payload jsonb;
+BEGIN
+ SELECT household_id INTO STRICT h FROM bb_planner_private.routines WHERE routine_key='prepare_for_tomorrow_v1';
+ SELECT user_id INTO STRICT pa FROM public.bb_planner_members WHERE household_id=h AND member_role='adult' ORDER BY user_id LIMIT 1;
+ SELECT user_id INTO STRICT pb FROM public.bb_planner_members WHERE household_id=h AND member_role='adult' AND user_id<>pa LIMIT 1;
+ SELECT user_id INTO STRICT k1 FROM public.bb_planner_members WHERE household_id=h AND member_role='child' ORDER BY user_id LIMIT 1;
+ SELECT user_id INTO STRICT k2 FROM public.bb_planner_members WHERE household_id=h AND member_role='child' AND user_id<>k1 LIMIT 1;
+ SELECT user_id INTO STRICT outsider FROM public.bb_planner_members m WHERE NOT EXISTS(SELECT FROM public.bb_planner_members x WHERE x.household_id=h AND x.user_id=m.user_id) LIMIT 1;
+ PERFORM set_config('request.jwt.claim.sub',k1::text,true);EXECUTE 'SET LOCAL ROLE authenticated';
+ payload:=jsonb_build_object('owner_id',k1,'title','Rollback fictional roadmap','description','Role verification only');
+ r:=public.bb_goal_write(h,i,NULL,'create',payload);IF r->>'owner_id'<>k1::text OR jsonb_array_length(r->'milestones')<>3 OR jsonb_array_length(r->'milestones'->0->'steps')<>4 THEN RAISE EXCEPTION 'Shape/owner';END IF;
+ PERFORM public.bb_goal_write(h,i,NULL,'create',payload);
+ BEGIN PERFORM public.bb_goal_write(h,gen_random_uuid(),NULL,'create',payload||jsonb_build_object('owner_id',k2));RAISE EXCEPTION 'Child assigned sibling';EXCEPTION WHEN insufficient_privilege THEN NULL;END;
+ BEGIN PERFORM public.bb_goal_write(h,i,1,'edit','{"title":" ","description":""}');RAISE EXCEPTION 'Blank accepted';EXCEPTION WHEN invalid_parameter_value THEN NULL;END;
+ r:=public.bb_goal_write(h,i,1,'step','{"milestone":0,"step":0,"done":true}');IF r->'milestones'->0->'steps'->0->>'completed_by'<>k1::text THEN RAISE EXCEPTION 'Child attribution';END IF;
+ BEGIN PERFORM public.bb_goal_write(h,i,1,'edit','{"title":"Stale","description":""}');RAISE EXCEPTION 'Stale accepted';EXCEPTION WHEN serialization_failure THEN NULL;END;
+ PERFORM set_config('request.jwt.claim.sub',k2::text,true);SELECT count(*) INTO n FROM public.bb_goal_roadmaps WHERE id=i;IF n<>1 THEN RAISE EXCEPTION 'Family visibility';END IF;
+ BEGIN PERFORM public.bb_goal_write(h,i,2,'step','{"milestone":0,"step":1,"done":true}');RAISE EXCEPTION 'Sibling complete';EXCEPTION WHEN insufficient_privilege THEN NULL;END;
+ BEGIN PERFORM public.bb_goal_write(h,i,2,'archive','{}');RAISE EXCEPTION 'Sibling archive';EXCEPTION WHEN insufficient_privilege THEN NULL;END;
+ BEGIN PERFORM public.bb_goal_write(h,i,2,'edit','{"title":"Sibling rename","description":""}');RAISE EXCEPTION 'Sibling rename';EXCEPTION WHEN insufficient_privilege THEN NULL;END;
+ PERFORM set_config('request.jwt.claim.sub',pa::text,true);
+ r:=public.bb_goal_write(h,i,2,'milestone','{"milestone":0,"title":"Updated milestone","steps":["First","Second","Third","Fourth"]}');IF NOT(r->'milestones'->0->'steps'->0->>'done')::boolean OR r->'milestones'->0->'steps'->0->>'completed_by'<>k1::text THEN RAISE EXCEPTION 'Edit lost completion';END IF;
+ BEGIN PERFORM public.bb_goal_write(h,i,3,'milestone','{"milestone":0,"title":"Invalid","steps":["Only one"]}');RAISE EXCEPTION 'Wrong step count';EXCEPTION WHEN invalid_parameter_value THEN NULL;END;
+ BEGIN PERFORM public.bb_goal_write(h,i,3,'step','{"milestone":3,"step":0,"done":true}');RAISE EXCEPTION 'Index accepted';EXCEPTION WHEN invalid_parameter_value THEN NULL;END;
+ BEGIN PERFORM public.bb_goal_write(h,i,3,'step','{"milestone":0,"step":0,"done":null}');RAISE EXCEPTION 'Null complete';EXCEPTION WHEN invalid_parameter_value THEN NULL;END;
+ BEGIN PERFORM public.bb_goal_write(h,i,3,'edit',payload);RAISE EXCEPTION 'Immutable owner accepted';EXCEPTION WHEN invalid_parameter_value THEN NULL;END;
+ r:=public.bb_goal_write(h,i,3,'step','{"milestone":0,"step":0,"done":false}');IF r->'milestones'->0->'steps'->0->>'completed_by' IS NOT NULL THEN RAISE EXCEPTION 'Undo attribution';END IF;
+ PERFORM set_config('request.jwt.claim.sub',pb::text,true);r:=public.bb_goal_write(h,i,4,'step','{"milestone":0,"step":1,"done":true}');IF r->'milestones'->0->'steps'->1->>'completed_by'<>pb::text THEN RAISE EXCEPTION 'Parent peer completion';END IF;
+ PERFORM public.bb_goal_write(h,j,NULL,'create',jsonb_build_object('owner_id',k2,'title','Rollback parent-created roadmap','description',''));
+ -- Full roadmap acceptance under the second child's own identity, then an independent parent's read.
+ PERFORM set_config('request.jwt.claim.sub',k2::text,true);ver:=1;
+ FOR mi IN 0..2 LOOP FOR si IN 0..3 LOOP
+  r:=public.bb_goal_write(h,j,ver,'step',jsonb_build_object('milestone',mi,'step',si,'done',true));ver:=(r->>'version')::bigint;
+ END LOOP;END LOOP;
+ SELECT count(*) INTO n FROM jsonb_array_elements(r->'milestones')m CROSS JOIN LATERAL jsonb_array_elements(m->'steps')s WHERE (s->>'done')::boolean AND s->>'completed_by'=k2::text;
+ IF n<>12 OR ver<>13 THEN RAISE EXCEPTION 'Full 12-step completion/attribution';END IF;
+ r:=public.bb_goal_write(h,j,ver,'step','{"milestone":2,"step":3,"done":true}');IF (r->>'version')::bigint<>ver THEN RAISE EXCEPTION 'No-op changed version';END IF;
+ r:=public.bb_goal_write(h,j,ver,'step','{"milestone":2,"step":3,"done":false}');ver:=(r->>'version')::bigint;
+ IF r->'milestones'->2->'steps'->3->>'completed_by' IS NOT NULL THEN RAISE EXCEPTION 'Full goal reopen attribution';END IF;
+ r:=public.bb_goal_write(h,j,ver,'step','{"milestone":2,"step":3,"done":true}');
+ PERFORM set_config('request.jwt.claim.sub',pa::text,true);SELECT to_jsonb(g) INTO r FROM public.bb_goal_roadmaps g WHERE id=j;
+ SELECT count(*) INTO n FROM jsonb_array_elements(r->'milestones')m CROSS JOIN LATERAL jsonb_array_elements(m->'steps')s WHERE (s->>'done')::boolean;
+ IF n<>12 THEN RAISE EXCEPTION 'Independent parent does not read completed goal';END IF;
+ PERFORM set_config('request.jwt.claim.sub',pb::text,true);
+ PERFORM public.bb_goal_write(h,i,5,'archive','{}');
+ BEGIN PERFORM public.bb_goal_write(h,i,6,'step','{"milestone":0,"step":1,"done":false}');RAISE EXCEPTION 'Archive mutable';EXCEPTION WHEN object_not_in_prerequisite_state THEN NULL;END;
+ BEGIN UPDATE public.bb_goal_roadmaps SET owner_id=k2 WHERE id=i;RAISE EXCEPTION 'Direct update';EXCEPTION WHEN insufficient_privilege THEN NULL;END;
+ PERFORM set_config('request.jwt.claim.sub',outsider::text,true);SELECT count(*) INTO n FROM public.bb_goal_roadmaps WHERE household_id=h;IF n<>0 THEN RAISE EXCEPTION 'Foreign read';END IF;
+ BEGIN PERFORM public.bb_goal_write(h,j,1,'edit','{"title":"Foreign","description":""}');RAISE EXCEPTION 'Foreign edit';EXCEPTION WHEN insufficient_privilege THEN NULL;END;
+ PERFORM set_config('request.jwt.claim.sub','',true);
+ BEGIN PERFORM public.bb_goal_write(h,j,1,'edit','{"title":"No identity","description":""}');RAISE EXCEPTION 'No identity edit';EXCEPTION WHEN insufficient_privilege THEN NULL;END;
+ EXECUTE 'SET LOCAL ROLE postgres';SELECT count(*) INTO n FROM bb_planner_private.goal_changes WHERE goal_id IN(i,j);IF n<>21 THEN RAISE EXCEPTION 'Audit count %',n;END IF;
+ IF has_table_privilege('anon','public.bb_goal_roadmaps','SELECT') OR has_table_privilege('authenticated','public.bb_goal_roadmaps','INSERT') OR has_table_privilege('authenticated','public.bb_goal_roadmaps','DELETE') OR has_function_privilege('anon','public.bb_goal_write(uuid,uuid,bigint,text,jsonb)','EXECUTE') OR has_table_privilege('authenticated','bb_planner_private.goal_changes','SELECT') OR pg_has_role('authenticated','bb_goal_writer','MEMBER') THEN RAISE EXCEPTION 'ACL exposure';END IF;
+ RAISE NOTICE 'PASS family read, own child write, sibling denial, parent peer management, 3x4 shape, preserved completions, attribution/undo, archive, versions/retries, ACLs and foreign/no-identity denial';
+END $test$;
+ROLLBACK;

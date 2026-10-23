@@ -1,0 +1,25 @@
+{
+  "status": "MOCK_PLANNER_UI_PASS",
+  "real_authentication": false,
+  "real_network_requests": false,
+  "contexts": [
+    "desktop A",
+    "mobile B",
+    "mobile C"
+  ],
+  "checks": [
+    "database role presentation",
+    "child Task creation hidden",
+    "two-session refresh and completion",
+    "child self-assigned Activity",
+    "sibling read-only Activity",
+    "literal text rendering",
+    "stale edit conflict",
+    "Household once",
+    "Shared partial wording and aggregate",
+    "signout network failure clears data",
+    "no browser storage writes",
+    "no mobile overflow",
+    "no page errors"
+  ]
+}
