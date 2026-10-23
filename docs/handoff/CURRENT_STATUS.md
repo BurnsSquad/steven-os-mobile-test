@@ -1,6 +1,6 @@
 # Start here — current Steven OS handoff
 
-Current preview v157: https://steven-os-mobile-test-gd6w2pcxg-burns6.vercel.app/
+Current staging preview v158: https://steven-os-mobile-test-lyfjxsvre-burns6.vercel.app/
 
 ## Where the work is
 
@@ -22,6 +22,7 @@ Generic development updates 302 onward live under `docs/development-updates/`. T
 - Shared groceries for family add/pick, child-own edit, parent management/archive; same list in original Groceries. Pickup is not a financial transaction.
 - Shared phone navigation remains visible while scrolling, labels the current section and keeps Task/Activity controls out of Groceries/Calendar/Finance. The original toolbar has a Shared groceries shortcut.
 - A shared client refresh guard preventing simultaneous token refreshes or late old-session failures from clearing a newer session.
+- A modern role-aware Home dashboard and signed-out Burns Base front door. Home summarizes live connected records while editors remain in their sections; the decorative flow graphic is reduced-motion aware and does not handle data.
 
 ## Boundaries that must remain
 
@@ -43,6 +44,22 @@ Earlier family planner/calendar acceptance was reported by the user. On v152 the
 4. Businesses audience was confirmed parents-only and implemented in v155. Goals/milestones were confirmed family-visible, manage-own, parents-manage-all and implemented in v156. The connected Priority Board and the two download scopes were implemented in v157. Private records are not migrated automatically.
 
 See database/planner/ORIGINAL_OS_COMPATIBILITY.md, SHARED_GROCERIES.md, FINANCE_CURRENT_WORKFLOW.md and CLIENT_SESSION_RELIABILITY.md for the current implementation boundaries.
+
+## Latest update — Entry 317
+
+Entry 317 records family confirmation of the staging preview across intended devices. Home, the private original workspace, shared sections and parent-only boundaries were accepted. The staging acceptance gate is complete; merge and production promotion remain deliberate release decisions.
+
+## Latest update — Entry 316
+
+Entry 316 records the final deterministic release suite: all 13 tests pass, including the restored original workspace and connected dashboard coverage. The current staging preview is ready for the short family device check before any production release.
+
+## Latest update — Entry 315
+
+Entry 315 restores the explicit **My Steven OS · private** path while keeping Home as the family landing view. The sandbox key is now included in staging configuration, so normal sign-in no longer asks for a key. The user confirmed the original layout and saved information are present. Static checks pass; final family cross-device verification remains the release gate.
+
+## Latest update — Entry 314
+
+The v158 presentation pass adds the connected Home dashboard and a calmer interactive sign-in front door. Static audit and JavaScript syntax checks pass. The staging deployment is READY; a Playwright run was blocked before browser startup by an environment Chromium SIGTRAP, so no new browser acceptance is claimed. Existing private-source, Supabase Free and production-boundary conditions remain unchanged.
 
 ## Latest update — Entry 310
 

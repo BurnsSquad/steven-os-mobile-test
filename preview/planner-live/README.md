@@ -24,6 +24,6 @@ The login flow probes private `actor_uid` with an Accept-Profile header and requ
 4. With A, create a Household item eligible for B/C and a Shared item assigned B/C. B completion finishes Household once. Shared stays partial after B and finishes only after C. Confirm no repeat contribution and distinct actors.
 5. Sign out on a device and confirm planner data disappears. Never send passwords or authentication tokens as evidence. Capture independent provider final records and role/policy state; preserve test rows pending separately approved cleanup.
 
-Leaked-password protection remains disabled because the provider organization is Free and the user chose to keep it Free. Current provider docs require Pro or higher. This remains a before-real-use requirement; no paid upgrade or Auth setting change performed.
+Leaked-password protection remains disabled because the provider organization is Free and the user chose to keep it Free. Current provider docs require Pro or higher. This is an optional security recommendation, not a technical prerequisite for household use or a required paid upgrade. No paid upgrade or Auth setting change performed.
 
 Real credentials are saved on the user's devices, not available to the worker. The worker also has a restricted HTTP destination policy. Deploying code and passing mock/SQL tests do not substitute for actual device acceptance. Do not reset passwords, mint JWTs or bypass network policy to manufacture a PASS. Do not promote to production or merge based on this preview.

@@ -51,7 +51,7 @@ Installed migrations:20261017190546 (original schema),20261017191149 (managed-au
 
 ## Security item: deliberately deferred by the user
 
-Provider organization plan is Free. Current [Supabase password-security documentation](https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection) says leaked-password protection requires Pro or above. User explicitly chose **keep sandbox Free for now**. No paid upgrade or Auth setting change is authorized by that choice. Keep this item visibly pending before real household use; do not report it enabled. It does not block fictional sandbox integration work.
+Provider organization plan is Free. Current [Supabase password-security documentation](https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection) says leaked-password protection requires Pro or above. User explicitly chose **keep sandbox Free for now**. No paid upgrade or Auth setting change is authorized by that choice. This is an optional recommended safeguard, not a technical requirement for household use and not a mandatory paid upgrade. Earlier wording calling it a requirement was overstated. It remains disabled by the user’s Free-plan choice; actual sign-in, sharing and authorization checks still need completion.
 
 ## Source and operations
 

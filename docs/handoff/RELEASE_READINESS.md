@@ -1,6 +1,6 @@
 # Connected household features — release-readiness review
 
-Current tested preview: v157, https://steven-os-mobile-test-gd6w2pcxg-burns6.vercel.app/
+Current tested preview: v158 staging, https://steven-os-mobile-test-lyfjxsvre-burns6.vercel.app/
 
 ## Result
 
@@ -51,6 +51,18 @@ New family roadmap table/checked writes/private audit installed. Hosted rollback
 ## Entry 312 — full-roadmap verification
 
 Expanded hosted rollback SQL and mocked browser checks pass all 12 completions, independent parent/sibling readback, 100% progress, 92% after reopening and 100% on recompletion. Sibling controls remain read-only. Server attribution, no-op version stability and audit are checked; no fixtures retained. This completes agent-run acceptance; actual family JWT/device acceptance remains unverified. v156 runtime/deployment unchanged.
+
+## v158 restoration and family release gate
+
+The staging flow now labels the owner-scoped legacy workspace **My Steven OS · private** and keeps it separate from the connected Home dashboard. The staging sandbox key is configured, and the user confirmed the full original layout and saved information are present after sign-in. Static checks pass. Before any production promotion, the family should verify Home, private Steven OS, shared Planner, Calendar, Goals, Groceries, parent Finance and parent Businesses across the intended devices.
+
+## v158 family acceptance
+
+The family subsequently confirmed the staging preview across the intended devices. Home, the owner-scoped private original workspace, connected shared sections and parent-only Finance/Businesses behaved as expected. Staging acceptance is complete. The implementation is still on the draft branch with production unchanged; merge and promotion require a separate release decision.
+
+## v158 Home experience
+
+The staging preview introduces a role-aware Home dashboard and a modern signed-out Burns Base front door. Home summarizes connected Tasks/Activities, Calendar, Goals, Priorities and Groceries, with parent-only Finance and Business pulse cards. Detailed editors remain section-specific; Settings owns downloads and username controls; the original private Steven OS stays separate. The decorative flow graphic is reduced-motion aware and does not alter authentication or data boundaries. Static audit and JavaScript syntax checks pass. The Playwright harness could not launch Chromium in this environment (SIGTRAP before context creation), so this entry makes no new browser-flow claim.
 
 ## v157 priorities and download scopes
 
