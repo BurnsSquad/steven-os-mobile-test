@@ -16,7 +16,7 @@ BEGIN
  PERFORM set_config('request.jwt.claim.sub',outsider::text,true);SELECT count(*) INTO n FROM public.bb_finance_records WHERE household_id=h;IF n<>0 THEN RAISE EXCEPTION 'Foreign household finance leak';END IF;
  EXECUTE 'SET LOCAL ROLE postgres';
  IF has_table_privilege('anon','public.bb_finance_records','SELECT') THEN RAISE EXCEPTION 'Anonymous finance access'; END IF;
- IF EXISTS(SELECT FROM public.bb_finance_records WHERE household_id=h AND (source='' OR effective_start IS NULL OR NOT needs_confirmation)) THEN RAISE EXCEPTION 'Source/confirmation metadata';END IF;
- RAISE NOTICE 'PASS adult read, child/outsider/anon denial, no direct writes, provenance and confirmation flags';
+ IF EXISTS(SELECT FROM public.bb_finance_records WHERE household_id=h AND (source='' OR effective_start IS NULL)) THEN RAISE EXCEPTION 'Source/confirmation metadata';END IF;
+ RAISE NOTICE 'PASS adult read, child/outsider/anon denial, no direct writes, provenance; confirmed revisions allowed';
 END $test$;
 ROLLBACK;

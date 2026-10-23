@@ -1,7 +1,7 @@
 -- Administrator-driven role simulation, all data edits rolled back.
 BEGIN;
 DO $test$
-DECLARE r record; a uuid; child_id uuid; outsider uuid; result jsonb; taskid uuid; oldversion bigint; n integer;
+DECLARE r record; a uuid; child_id uuid; outsider uuid; result jsonb; taskid uuid; oldversion bigint; n integer; expected_templates integer;
 BEGIN
  SELECT * INTO r FROM bb_planner_private.routines LIMIT 1;
  SELECT user_id INTO a FROM public.bb_planner_members WHERE household_id=r.household_id AND member_role='adult' ORDER BY user_id LIMIT 1;
@@ -33,8 +33,9 @@ BEGIN
  -- Generator respects chosen weekdays, minute precision and paused templates.
  UPDATE bb_planner_private.routines SET enabled=false;
  UPDATE bb_planner_private.routines SET enabled=true WHERE id=r.id;
+ SELECT count(*) INTO expected_templates FROM bb_planner_private.routine_templates WHERE routine_id=r.id AND enabled;
  n:=bb_planner_private.generate_evening_routines('2027-03-15 22:36:00+00'); IF n<>0 THEN RAISE EXCEPTION 'Early'; END IF;
- n:=bb_planner_private.generate_evening_routines('2027-03-15 22:37:00+00'); IF n<>3 THEN RAISE EXCEPTION 'Paused template or minute boundary %',n; END IF;
+ n:=bb_planner_private.generate_evening_routines('2027-03-15 22:37:00+00'); IF n<>expected_templates THEN RAISE EXCEPTION 'Paused template or minute boundary %, expected %',n,expected_templates; END IF;
  n:=bb_planner_private.generate_evening_routines('2027-03-16 23:00:00+00'); IF n<>0 THEN RAISE EXCEPTION 'Unselected day'; END IF;
  RAISE NOTICE 'PASS adult editing, invalid inputs, stale conflict, foreign assignee, child/outsider denial, private ACLs, minute/day/paused generation';
 END $test$;

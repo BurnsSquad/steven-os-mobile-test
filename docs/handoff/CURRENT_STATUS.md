@@ -28,6 +28,8 @@ Original legacy goals, businesses, flexible priorities and historical household/
 
 ## Evidence
 
+See [RELEASE_READINESS.md](RELEASE_READINESS.md) for the completed current-scope release check: ten request/model test files, eight mocked browser flows and six hosted rollback SQL-role suites passed. The direct anonymous REST probe was network-unavailable and is not counted as live API evidence.
+
 Earlier family planner/calendar acceptance was reported by the user. On v152 the user also confirmed cross-device shared grocery pickup and the correct pickup attribution. New work has hosted rollback SQL-role checks plus deterministic request tests and mocked multi-session/original-source browser checks. These are not fresh real-password/physical-device acceptance. Routine template edits preserve existing Task history; grocery test fixtures were rolled back. Session tests cover concurrency, delayed responses and sign-out/new-login isolation. All eleven original tabs and five calendar views are part of regression coverage, not certification of every legacy control.
 
 ## Next actions requiring the family
