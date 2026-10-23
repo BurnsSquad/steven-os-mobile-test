@@ -47,3 +47,7 @@ Hosted additive parent-only tables/RPCs are installed. Rollback SQL covers paren
 ## v156 goals addition
 
 New family roadmap table/checked writes/private audit installed. Hosted rollback role tests pass child-own creation/write, sibling read-only, both-parent management, immutable ownership, 3x4 validation, stale/retry guards, completion attribution/undo, archive, ACLs and foreign/missing-identity denial. Post-check goal rows/audit fixtures zero. New mocked family goal flow and two request tests pass. Original eleven-tab/five-view source, shared-shell and recovery regressions pass; 19 targeted request/session/export tests pass. Earlier broad readiness evidence remains historical as labelled above. No fresh family-device goal acceptance or production promotion is claimed.
+
+## Entry 312 — full-roadmap verification
+
+Expanded hosted rollback SQL and mocked browser checks pass all 12 completions, independent parent/sibling readback, 100% progress, 92% after reopening and 100% on recompletion. Sibling controls remain read-only. Server attribution, no-op version stability and audit are checked; no fixtures retained. This completes agent-run acceptance; actual family JWT/device acceptance remains unverified. v156 runtime/deployment unchanged.

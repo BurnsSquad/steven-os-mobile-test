@@ -1,6 +1,6 @@
 BEGIN;
 DO $test$
-DECLARE h uuid;pa uuid;pb uuid;k1 uuid;k2 uuid;outsider uuid;i uuid:=gen_random_uuid();j uuid:=gen_random_uuid();r jsonb;n int;payload jsonb;
+DECLARE h uuid;pa uuid;pb uuid;k1 uuid;k2 uuid;outsider uuid;i uuid:=gen_random_uuid();j uuid:=gen_random_uuid();r jsonb;n int;mi int;si int;ver bigint;payload jsonb;
 BEGIN
  SELECT household_id INTO STRICT h FROM bb_planner_private.routines WHERE routine_key='prepare_for_tomorrow_v1';
  SELECT user_id INTO STRICT pa FROM public.bb_planner_members WHERE household_id=h AND member_role='adult' ORDER BY user_id LIMIT 1;
@@ -29,6 +29,21 @@ BEGIN
  r:=public.bb_goal_write(h,i,3,'step','{"milestone":0,"step":0,"done":false}');IF r->'milestones'->0->'steps'->0->>'completed_by' IS NOT NULL THEN RAISE EXCEPTION 'Undo attribution';END IF;
  PERFORM set_config('request.jwt.claim.sub',pb::text,true);r:=public.bb_goal_write(h,i,4,'step','{"milestone":0,"step":1,"done":true}');IF r->'milestones'->0->'steps'->1->>'completed_by'<>pb::text THEN RAISE EXCEPTION 'Parent peer completion';END IF;
  PERFORM public.bb_goal_write(h,j,NULL,'create',jsonb_build_object('owner_id',k2,'title','Rollback parent-created roadmap','description',''));
+ -- Full roadmap acceptance under the second child's own identity, then an independent parent's read.
+ PERFORM set_config('request.jwt.claim.sub',k2::text,true);ver:=1;
+ FOR mi IN 0..2 LOOP FOR si IN 0..3 LOOP
+  r:=public.bb_goal_write(h,j,ver,'step',jsonb_build_object('milestone',mi,'step',si,'done',true));ver:=(r->>'version')::bigint;
+ END LOOP;END LOOP;
+ SELECT count(*) INTO n FROM jsonb_array_elements(r->'milestones')m CROSS JOIN LATERAL jsonb_array_elements(m->'steps')s WHERE (s->>'done')::boolean AND s->>'completed_by'=k2::text;
+ IF n<>12 OR ver<>13 THEN RAISE EXCEPTION 'Full 12-step completion/attribution';END IF;
+ r:=public.bb_goal_write(h,j,ver,'step','{"milestone":2,"step":3,"done":true}');IF (r->>'version')::bigint<>ver THEN RAISE EXCEPTION 'No-op changed version';END IF;
+ r:=public.bb_goal_write(h,j,ver,'step','{"milestone":2,"step":3,"done":false}');ver:=(r->>'version')::bigint;
+ IF r->'milestones'->2->'steps'->3->>'completed_by' IS NOT NULL THEN RAISE EXCEPTION 'Full goal reopen attribution';END IF;
+ r:=public.bb_goal_write(h,j,ver,'step','{"milestone":2,"step":3,"done":true}');
+ PERFORM set_config('request.jwt.claim.sub',pa::text,true);SELECT to_jsonb(g) INTO r FROM public.bb_goal_roadmaps g WHERE id=j;
+ SELECT count(*) INTO n FROM jsonb_array_elements(r->'milestones')m CROSS JOIN LATERAL jsonb_array_elements(m->'steps')s WHERE (s->>'done')::boolean;
+ IF n<>12 THEN RAISE EXCEPTION 'Independent parent does not read completed goal';END IF;
+ PERFORM set_config('request.jwt.claim.sub',pb::text,true);
  PERFORM public.bb_goal_write(h,i,5,'archive','{}');
  BEGIN PERFORM public.bb_goal_write(h,i,6,'step','{"milestone":0,"step":1,"done":false}');RAISE EXCEPTION 'Archive mutable';EXCEPTION WHEN object_not_in_prerequisite_state THEN NULL;END;
  BEGIN UPDATE public.bb_goal_roadmaps SET owner_id=k2 WHERE id=i;RAISE EXCEPTION 'Direct update';EXCEPTION WHEN insufficient_privilege THEN NULL;END;
@@ -36,7 +51,7 @@ BEGIN
  BEGIN PERFORM public.bb_goal_write(h,j,1,'edit','{"title":"Foreign","description":""}');RAISE EXCEPTION 'Foreign edit';EXCEPTION WHEN insufficient_privilege THEN NULL;END;
  PERFORM set_config('request.jwt.claim.sub','',true);
  BEGIN PERFORM public.bb_goal_write(h,j,1,'edit','{"title":"No identity","description":""}');RAISE EXCEPTION 'No identity edit';EXCEPTION WHEN insufficient_privilege THEN NULL;END;
- EXECUTE 'SET LOCAL ROLE postgres';SELECT count(*) INTO n FROM bb_planner_private.goal_changes WHERE goal_id IN(i,j);IF n<>7 THEN RAISE EXCEPTION 'Audit count %',n;END IF;
+ EXECUTE 'SET LOCAL ROLE postgres';SELECT count(*) INTO n FROM bb_planner_private.goal_changes WHERE goal_id IN(i,j);IF n<>21 THEN RAISE EXCEPTION 'Audit count %',n;END IF;
  IF has_table_privilege('anon','public.bb_goal_roadmaps','SELECT') OR has_table_privilege('authenticated','public.bb_goal_roadmaps','INSERT') OR has_table_privilege('authenticated','public.bb_goal_roadmaps','DELETE') OR has_function_privilege('anon','public.bb_goal_write(uuid,uuid,bigint,text,jsonb)','EXECUTE') OR has_table_privilege('authenticated','bb_planner_private.goal_changes','SELECT') OR pg_has_role('authenticated','bb_goal_writer','MEMBER') THEN RAISE EXCEPTION 'ACL exposure';END IF;
  RAISE NOTICE 'PASS family read, own child write, sibling denial, parent peer management, 3x4 shape, preserved completions, attribution/undo, archive, versions/retries, ACLs and foreign/no-identity denial';
 END $test$;

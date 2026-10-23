@@ -50,3 +50,7 @@ Parents-only Businesses is installed in the hosted database and deployed in v155
 ## Latest update — Entry 311
 
 Family Goals/milestones installed and connected in v156. Hosted rollback SQL verifies family visibility, child-own writes, sibling write denial, both-parent management, 3x4 shape, preserved completion on milestone edits, attributed completion/undo, stale/idempotent writes, archive and foreign/no-identity/ACL denial. No test goals/audit fixtures retained. Two new request tests and the mocked family goal flow pass; original-source/shared-shell/recovery browser regressions and 19 targeted request/session/export tests pass. Existing advisors unchanged. A fresh physical-device goal check remains unverified.
+
+## Entry 312 — full-roadmap verification
+
+Expanded hosted rollback SQL and mocked browser checks pass all 12 completions, independent parent/sibling readback, 100% progress, 92% after reopening and 100% on recompletion. Sibling controls remain read-only. Server attribution, no-op version stability and audit are checked; no fixtures retained. This completes agent-run acceptance; actual family JWT/device acceptance remains unverified. v156 runtime/deployment unchanged.

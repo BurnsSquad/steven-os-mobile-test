@@ -21,3 +21,7 @@ Hosted shared-goals-test.sql passed inside a rollback: own child writes, sibling
 Two goals API request tests pass. Mocked three-context browser covers own creation, sibling read-only, parent milestone/step edits, completion/undo, progress, preserved completion, stale edit text, archive, literal rendering, mobile and clearing. Shared-shell and original-source regressions exercise navigation and original Goals bridge alongside preserved eleven tabs and five calendar views. Recovery/session/export tests remain passing. These are database-role simulations and mocked browsers, not new password/device acceptance.
 
 Current preview: https://steven-os-mobile-test-17w73hdix-burns6.vercel.app/
+
+## Entry 312 — full-roadmap verification
+
+Expanded hosted rollback SQL and mocked browser checks pass all 12 completions, independent parent/sibling readback, 100% progress, 92% after reopening and 100% on recompletion. Sibling controls remain read-only. Server attribution, no-op version stability and audit are checked; no fixtures retained. This completes agent-run acceptance; actual family JWT/device acceptance remains unverified. v156 runtime/deployment unchanged.
