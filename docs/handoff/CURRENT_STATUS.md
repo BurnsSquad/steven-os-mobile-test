@@ -1,6 +1,6 @@
 # Start here — current Steven OS handoff
 
-Current preview v154: https://steven-os-mobile-test-78a4syx9h-burns6.vercel.app/
+Current preview v155: https://steven-os-mobile-test-mz759zm20-burns6.vercel.app/
 
 ## Where the work is
 
@@ -11,11 +11,12 @@ Generic development updates 302 onward live under `docs/development-updates/`. T
 ## What is connected
 
 - Original eleven-tab layout and private workspace/revision saves, with private HTML/JSON recovery downloads.
-- Separate parent-requested shared household JSON export for Tasks/Activities/completions, Family-visible calendar, groceries, routine settings/templates and usernames. No Finance/private original data; no automatic restore or point-in-time snapshot claim.
+- Separate parent-requested shared household JSON export for Tasks/Activities/completions, Family-visible calendar, groceries, routine settings/templates and usernames. No parent Businesses/Finance/private original data; no automatic restore or point-in-time snapshot claim.
 - Canonical household Tasks/Activities, individual/household/shared completion, usernames and existing recovery workflow.
 - Parent repeating routines with 12-hour Eastern times and future-template edits, also in original Household.
 - Family/Parents/Private calendar events projected into all five original calendar views without copying them into private records.
 - Parent Finance fact review, versioned revisions, paycheck drafts/calculation/approval, confirmed due-date calendar projection and an Overview summary. Current cash is parent-entered, not a bank balance query.
+- Parent-only shared Businesses: ventures, project tasks, department/project progress, completion attribution, version checks and archive. Same records appear above private legacy content in original Businesses and in the shared parent navigation. No automatic import or Finance coupling.
 - Shared groceries for family add/pick, child-own edit, parent management/archive; same list in original Groceries. Pickup is not a financial transaction.
 - Shared phone navigation remains visible while scrolling, labels the current section and keeps Task/Activity controls out of Groceries/Calendar/Finance. The original toolbar has a Shared groceries shortcut.
 - A shared client refresh guard preventing simultaneous token refreshes or late old-session failures from clearing a newer session.
@@ -37,6 +38,10 @@ Earlier family planner/calendar acceptance was reported by the user. On v152 the
 1. The v152 real-device grocery add/pick/attribution check is complete. Do not repeat it merely to prove the same database sharing. Verify new UI changes only when needed; keep passwords on the website.
 2. Parents verify current financial sources and cash snapshot through the Finance checklist before relying on a paycheck result. Do not let a developer infer confirmation from dated documents.
 3. Resume collaborator onboarding together; confirm the collaborator can read the active branch before granting wider infrastructure access or starting parallel edits.
-4. Decide the next legacy collection to share explicitly. Do not expose private collections merely because their UI is restored.
+4. Businesses audience was confirmed parents-only and implemented in v155. Goals/milestones are queued next; their audience/ownership rules still need an explicit choice. Private records are not migrated automatically.
 
 See database/planner/ORIGINAL_OS_COMPATIBILITY.md, SHARED_GROCERIES.md, FINANCE_CURRENT_WORKFLOW.md and CLIENT_SESSION_RELIABILITY.md for the current implementation boundaries.
+
+## Latest update — Entry 310
+
+Parents-only Businesses is installed in the hosted database and deployed in v155. Rollback SQL checks cover two parents, child/other-household/no-identity denials, retries, stale writes, archive, completion attribution/undo, direct-write denial and audit. Post-check found zero business fixtures retained. Two API tests and the new two-parent mocked browser flow pass; original-source/shared-shell/recovery regressions also pass. Existing security advisor findings are unchanged. No fresh physical-device business acceptance is claimed.

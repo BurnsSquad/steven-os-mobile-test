@@ -1,4 +1,4 @@
-# Original Steven OS compatibility map — v151
+# Original Steven OS compatibility map — v155
 
 The uploaded original HTML supplies the actual eleven-tab layout and legacy behavior. Its supplied JSON backup supplies working private records. Shared modules are added beside legacy content, not copied into it. This map replaces outdated assumptions that the layout or calendar backup still needs rebuilding/importing.
 
@@ -13,7 +13,7 @@ The uploaded original HTML supplies the actual eleven-tab layout and legacy beha
 | Groceries | Live shared household list above original lists/stores/spending entry and charts | Family can add/pick items; parents manage/archive, children edit own additions. Original records remain private. Pickup does not record a Finance expense. |
 | Kids Planner | Original child views/progress and connected Tasks/Activities panel | Original child-labelled records remain private to owner; child accounts use shared planner/calendar. Legacy history is not attributed to database identities by guessing. |
 | Goals | Original roadmaps, milestones and progress visuals | Private owner workspace. Shared goal permissions and migration require explicit design. |
-| Businesses | Original ventures and related visuals | Private owner workspace; business cash is excluded from household planning unless explicitly released/reviewed. |
+| Businesses | Parent-only connected ventures, project tasks, progress ring and department/project summaries above original private ventures/visuals | Parents share new canonical records; children cannot read/write them. Original business records remain private, with no automatic import. No business cash or Finance coupling. |
 | Settings | Original theme/preferences and private owner state, plus hosted recovery toolbar | Hosted saves preserve prior versions; stale saves stop. Private HTML/JSON downloads do not include shared online datasets. |
 
 ## Save compatibility fix

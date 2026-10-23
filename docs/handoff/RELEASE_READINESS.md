@@ -1,6 +1,6 @@
 # Connected household features — release-readiness review
 
-Current tested preview: v154, https://steven-os-mobile-test-78a4syx9h-burns6.vercel.app/
+Current tested preview: v155, https://steven-os-mobile-test-mz759zm20-burns6.vercel.app/
 
 ## Result
 
@@ -12,7 +12,7 @@ The implemented connected household scope passes the current automated release c
 | Eight mocked browser flows | PASS | Shared family shell, original private source, planner panel, calendar UI, groceries, Finance workbench, Finance summary, password recovery |
 | Six hosted rollback SQL-role suites | PASS | Finance access/workflow, private original access/version saves, routine controls/generation, shared calendar, shared groceries |
 | Original source compatibility | PASS within exercised flows | Eleven original tabs, five calendar views, shared bridges, mobile fit, snapshots, private HTML/JSON recovery and separate shared download |
-| Preview hosting | READY | Existing v154 deployment retained; no new runtime changes in this review |
+| Preview hosting | READY | v155 parent-only Businesses preview deployed; no production promotion |
 | Family live acceptance | User confirmed earlier | Shared planner/calendar; v152 shared grocery cross-device pickup and correct attribution |
 
 Hosted tests simulate database request identity/roles, not actual user JWT sign-ins. Browser tests use mocked provider/data transport and private local original inputs, not family passwords. Deterministic session tests cover expiry races; they do not demonstrate that a physical browser remained signed in for a full real token lifetime. A direct unauthenticated REST probe from the execution environment could not reach the provider, so it is NOT treated as live API evidence. Hosted role/ACL denial tests passed independently.
@@ -34,8 +34,12 @@ Implemented: shared Tasks/Activities, role-based completion/assignments, routine
 Still needs actual information or a decision:
 
 1. Parents confirm current Finance balances, bill sources and a cash snapshot through the workbench. A developer cannot truthfully certify dated amounts as current.
-2. Choose which private original collection becomes shared next: Goals, Priority Board or Businesses, and then agree its visibility/edit rules. Existing records stay private until explicitly selected.
+2. Businesses was selected and confirmed parents-only; v155 implements new shared business records. Goals/milestones remain queued for audience/ownership design. Existing private records are not automatically migrated.
 3. Resume collaborator onboarding together when ready. The code is on the active draft implementation branch, not merged main.
 4. A reviewed production release/merge, transaction/bank integrations and automatic shared-data restoration remain separate work. No paid plan or money movement is enabled by this readiness review.
 
 Use CURRENT_STATUS.md for the active branch/preview. The generic numbered update series continues separately from the unchanged historical log. Do not repeat accepted family tests simply to re-prove the same completed grocery flow.
+
+## v155 business addition
+
+Hosted additive parent-only tables/RPCs are installed. Rollback SQL covers parent peers, child/foreign/no-identity denials, ACLs, stale/idempotent writes, archive and attributed completion/undo; zero fixtures remain. Two new request tests and the two-parent/child mocked business flow pass. Original eleven-tab/five-calendar-view, shared-shell and recovery browser regressions also pass. Business records stay outside Finance and the shared-household export; original private records/backups remain separate. These additions do not replace the evidence limits above or constitute real-device sign-in acceptance.
