@@ -1,11 +1,11 @@
-# Original Steven OS compatibility map — v156
+# Original Steven OS compatibility map — v157
 
 The uploaded original HTML supplies the actual eleven-tab layout and legacy behavior. Its supplied JSON backup supplies working private records. Shared modules are added beside legacy content, not copied into it. This map replaces outdated assumptions that the layout or calendar backup still needs rebuilding/importing.
 
 | Original tab | Current behavior | Sharing boundary / remaining work |
 | --- | --- | --- |
 | Overview | Original cards and charts, connected Tasks/Activities and current Finance summary | Original records owner-only. Shared panels use canonical household data. Finance summary parent-only, saved-input source check, not live banking. |
-| Priority Board | Original flexible priorities, conditions, visual views and scheduling | Private owner workspace; not canonical household task assignments. No automatic cross-member sharing. |
+| Priority Board | Connected family priorities and private readiness recommendations appear above the original flexible priorities, conditions, visual views and scheduling | Everyone reads connected priorities; each person manages their own and parents manage all/Family priorities. Readiness choices are account-private. Original records remain private and are not imported automatically. |
 | Calendar | Original five views and private events, plus connected events and confirmed parent Finance due dates | Family/Parents/Private audiences for connected events. Legacy private events are not shared automatically. Finance dates route to the source rather than duplicate events. |
 | Finance | Current parent fact review/paycheck plans above original ledger/spending charts | Current and historical values clearly separated. Actual balances/provider confirmations must come from parents. Transaction ingest and complete forecasting remain pending. |
 | Burns Base | Original records and sections | Private owner records; not implicitly shared with family. |
@@ -26,4 +26,4 @@ An invalid private snapshot now produces a visible could-not-save message rather
 
 Mocked original-source browser checks exercise all eleven tab renders and five calendar views, hosted Kids navigation-style save, valid key namespace, subsequent calendar/preference saves, current Finance/Overview routing, connected planner/calendar overlays, mobile fit and private recovery downloads. The exported HTML opens independently with the saved Kids navigation style. Recovery unit checks cover state/provenance, optional collections and alias rewriting.
 
-These checks do not certify every legacy button or prove new ordinary-account/device acceptance. Missing optional records in the uploaded backup are not invented. Connected data stays out of private legacy arrays and recovery files. No household permissions, schema, family records or production deployment are changed by this compatibility fix.
+These checks do not certify every legacy button or prove new ordinary-account/device acceptance. Missing optional records in the uploaded backup are not invented. Connected data stays out of private legacy arrays and recovery files. The v157 Priority schema is additive and separately permissioned; no production promotion was performed.

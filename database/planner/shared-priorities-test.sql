@@ -1,0 +1,37 @@
+BEGIN;
+DO $test$
+DECLARE h uuid;pa uuid;pb uuid;k1 uuid;k2 uuid;outsider uuid;i uuid:=gen_random_uuid();family_id uuid:=gen_random_uuid();r jsonb;n int;
+BEGIN
+ SELECT household_id INTO STRICT h FROM bb_planner_private.routines WHERE routine_key='prepare_for_tomorrow_v1';
+ SELECT user_id INTO STRICT pa FROM public.bb_planner_members WHERE household_id=h AND member_role='adult' ORDER BY user_id LIMIT 1;
+ SELECT user_id INTO STRICT pb FROM public.bb_planner_members WHERE household_id=h AND member_role='adult' AND user_id<>pa LIMIT 1;
+ SELECT user_id INTO STRICT k1 FROM public.bb_planner_members WHERE household_id=h AND member_role='child' ORDER BY user_id LIMIT 1;
+ SELECT user_id INTO STRICT k2 FROM public.bb_planner_members WHERE household_id=h AND member_role='child' AND user_id<>k1 LIMIT 1;
+ SELECT user_id INTO STRICT outsider FROM public.bb_planner_members m WHERE NOT EXISTS(SELECT FROM public.bb_planner_members x WHERE x.household_id=h AND x.user_id=m.user_id) LIMIT 1;
+ PERFORM set_config('request.jwt.claim.sub',k1::text,true);EXECUTE 'SET LOCAL ROLE authenticated';
+ r:=public.bb_priority_write(h,i,NULL,'create',jsonb_build_object('owner_id',k1,'title','Rollback child priority','duration_minutes',30,'category','Creative','next_action','Test safely','requires_home',true,'requires_homework',false,'requires_energy',true));
+ IF r->>'owner_id'<>k1::text OR (r->>'version')::int<>1 THEN RAISE EXCEPTION 'Child create';END IF;
+ PERFORM public.bb_priority_write(h,i,NULL,'create',jsonb_build_object('owner_id',k1,'title','Rollback child priority','duration_minutes',30,'category','Creative','next_action','Test safely','requires_home',true,'requires_homework',false,'requires_energy',true));
+ r:=public.bb_priority_preference_save(h,NULL,'{"household_ready":true,"homework_ready":false,"focus_energy":true,"minutes":60}');IF r->>'user_id'<>k1::text OR (r->>'minutes')::int<>60 THEN RAISE EXCEPTION 'Own preference';END IF;
+ BEGIN PERFORM public.bb_priority_write(h,gen_random_uuid(),NULL,'create',jsonb_build_object('owner_id',k2,'title','Wrong owner','duration_minutes',30,'category','','next_action','','requires_home',false,'requires_homework',false,'requires_energy',false));RAISE EXCEPTION 'Child assigned sibling';EXCEPTION WHEN insufficient_privilege THEN NULL;END;
+ BEGIN PERFORM public.bb_priority_write(h,gen_random_uuid(),NULL,'create',jsonb_build_object('owner_id',NULL,'title','Wrong family','duration_minutes',30,'category','','next_action','','requires_home',false,'requires_homework',false,'requires_energy',false));RAISE EXCEPTION 'Child created family';EXCEPTION WHEN insufficient_privilege THEN NULL;END;
+ r:=public.bb_priority_write(h,i,1,'complete','{"completed":true}');IF r->>'completed_by'<>k1::text THEN RAISE EXCEPTION 'Completion attribution';END IF;
+ PERFORM set_config('request.jwt.claim.sub',k2::text,true);SELECT count(*) INTO n FROM public.bb_priorities WHERE id=i;IF n<>1 THEN RAISE EXCEPTION 'Family read';END IF;
+ BEGIN PERFORM public.bb_priority_write(h,i,2,'edit','{"title":"Sibling","duration_minutes":30,"category":"","next_action":"","requires_home":false,"requires_homework":false,"requires_energy":false}');RAISE EXCEPTION 'Sibling edit';EXCEPTION WHEN insufficient_privilege THEN NULL;END;
+ SELECT count(*) INTO n FROM public.bb_priority_preferences WHERE user_id=k1;IF n<>0 THEN RAISE EXCEPTION 'Sibling preference exposure';END IF;
+ PERFORM set_config('request.jwt.claim.sub',pa::text,true);
+ r:=public.bb_priority_write(h,i,2,'complete','{"completed":false}');IF r->>'completed_by' IS NOT NULL THEN RAISE EXCEPTION 'Parent reopen';END IF;
+ r:=public.bb_priority_write(h,family_id,NULL,'create',jsonb_build_object('owner_id',NULL,'title','Rollback family priority','duration_minutes',45,'category','Family','next_action','Review together','requires_home',false,'requires_homework',true,'requires_energy',false));
+ PERFORM set_config('request.jwt.claim.sub',pb::text,true);r:=public.bb_priority_write(h,family_id,1,'edit','{"title":"Rollback family priority updated","duration_minutes":60,"category":"Family","next_action":"Review together","requires_home":false,"requires_homework":true,"requires_energy":false}');IF r->>'title'<>'Rollback family priority updated' THEN RAISE EXCEPTION 'Parent peer edit';END IF;
+ BEGIN PERFORM public.bb_priority_write(h,family_id,1,'complete','{"completed":true}');RAISE EXCEPTION 'Stale accepted';EXCEPTION WHEN serialization_failure THEN NULL;END;
+ PERFORM public.bb_priority_write(h,family_id,2,'archive','{}');
+ BEGIN PERFORM public.bb_priority_write(h,family_id,3,'complete','{"completed":true}');RAISE EXCEPTION 'Archived mutable';EXCEPTION WHEN object_not_in_prerequisite_state THEN NULL;END;
+ BEGIN UPDATE public.bb_priorities SET title='Direct' WHERE id=i;RAISE EXCEPTION 'Direct update';EXCEPTION WHEN insufficient_privilege THEN NULL;END;
+ PERFORM set_config('request.jwt.claim.sub',outsider::text,true);SELECT count(*) INTO n FROM public.bb_priorities WHERE household_id=h;IF n<>0 THEN RAISE EXCEPTION 'Foreign read';END IF;
+ PERFORM set_config('request.jwt.claim.sub','',true);BEGIN PERFORM public.bb_priority_write(h,i,3,'archive','{}');RAISE EXCEPTION 'No identity';EXCEPTION WHEN insufficient_privilege THEN NULL;END;
+ EXECUTE 'SET LOCAL ROLE postgres';
+ IF has_table_privilege('anon','public.bb_priorities','SELECT') OR has_table_privilege('authenticated','public.bb_priorities','INSERT') OR has_table_privilege('authenticated','public.bb_priority_preferences','UPDATE') OR has_function_privilege('anon','public.bb_priority_write(uuid,uuid,bigint,text,jsonb)','EXECUTE') OR has_table_privilege('authenticated','bb_planner_private.priority_changes','SELECT') OR pg_has_role('authenticated','bb_priority_writer','MEMBER') THEN RAISE EXCEPTION 'ACL exposure';END IF;
+ SELECT count(*) INTO n FROM bb_planner_private.priority_changes WHERE priority_id IN(i,family_id) OR (priority_id IS NULL AND actor_id=k1);IF n<>7 THEN RAISE EXCEPTION 'Audit count %',n;END IF;
+ RAISE NOTICE 'PASS family read, own child writes, parent all/family management, private readiness preferences, attribution, versions, archive, ACLs and isolation';
+END $test$;
+ROLLBACK;

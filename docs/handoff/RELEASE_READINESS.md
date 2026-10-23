@@ -1,6 +1,6 @@
 # Connected household features — release-readiness review
 
-Current tested preview: v156, https://steven-os-mobile-test-17w73hdix-burns6.vercel.app/
+Current tested preview: v157, https://steven-os-mobile-test-gd6w2pcxg-burns6.vercel.app/
 
 ## Result
 
@@ -8,11 +8,11 @@ The implemented connected household scope passes the current automated release c
 
 | Evidence | Result | Coverage |
 | --- | --- | --- |
-| Ten current request/model test files | PASS | Session concurrency, verified identity, permissions/scope validation, username handler, planner rules, Eastern calendar dates, Finance calendar projection, recovery, private/shared exports |
-| Eight mocked browser flows | PASS | Shared family shell, original private source, planner panel, calendar UI, groceries, Finance workbench, Finance summary, password recovery |
-| Six hosted rollback SQL-role suites | PASS | Finance access/workflow, private original access/version saves, routine controls/generation, shared calendar, shared groceries |
+| Current request/model tests | PASS | Session concurrency, verified identity, permissions/scope validation, username handler, planner rules, Eastern calendar dates, Finance calendar projection, recovery, private/shared exports and Priority request scope |
+| Mocked browser flows | PASS | Shared family shell, original private source, planner panel, calendar UI, groceries, Goals, Businesses, Priority Board, Finance workbench/summary and password recovery |
+| Hosted rollback SQL-role suites | PASS | Finance access/workflow, private original access/version saves, routine controls/generation, shared calendar, groceries, Businesses, Goals and priorities |
 | Original source compatibility | PASS within exercised flows | Eleven original tabs, five calendar views, shared bridges, mobile fit, snapshots, private HTML/JSON recovery and separate shared download |
-| Preview hosting | READY | v156 family Goals/milestones preview deployed; no production promotion |
+| Preview hosting | READY | v157 Priority Board and scoped-download preview deployed; no production promotion |
 | Family live acceptance | User confirmed earlier | Shared planner/calendar; v152 shared grocery cross-device pickup and correct attribution |
 
 Hosted tests simulate database request identity/roles, not actual user JWT sign-ins. Browser tests use mocked provider/data transport and private local original inputs, not family passwords. Deterministic session tests cover expiry races; they do not demonstrate that a physical browser remained signed in for a full real token lifetime. A direct unauthenticated REST probe from the execution environment could not reach the provider, so it is NOT treated as live API evidence. Hosted role/ACL denial tests passed independently.
@@ -29,7 +29,7 @@ The existing optional [leaked-password protection](https://supabase.com/docs/gui
 
 ## What is complete and what needs the family
 
-Implemented: shared Tasks/Activities, role-based completion/assignments, routines, calendar audiences, groceries, manual parent Finance review/calculation/approval, original layout integrations, clearer shared mobile navigation, private recovery files and a separate scoped shared-data export.
+Implemented: shared Tasks/Activities, role-based completion/assignments, routines, calendar audiences, groceries, Goals/milestones, parents-only Businesses, flexible priorities with private readiness choices, manual parent Finance review/calculation/approval, original layout integrations, clearer shared mobile navigation, private recovery files, a family data download and a separate parents-only Business download.
 
 Still needs actual information or a decision:
 
@@ -51,3 +51,11 @@ New family roadmap table/checked writes/private audit installed. Hosted rollback
 ## Entry 312 — full-roadmap verification
 
 Expanded hosted rollback SQL and mocked browser checks pass all 12 completions, independent parent/sibling readback, 100% progress, 92% after reopening and 100% on recompletion. Sibling controls remain read-only. Server attribution, no-op version stability and audit are checked; no fixtures retained. This completes agent-run acceptance; actual family JWT/device acceptance remains unverified. v156 runtime/deployment unchanged.
+
+## v157 priorities and download scopes
+
+The additive Priority tables, checked RPCs, private audit table and RLS policies are installed. Hosted rollback tests pass family read, child-own management, both-parent management, Family priorities, private per-account readiness settings, completion/reopen attribution, retry/version behavior, archive locking, ACL denial and foreign/no-identity denial. Zero rollback priority/audit fixtures remain. A dedicated three-context browser test passes personal/everyone views, recommendations, literal rendering, mobile fit and clearing; shared-shell and original-source regressions pass. The original private Priority Board remains below the connected panel and is never auto-imported.
+
+The family export now field-limits and includes Goals/milestones and shared priorities while excluding personal readiness settings and parent Businesses. A second parents-only export field-limits Business ventures/tasks and refuses before collection reads for child accounts. Both are download-only; no restore/import claim is made.
+
+The security advisor has the same existing leaked-password warning and private scheduler-table RLS information item. The performance advisor initially found the new completion-attribution foreign key uncovered; v157 adds the covering index, and the follow-up advisor report contains no new Priority foreign-key finding.
