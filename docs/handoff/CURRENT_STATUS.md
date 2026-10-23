@@ -1,6 +1,6 @@
 # Start here — current Steven OS handoff
 
-Current preview v153: https://steven-os-mobile-test-mxvigwz5l-burns6.vercel.app/
+Current preview v154: https://steven-os-mobile-test-78a4syx9h-burns6.vercel.app/
 
 ## Where the work is
 
@@ -11,6 +11,7 @@ Generic development updates 302 onward live under `docs/development-updates/`. T
 ## What is connected
 
 - Original eleven-tab layout and private workspace/revision saves, with private HTML/JSON recovery downloads.
+- Separate parent-requested shared household JSON export for Tasks/Activities/completions, Family-visible calendar, groceries, routine settings/templates and usernames. No Finance/private original data; no automatic restore or point-in-time snapshot claim.
 - Canonical household Tasks/Activities, individual/household/shared completion, usernames and existing recovery workflow.
 - Parent repeating routines with 12-hour Eastern times and future-template edits, also in original Household.
 - Family/Parents/Private calendar events projected into all five original calendar views without copying them into private records.
