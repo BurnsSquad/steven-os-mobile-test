@@ -1,0 +1,2 @@
+import test from 'node:test';import assert from 'node:assert/strict';import{promises as fs}from'node:fs';
+test('exchange source encrypts and never returns the Plaid access token',async()=>{const source=await fs.readFile(new URL('./exchange-token.mjs',import.meta.url),'utf8');assert.match(source,/aes-256-gcm/);assert.match(source,/PLAID_TOKEN_ENCRYPTION_KEY/);assert.doesNotMatch(source,/access_token\s*:/);assert.match(source,/member_role!==['"]adult['"]/);});
