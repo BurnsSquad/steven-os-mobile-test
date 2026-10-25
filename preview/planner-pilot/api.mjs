@@ -35,7 +35,7 @@ export function createClient(fetcher=fetch){
   const current=session;
   const response=await fetch(location.origin+path,{method:'POST',redirect:'error',credentials:'same-origin',cache:'no-store',referrerPolicy:'no-referrer',headers:{Authorization:`Bearer ${current.token}`,'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(body||{})});
   const data=await response.json().catch(()=>null);
-  if(!response.ok)throw new ClientError(typeof data?.code==='string'?data.code:response.status===401?'SESSION':'BANKING',response.status);
+  if(!response.ok){const code=typeof data?.code==='string'?data.code:response.status===401?'SESSION':'BANKING';const provider=typeof data?.provider_code==='string'?data.provider_code:'';throw new ClientError(provider?`${code}:${provider}`:code,response.status);}
   return data;
  }
  return {
