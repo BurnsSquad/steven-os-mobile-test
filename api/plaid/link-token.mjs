@@ -20,7 +20,7 @@ export async function POST(request){
   const body=await request.json().catch(()=>({}));
   const clientUserId=`bb:${identity.data.id}`;
   const plaid=await fetch(`${plaidBase}/link/token/create`,{method:'POST',headers:{'content-type':'application/json','PLAID-CLIENT-ID':process.env.PLAID_CLIENT_ID,'PLAID-SECRET':process.env.PLAID_SECRET},body:JSON.stringify({client_name:'Burns Base',language:'en',country_codes:['US'],user:{client_user_id:clientUserId},products:['auth','transactions'],...(typeof body.redirect_uri==='string'&&body.redirect_uri?{redirect_uri:body.redirect_uri}:{})})});
-  const result=await plaid.json().catch(()=>null);if(!plaid.ok||typeof result?.link_token!=='string')return json({code:'PLAID_UNAVAILABLE'},502);
+  const result=await plaid.json().catch(()=>null);if(!plaid.ok||typeof result?.link_token!=='string'){console.warn('Plaid link token rejected',{status:plaid.status,error_code:result?.error_code||null,error_type:result?.error_type||null});return json({code:'PLAID_UNAVAILABLE',provider_status:plaid.status,provider_code:typeof result?.error_code==='string'?result.error_code:null,provider_type:typeof result?.error_type==='string'?result.error_type:null},502);}
   return json({link_token:result.link_token,expiration:result.expiration||null,environment:plaidEnv});
  }catch{return json({code:'BANKING_UNAVAILABLE'},503);}
 }
