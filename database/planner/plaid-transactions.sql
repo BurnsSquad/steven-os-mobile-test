@@ -3,7 +3,7 @@
 CREATE TABLE IF NOT EXISTS bb_plaid_transactions (
  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
  connection_id uuid NOT NULL REFERENCES bb_plaid_connections(id) ON DELETE CASCADE,
- household_id uuid NOT NULL REFERENCES bb_households(id),
+ household_id uuid NOT NULL REFERENCES bb_planner_households(id),
  owner_id uuid NOT NULL REFERENCES auth.users(id),
  transaction_id text NOT NULL,
  account_id text NOT NULL,

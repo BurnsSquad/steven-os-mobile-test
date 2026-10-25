@@ -2,7 +2,7 @@
 -- server before insert; this table is never readable through the browser API.
 CREATE TABLE IF NOT EXISTS bb_plaid_connections (
  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
- household_id uuid NOT NULL REFERENCES bb_households(id),
+ household_id uuid NOT NULL REFERENCES bb_planner_households(id),
  owner_id uuid NOT NULL REFERENCES auth.users(id),
  item_id text NOT NULL UNIQUE,
  institution_name text,
