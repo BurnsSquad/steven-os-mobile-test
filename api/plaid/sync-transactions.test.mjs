@@ -1,0 +1,2 @@
+import test from 'node:test';import assert from 'node:assert/strict';import{promises as fs}from'node:fs';
+test('transaction sync is encrypted, parent-only and field-limited',async()=>{const source=await fs.readFile(new URL('./sync-transactions.mjs',import.meta.url),'utf8');assert.match(source,/transactions\/sync/);assert.match(source,/aes-256-gcm/);assert.match(source,/member\.member_role!==['"]adult['"]/);assert.match(source,/amount_cents/);assert.doesNotMatch(source,/raw_payload/);assert.doesNotMatch(source,/return reply\([^)]*access_token/);});
