@@ -26,3 +26,21 @@ export async function POST(request){
   if(!saved.r.ok)return body({code:'STORAGE_UNAVAILABLE'},503);return body({connected:true,item_id:result.item_id});
  }catch{return body({code:'BANKING_UNAVAILABLE'},503);}
 }
+
+
+// Vercel's Node runtime invokes API files through the default (req, res) handler.
+// Keep the Web Request implementation above for tests, and adapt it at the boundary.
+function toWebRequest(req){
+ const headers=new Headers();
+ for(const [name,value] of Object.entries(req.headers||{})){ if(value!==undefined) headers.set(name,Array.isArray(value)?value.join(','):String(value)); }
+ const init={method:req.method||'GET',headers};
+ if(!['GET','HEAD'].includes(init.method)) { init.body=req; init.duplex='half'; }
+ return new Request(`https://${req.headers?.host||'localhost'}${req.url||'/'}`,init);
+}
+async function sendNodeResponse(res,response){
+ res.statusCode=response.status; response.headers.forEach((value,name)=>res.setHeader(name,value)); res.end(await response.text());
+}
+export default async function handler(req,res){
+ try { await sendNodeResponse(res,await (req.method==='OPTIONS'?OPTIONS():POST(toWebRequest(req)))); }
+ catch { if(!res.headersSent){res.statusCode=503;res.setHeader('content-type','application/json');res.end(JSON.stringify({code:'BANKING_UNAVAILABLE'}));} }
+}
