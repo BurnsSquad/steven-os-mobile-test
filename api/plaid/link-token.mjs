@@ -7,8 +7,8 @@ const plaidBase=plaidEnv==='production'?'https://production.plaid.com':'https://
 const json=(body,status=200)=>new Response(JSON.stringify(body),{status,headers:{'content-type':'application/json','cache-control':'no-store'}});
 const auth=(request)=>/^Bearer\s+([^\s]+)$/i.exec(request.headers.get('authorization')||'')?.[1]||null;
 async function call(path,options={}){const response=await fetch(supabaseUrl+path,{...options,headers:{apikey:supabaseKey,authorization:options.token?`Bearer ${options.token}`:undefined,accept:'application/json','content-type':'application/json'}});return {response,data:await response.json().catch(()=>null)};}
-export default async function handler(request){
- if(request.method==='OPTIONS')return new Response(null,{status:204,headers:{'access-control-allow-origin':'*','access-control-allow-headers':'authorization,content-type','access-control-allow-methods':'POST,OPTIONS'}});
+export function OPTIONS(){return new Response(null,{status:204,headers:{'access-control-allow-origin':'*','access-control-allow-headers':'authorization,content-type','access-control-allow-methods':'POST,OPTIONS'} });}
+export async function POST(request){
  if(request.method!=='POST')return json({code:'METHOD'},405);
  const token=auth(request);if(!token)return json({code:'SESSION'},401);
  if(!supabaseKey||!process.env.PLAID_CLIENT_ID||!process.env.PLAID_SECRET)return json({code:'BANKING_NOT_CONFIGURED'},503);
