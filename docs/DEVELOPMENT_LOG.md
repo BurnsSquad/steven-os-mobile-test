@@ -2372,3 +2372,7 @@ Recovery path: use commits `7373c68` (CSP same-origin allowance), `102ff27` (Ver
 2026-10-25, America/New_York. After the Sandbox secret was corrected, the connected preview reached Plaid and returned `PLAID_UNAVAILABLE:INVALID_FIELD`. This confirmed credentials were being accepted and the remaining rejection was inside the Link-token request. The generated `user.client_user_id` used `bb:<uuid>`; changed it to the URL-safe `bb-<uuid>` form and added only a non-secret provider field diagnostic. Commit `0c1db74` is deployed and the stable banking preview alias now points to it. Production remains unchanged.
 
 Next acceptance check: open a fresh stable-preview tab, sign in as Dad or Mom, open Finance Center and choose Connect bank · Sandbox. If Plaid Link opens, complete the Sandbox institution flow and then test Sync bank transactions. If another error appears, record only the safe provider code/field; never share secrets, access tokens or JWTs.
+
+## Entry304 — Preview rebuilt after Plaid Client ID correction
+
+2026-10-25, America/New_York. Vercel now shows separate Preview and Development `PLAID_CLIENT_ID` entries. The environment save created a deployment from the main production commit, so a fresh banking-branch Preview deployment is required before the stable banking alias can read the corrected value. This is an environment/deployment boundary only; no production promotion is authorized.
