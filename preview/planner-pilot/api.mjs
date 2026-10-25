@@ -29,6 +29,15 @@ export function createClient(fetcher=fetch){
    if(error.status===401){if(session===current)clear();throw new ClientError('SESSION');}throw error;
   }
  }
+ async function plaidRequest(path,body){
+  if(!session)throw new ClientError('SESSION');
+  if(session.expires<Date.now()+30000)await refresh();
+  const current=session;
+  const response=await fetch(location.origin+path,{method:'POST',redirect:'error',credentials:'same-origin',cache:'no-store',referrerPolicy:'no-referrer',headers:{Authorization:`Bearer ${current.token}`,'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(body||{})});
+  const data=await response.json().catch(()=>null);
+  if(!response.ok)throw new ClientError(typeof data?.code==='string'?data.code:response.status===401?'SESSION':'BANKING',response.status);
+  return data;
+ }
  return {
   async signIn(account,key,password){clear();const email=String(account).trim().toLowerCase(),byUsername=!email.includes('@');if(!(byUsername?/^[a-z][a-z0-9_]{2,23}$/:/^[^\s@]+@[^\s@]+\.[^\s@]+$/).test(email)||!password)throw new ClientError('SIGNIN');const version=epoch;
    try{const data=await send(byUsername?'/functions/v1/planner-identity':'/auth/v1/token?grant_type=password',{method:'POST',body:byUsername?{action:'signin',username:email,password}:{email,password},key});if(epoch!==version)throw new ClientError('SESSION');const pending=tokenState(data,key,null);const user=await send('/auth/v1/user',{key,token:pending.token});if(epoch!==version||typeof user?.id!=='string'||(byUsername?user.id!==data.actor_id:user?.email?.toLowerCase()!==email))throw new ClientError('SESSION');session={...pending,user};return user;}catch(error){if(epoch===version)clear();throw new ClientError(error.status===429?'RATE_LIMIT':'SIGNIN');}
@@ -38,6 +47,9 @@ export function createClient(fetcher=fetch){
   async roster(){if(!household)throw new ClientError('MEMBERSHIP');const rows=await request('/rest/v1/rpc/bb_planner_roster',{method:'POST',body:{h:household}});if(!Array.isArray(rows)||!rows.length||rows.some(x=>typeof x.user_id!=='string'||!['adult','child'].includes(x.member_role))||new Set(rows.map(x=>x.user_id)).size!==rows.length||!rows.some(x=>x.user_id===session.user.id))throw new ClientError('ISOLATION');return rows;},
   async profiles(){if(!household)throw new ClientError('MEMBERSHIP');const rows=await request('/rest/v1/bb_planner_profiles?'+new URLSearchParams({select:'household_id,user_id,username',household_id:`eq.${household}`}));if(!Array.isArray(rows)||rows.some(x=>x.household_id!==household||typeof x.user_id!=='string'||typeof x.username!=='string'||!/^[A-Za-z][A-Za-z0-9_]{2,23}$/.test(x.username)))throw new ClientError('ISOLATION');return rows;},
   async changeUsername(username,password){const result=await request('/functions/v1/planner-identity',{method:'POST',body:{action:'rename',username,password}});if(result?.username!==username)throw new ClientError('UNCONFIRMED');return result;},
+  async plaidLinkToken(){return plaidRequest('/api/plaid/link-token',{});},
+  async plaidExchange(publicToken){return plaidRequest('/api/plaid/exchange-token',{public_token:publicToken});},
+  async plaidSync(){return plaidRequest('/api/plaid/sync-transactions',{});},
   async checkExposure(){try{await request('/rest/v1/rpc/actor_uid',{profile:'bb_planner_private'});}catch(error){if(error.code==='PGRST106')return true;throw new ClientError(error.code==='NETWORK'?'NETWORK':'EXPOSURE');}throw new ClientError('EXPOSURE');},
   async list(){if(!household)throw new ClientError('MEMBERSHIP');const rows=await request('/rest/v1/rpc/bb_planner_list',{method:'POST',body:{h:household}});if(!Array.isArray(rows)||rows.some(x=>x.household_id!==household||!['task','activity'].includes(x.item_type)||!Array.isArray(x.assignees)||!Array.isArray(x.completions)))throw new ClientError('ISOLATION');return rows;},
   async create({id,type,title,mode,assignees}){return mutation('bb_planner_create',{h:household,i:id,k:type,t:title,m:mode,ids:assignees},id);},
