@@ -22,9 +22,16 @@ export async function POST(request){
   const result=await plaid.json().catch(()=>null);if(!plaid.ok||typeof result?.access_token!=='string'||typeof result?.item_id!=='string'){console.warn('Plaid exchange rejected',{status:plaid.status,error_code:result?.error_code||null,error_type:result?.error_type||null});return body({code:'PLAID_UNAVAILABLE',provider_status:plaid.status,provider_code:typeof result?.error_code==='string'?result.error_code:null,provider_type:typeof result?.error_type==='string'?result.error_type:null},502);}
   const nonce=crypto.randomBytes(12),cipher=crypto.createCipheriv('aes-256-gcm',key(),nonce);const encrypted=Buffer.concat([cipher.update(result.access_token,'utf8'),cipher.final()]);
   const row={household_id:members.data[0].household_id,owner_id:me.data.id,item_id:result.item_id,institution_name:typeof input.institution_name==='string'?input.institution_name.slice(0,160):null,access_token_ciphertext:encrypted.toString('base64'),access_token_nonce:nonce.toString('base64'),access_token_tag:cipher.getAuthTag().toString('base64'),status:'active'};
-  const saved=await supa('/rest/v1/bb_plaid_connections',{method:'POST',admin:true,body:JSON.stringify(row),headers:{Prefer:'resolution=merge-duplicates,return=minimal'}});
-  if(!saved.r.ok)return body({code:'STORAGE_UNAVAILABLE'},503);return body({connected:true,item_id:result.item_id});
- }catch{return body({code:'BANKING_UNAVAILABLE'},503);}
+  // Item IDs are the durable Plaid identity. Explicitly target that unique key
+  // so retrying a completed Sandbox Link flow remains idempotent.
+  const saved=await supa('/rest/v1/bb_plaid_connections?on_conflict=item_id',{method:'POST',admin:true,body:JSON.stringify(row),headers:{Prefer:'resolution=merge-duplicates,return=minimal'}});
+  if(!saved.r.ok){
+   const detail=typeof saved.data?.code==='string'?saved.data.code:null;
+   console.warn('Plaid connection storage rejected',{status:saved.r.status,code:detail});
+   return body({code:'STORAGE_UNAVAILABLE',storage_status:saved.r.status,storage_code:detail},503);
+  }
+  return body({connected:true,item_id:result.item_id});
+ }catch(error){console.warn('Plaid exchange failed',{code:error?.message==='key'?'ENCRYPTION_KEY_INVALID':'EXCHANGE_HANDLER'});return body({code:'BANKING_UNAVAILABLE'},503);}
 }
 
 
