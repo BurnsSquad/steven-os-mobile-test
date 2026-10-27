@@ -2388,3 +2388,9 @@ The banking preview must be rebuilt after the environment change. After redeploy
 2026-10-26, America/New_York. Dad completed the Plaid Sandbox institution and account-selection flow in the banking Preview. The Finance workbench now reports **Bank connected. 24 new transactions imported.** A direct database check confirms one active encrypted Plaid connection and 24 stored reviewed transaction rows. No access token, secret key or raw provider payload was exposed to the browser or documentation.
 
 The final repair was support for Supabase's `sb_secret_...` server key format: it must be sent as the API key rather than as a JWT bearer value. API tests pass, Preview commit `424830c` is deployed and the stable banking alias points to it. This is still Sandbox-only; production, real-bank credentials and payment actions remain unchanged.
+
+## Entry307 — Reviewed spending chart added to Finance Center
+
+2026-10-26, America/New_York. Current-period Plaid transactions now appear in the parent Finance Center as a separate reviewed-activity section: total imported amount, pending count, recent transaction table and category chart. This layer is read-only reference data; it does not silently alter paycheck plans or overwrite the original Steven OS historical/private charts. The category chart is sourced from the stored reviewed transaction fields and is limited to the parent household owner.
+
+Preview commit `640dca6` is deployed and assigned to the stable banking preview alias. Next refinement is parent review/correction of categories before any category is allowed to contribute to a plan or a permanent original-OS chart.
