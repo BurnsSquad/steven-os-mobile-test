@@ -2376,3 +2376,9 @@ Next acceptance check: open a fresh stable-preview tab, sign in as Dad or Mom, o
 ## Entry304 — Preview rebuilt after Plaid Client ID correction
 
 2026-10-25, America/New_York. Vercel now shows separate Preview and Development `PLAID_CLIENT_ID` entries. The environment save created a deployment from the main production commit, so a fresh banking-branch Preview deployment is required before the stable banking alias can read the corrected value. This is an environment/deployment boundary only; no production promotion is authorized.
+
+## Entry305 — Plaid connection reached encryption boundary
+
+2026-10-26, America/New_York. Plaid Link completed the Sandbox institution and account-selection flow, but the secure save returned a generic failure. Vercel runtime logs identified the exact cause: `PLAID_TOKEN_ENCRYPTION_KEY` was not a valid 32-byte base64 key. Replaced the Preview and Development values with a newly generated 32-byte key; the secret remains stored only in Vercel and was not published. No Plaid access token, service-role key or bank data was exposed.
+
+The banking preview must be rebuilt after the environment change. After redeploy, retry the same Sandbox flow and verify that Finance reports a connected bank, then run Sync bank transactions. Production and the original private OS remain unchanged.
