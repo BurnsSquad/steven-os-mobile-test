@@ -51,6 +51,7 @@ export function createClient(fetcher=fetch){
   async plaidExchange(publicToken){return plaidRequest('/api/plaid/exchange-token',{public_token:publicToken});},
   async plaidSync(){return plaidRequest('/api/plaid/sync-transactions',{});},
   async plaidTransactions(){return plaidRequest('/api/plaid/transactions',{});},
+  async plaidReview(transaction_id,reviewed_category){return plaidRequest('/api/plaid/review-transaction',{transaction_id,reviewed_category});},
   async checkExposure(){try{await request('/rest/v1/rpc/actor_uid',{profile:'bb_planner_private'});}catch(error){if(error.code==='PGRST106')return true;throw new ClientError(error.code==='NETWORK'?'NETWORK':'EXPOSURE');}throw new ClientError('EXPOSURE');},
   async list(){if(!household)throw new ClientError('MEMBERSHIP');const rows=await request('/rest/v1/rpc/bb_planner_list',{method:'POST',body:{h:household}});if(!Array.isArray(rows)||rows.some(x=>x.household_id!==household||!['task','activity'].includes(x.item_type)||!Array.isArray(x.assignees)||!Array.isArray(x.completions)))throw new ClientError('ISOLATION');return rows;},
   async create({id,type,title,mode,assignees}){return mutation('bb_planner_create',{h:household,i:id,k:type,t:title,m:mode,ids:assignees},id);},
