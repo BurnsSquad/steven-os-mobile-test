@@ -2394,3 +2394,9 @@ The final repair was support for Supabase's `sb_secret_...` server key format: i
 2026-10-26, America/New_York. Current-period Plaid transactions now appear in the parent Finance Center as a separate reviewed-activity section: total imported amount, pending count, recent transaction table and category chart. This layer is read-only reference data; it does not silently alter paycheck plans or overwrite the original Steven OS historical/private charts. The category chart is sourced from the stored reviewed transaction fields and is limited to the parent household owner.
 
 Preview commit `640dca6` is deployed and assigned to the stable banking preview alias. Next refinement is parent review/correction of categories before any category is allowed to contribute to a plan or a permanent original-OS chart.
+
+## Entry308 — Persistent parent category review completed
+
+2026-10-26, America/New_York. Added a parent-only category review control for imported transactions. Parents can choose a reviewed category for each recent transaction; the original Plaid category remains preserved, while the spending chart uses the reviewed category. Changes are stored in `bb_plaid_transactions.reviewed_category`, scoped to the owning household and adult member.
+
+The Finance Center now has a complete current-period review loop: import, summarize, chart, correct category and re-render. Reviewed categories remain separate from paycheck-plan inputs and the original private historical charts until a later explicit mapping decision. Preview commit `57814d6` is deployed to the stable banking alias.
