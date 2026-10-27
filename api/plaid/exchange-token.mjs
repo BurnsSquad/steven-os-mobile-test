@@ -9,7 +9,7 @@ const plaidBase=environment==='production'?'https://production.plaid.com':'https
 const body=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:{'content-type':'application/json','cache-control':'no-store'}});
 function token(request){return /^Bearer\s+([^\s]+)$/i.exec(request.headers.get('authorization')||'')?.[1]||null;}
 function key(){const raw=Buffer.from(process.env.PLAID_TOKEN_ENCRYPTION_KEY||'','base64');if(raw.length!==32)throw Error('key');return raw;}
-async function supa(path,options={}){const headers={apikey:options.admin?service:publishable,authorization:`Bearer ${options.admin?service:options.token}`,accept:'application/json','content-type':'application/json',...(options.headers||{})};const r=await fetch(supabaseUrl+path,{...options,headers});return{r,data:await r.json().catch(()=>null)};}
+async function supa(path,options={}){const admin=options.admin;const key=admin?service:publishable;const headers={apikey:key,...(admin&&service?.startsWith('sb_secret_')?{}:{authorization:`Bearer ${admin?service:options.token}`}),accept:'application/json','content-type':'application/json',...(options.headers||{})};const r=await fetch(supabaseUrl+path,{...options,headers});return{r,data:await r.json().catch(()=>null)};}
 export async function POST(request){
  if(request.method!=='POST')return body({code:'METHOD'},405);const jwt=token(request);if(!jwt)return body({code:'SESSION'},401);
  if(!publishable||!service||!process.env.PLAID_CLIENT_ID||!process.env.PLAID_SECRET||!process.env.PLAID_TOKEN_ENCRYPTION_KEY)return body({code:'BANKING_NOT_CONFIGURED'},503);
