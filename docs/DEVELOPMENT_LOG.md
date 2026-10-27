@@ -2382,3 +2382,9 @@ Next acceptance check: open a fresh stable-preview tab, sign in as Dad or Mom, o
 2026-10-26, America/New_York. Plaid Link completed the Sandbox institution and account-selection flow, but the secure save returned a generic failure. Vercel runtime logs identified the exact cause: `PLAID_TOKEN_ENCRYPTION_KEY` was not a valid 32-byte base64 key. Replaced the Preview and Development values with a newly generated 32-byte key; the secret remains stored only in Vercel and was not published. No Plaid access token, service-role key or bank data was exposed.
 
 The banking preview must be rebuilt after the environment change. After redeploy, retry the same Sandbox flow and verify that Finance reports a connected bank, then run Sync bank transactions. Production and the original private OS remain unchanged.
+
+## Entry306 — Plaid Sandbox connection and transaction sync verified
+
+2026-10-26, America/New_York. Dad completed the Plaid Sandbox institution and account-selection flow in the banking Preview. The Finance workbench now reports **Bank connected. 24 new transactions imported.** A direct database check confirms one active encrypted Plaid connection and 24 stored reviewed transaction rows. No access token, secret key or raw provider payload was exposed to the browser or documentation.
+
+The final repair was support for Supabase's `sb_secret_...` server key format: it must be sent as the API key rather than as a JWT bearer value. API tests pass, Preview commit `424830c` is deployed and the stable banking alias points to it. This is still Sandbox-only; production, real-bank credentials and payment actions remain unchanged.
