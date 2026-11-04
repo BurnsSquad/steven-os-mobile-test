@@ -1,6 +1,6 @@
  // Single source-of-truth bank summary for the original Everyday Spending view.
  export function connectedBankSpending({host,transport}){
-  const money=v=>Number(v||0).toLocaleString('en-US',{style:'currency',currency:'USD'});
+  const money=v=>(Number(v||0)/100).toLocaleString('en-US',{style:'currency',currency:'USD'});
   const node=(tag,text)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=text;return e;};
   host.replaceChildren();host.className='connected-bank-spending';
   host.append(node('h2','Bank spending · source of truth'),node('p','Plaid transactions drive the selected month below. Manual expenses remain separate and are never counted twice.'));
