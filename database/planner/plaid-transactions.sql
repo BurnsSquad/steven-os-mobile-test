@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS bb_plaid_transactions (
  posted_on date,
  pending boolean NOT NULL DEFAULT false,
  category text,
+ reviewed_category text,
  is_removed boolean NOT NULL DEFAULT false,
  created_at timestamptz NOT NULL DEFAULT clock_timestamp(),
  updated_at timestamptz NOT NULL DEFAULT clock_timestamp(),
