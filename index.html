@@ -1104,4 +1104,11 @@ document.addEventListener('click',e=>{if(e.target?.id==='restoreSnapshotBtn')$('
 .card,.day,.item,.cal-shell,.cal-main,.cal-filters,.kx-panel,.kx-day,.v77-day,.bb-root .card,.bb-hero,.bb-nav,.bb-toolbar,.notice,dialog{background:transparent!important;box-shadow:none!important}
 </style><style id="more-transparent-containers">
 .food78-bucket,.v84-tab,.v84-bucket,.v84-month,.v84-action,.v84-chart-inner,.v84-paybox,.cal-grid,.cal-cell,.cal-weekhead,.cal-hourcell,.cal-hourhead,.cal-mini,.work-job,.kid-day,.hh79-note,.hh79-day,.hh80-hero,.hh80-pill,.hh80-progress,.v83-period,.v87-pane,.v87-quote,.v77-group,.v77-groupitems{background:transparent!important;box-shadow:none!important}
-</style></body></html>
+</style><style id="interactive-mesh-ripples">
+body{--ripple-x:50%;--ripple-y:50%}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(circle at var(--ripple-x) var(--ripple-y),color-mix(in srgb,var(--network-glow) 22%,transparent) 0,transparent 34px);opacity:0}
+body.network-ripple::after{animation:networkRipple .9s ease-out}
+@keyframes networkRipple{0%{opacity:.32;background-size:40px 40px}100%{opacity:0;background-size:520px 520px}}
+</style><script id="interactive-mesh-ripple-script">
+(()=>{let timer=0;function ripple(e){if(e.target.closest('button,input,select,textarea,a,dialog'))return;const x=(e.clientX/innerWidth*100).toFixed(1)+'%',y=(e.clientY/innerHeight*100).toFixed(1)+'%';document.body.style.setProperty('--ripple-x',x);document.body.style.setProperty('--ripple-y',y);document.body.classList.remove('network-ripple');requestAnimationFrame(()=>document.body.classList.add('network-ripple'));clearTimeout(timer);timer=setTimeout(()=>document.body.classList.remove('network-ripple'),950)}document.addEventListener('pointerdown',ripple,{passive:true})})();
+</script></body></html>
