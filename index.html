@@ -1108,4 +1108,8 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
 document.getElementById('recoveryBtn')?.addEventListener('click',downloadRecoverySnapshot);
 document.addEventListener('click',e=>{if(e.target?.id==='restoreSnapshotBtn')$('restoreFile').click()});
 </script>
-</body></html>
+<style id="final-translucent-surfaces">
+body,.app,.main{background:transparent!important}
+.side,.mobilebar{background:color-mix(in srgb,var(--sidebar) 72%,transparent)!important}
+.card,.item,.day,.btn,input,select,textarea,dialog,.notice,summary,.cal-shell,.cal-main,.cal-filters,.cal-timeday,.kx-shell,.kx-panel,.kx-day,.v77-scroll,.v77-day,.v77-card,.bb-root,.bb-root .card,.bb-hero,.bb-nav,.bb-toolbar,[class*="-panel"],[class*="-shell"],[class*="-root"],[class*="-box"]{background:color-mix(in srgb,var(--card) 48%,transparent)!important;backdrop-filter:blur(12px)!important;-webkit-backdrop-filter:blur(12px)!important}
+</style></body></html>
