@@ -17,16 +17,16 @@ export async function POST(request){
   // Prefer the newest active connection so retries use credentials encrypted
   // with the current key after a reconnection or key rotation.
   const connections=await supa('/rest/v1/bb_plaid_connections?'+new URLSearchParams({select:'*',household_id:`eq.${member.household_id}`,owner_id:`eq.${me.data.id}`,status:'eq.active',order:'updated_at.desc'}),{admin:true});if(!connections.r.ok||!Array.isArray(connections.data)||!connections.data.length)return reply({code:'NO_BANK_CONNECTION'},404);
-  let added=0,modified=0,removed=0,hasMore=false,healthy=0;
+  let added=0,modified=0,removed=0,hasMore=false,healthy=0,failed=0,lastProviderError=null;
   for(const connection of connections.data){
-   const response=await fetch(`${plaid}/transactions/sync`,{method:'POST',headers:{'content-type':'application/json','PLAID-CLIENT-ID':process.env.PLAID_CLIENT_ID,'PLAID-SECRET':process.env.PLAID_SECRET},body:JSON.stringify({client_id:process.env.PLAID_CLIENT_ID,secret:process.env.PLAID_SECRET,access_token:decrypt(connection),cursor:connection.cursor||undefined,count:500})});const result=await response.json().catch(()=>null);if(!response.ok)continue;healthy++;hasMore=hasMore||!!result.has_more;
+   const response=await fetch(`${plaid}/transactions/sync`,{method:'POST',headers:{'content-type':'application/json','PLAID-CLIENT-ID':process.env.PLAID_CLIENT_ID,'PLAID-SECRET':process.env.PLAID_SECRET},body:JSON.stringify({client_id:process.env.PLAID_CLIENT_ID,secret:process.env.PLAID_SECRET,access_token:decrypt(connection),cursor:connection.cursor||undefined,count:500})});const result=await response.json().catch(()=>null);if(!response.ok){failed++;lastProviderError={code:typeof result?.error_code==='string'?result.error_code:null,type:typeof result?.error_type==='string'?result.error_type:null,message:typeof result?.error_message==='string'?result.error_message:null};continue;}healthy++;hasMore=hasMore||!!result.has_more;
    const rows=[...(result.added||[]),...(result.modified||[])].map(row=>clean(row,connection,member)).filter(Boolean).map(row=>({...row,is_removed:(result.modified||[]).some(x=>x.transaction_id===row.transaction_id&&x.pending===false&&x.amount===0)}));
    if(rows.length){const saved=await supa('/rest/v1/bb_plaid_transactions',{method:'POST',admin:true,headers:{Prefer:'resolution=merge-duplicates,return=minimal'},body:rows});if(!saved.r.ok)return reply({code:'STORAGE_UNAVAILABLE'},503);}
    if(Array.isArray(result.removed)&&result.removed.length){const ids=result.removed.map(x=>x.transaction_id).filter(Boolean);await supa('/rest/v1/bb_plaid_transactions?'+new URLSearchParams({connection_id:`eq.${connection.id}`,transaction_id:`in.(${ids.join(',')})`}),{method:'PATCH',admin:true,headers:{Prefer:'return=minimal'},body:{is_removed:true}});}
    const updated=await supa('/rest/v1/bb_plaid_connections?'+new URLSearchParams({id:`eq.${connection.id}`}),{method:'PATCH',admin:true,headers:{Prefer:'return=minimal'},body:{cursor:result.next_cursor||connection.cursor||null,last_synced_at:new Date().toISOString(),updated_at:new Date().toISOString()}});if(!updated.r.ok)return reply({code:'STORAGE_UNAVAILABLE'},503);
    added+=(result.added||[]).length;modified+=(result.modified||[]).length;removed+=(result.removed||[]).length;
   }
-  if(!healthy)return reply({code:'PLAID_UNAVAILABLE'},502);
+  if(!healthy)return reply({code:'PLAID_UNAVAILABLE',failed_connections:failed,provider_code:lastProviderError?.code||null,provider_type:lastProviderError?.type||null,provider_message:lastProviderError?.message||null},502);
   return reply({synced:true,connections:healthy,added,modified,removed,has_more:hasMore});
  }catch{return reply({code:'BANKING_UNAVAILABLE'},503);}
 }
