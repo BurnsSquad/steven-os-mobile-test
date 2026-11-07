@@ -77,12 +77,13 @@ export function createClient(fetcher=fetch){
    const workspace=await this.originalWorkspace();
    if(!workspace)return {available:false,count:0,bills:[],source:'original private workspace'};
    let data=null;try{data=JSON.parse(workspace.storage?.['steven-os-v60-data']||'null');}catch{throw new ClientError('INVALID_ORIGINAL_DATA');}
-   const raw=Array.isArray(data?.bills)?data.bills:[];
+   const raw=[...(Array.isArray(data?.bills)?data.bills:[]),...(Array.isArray(data?.events)?data.events.filter(x=>x&&x.category==='bill'):[])];
    const bills=raw.filter(x=>x&&typeof x==='object').map(x=>({
     name:String(x.name||x.title||x.label||x.merchant||'Unnamed bill'),
     amount_cents:Number.isSafeInteger(x.amount_cents)?x.amount_cents:Number.isFinite(Number(x.amount))?Math.round(Number(x.amount)*100):null,
-    due_date:typeof x.due_date==='string'?x.due_date:typeof x.dueDate==='string'?x.dueDate:null,
-    group:String(x.group||x.category||x.type||'Other')
+    due_date:typeof x.due_date==='string'?x.due_date:typeof x.dueDate==='string'?x.dueDate:typeof x.start==='string'?x.start.slice(0,10):null,
+    group:String(x.group||x.category||x.type||'Other'),
+    status:String(x.status||'unconfirmed')
    })).filter(x=>x.amount_cents!==null||x.due_date);
    return {available:true,count:bills.length,bills,source:'original private workspace',workspace_version:workspace.version};
   },
