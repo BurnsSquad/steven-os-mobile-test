@@ -73,6 +73,19 @@ export function createClient(fetcher=fetch){
   async groceries(){if(!household)throw new ClientError('MEMBERSHIP');const rows=[];for(let offset=0;offset<20000;offset+=500){const page=await request('/rest/v1/bb_grocery_items?'+new URLSearchParams({select:'*',household_id:'eq.'+household,order:'created_at.asc,id.asc',limit:'500',offset:String(offset)}));if(!Array.isArray(page)||page.some(r=>r.household_id!==household||typeof r.id!=='string'||typeof r.title!=='string'||typeof r.quantity!=='string'||typeof r.is_picked!=='boolean'||typeof r.is_archived!=='boolean'||!Number.isSafeInteger(r.version)))throw new ClientError('ISOLATION');rows.push(...page);if(page.length<500)return rows;}throw new ClientError('LIMIT');},
   async groceryWrite(p){const row=await mutation('bb_grocery_write',{h:household,i:p.id,v:p.version,op:p.op,t:p.title??null,q:p.quantity??null,picked:p.picked??null},p.id);if(!Number.isSafeInteger(row.version)||row.version<1)throw new ClientError('UNCONFIRMED');return row;},
   async originalWorkspace(){if(!household)throw new ClientError('MEMBERSHIP');const rows=await request('/rest/v1/bb_os_workspaces?'+new URLSearchParams({select:'id,source_id,household_id,owner_id,storage,version',owner_id:'eq.'+session.user.id,household_id:'eq.'+household,order:'updated_at.desc',limit:'1'}));if(!Array.isArray(rows)||rows.some(r=>r.household_id!==household||r.owner_id!==session.user.id||!r.storage||!Number.isSafeInteger(r.version)))throw new ClientError('ISOLATION');return rows[0]||null;},
+  async originalBillLedger(){
+   const workspace=await this.originalWorkspace();
+   if(!workspace)return {available:false,count:0,bills:[],source:'original private workspace'};
+   let data=null;try{data=JSON.parse(workspace.storage?.['steven-os-v60-data']||'null');}catch{throw new ClientError('INVALID_ORIGINAL_DATA');}
+   const raw=Array.isArray(data?.bills)?data.bills:[];
+   const bills=raw.filter(x=>x&&typeof x==='object').map(x=>({
+    name:String(x.name||x.title||x.label||x.merchant||'Unnamed bill'),
+    amount_cents:Number.isSafeInteger(x.amount_cents)?x.amount_cents:Number.isFinite(Number(x.amount))?Math.round(Number(x.amount)*100):null,
+    due_date:typeof x.due_date==='string'?x.due_date:typeof x.dueDate==='string'?x.dueDate:null,
+    group:String(x.group||x.category||x.type||'Other')
+   })).filter(x=>x.amount_cents!==null||x.due_date);
+   return {available:true,count:bills.length,bills,source:'original private workspace',workspace_version:workspace.version};
+  },
   async originalSource(id){const rows=await request('/rest/v1/bb_os_sources?'+new URLSearchParams({select:'id,household_id,owner_id,html,html_sha256,backup_sha256',id:'eq.'+id}));if(!Array.isArray(rows)||rows.length!==1||rows[0].household_id!==household||rows[0].owner_id!==session.user.id||rows[0].id!==id||typeof rows[0].html!=='string')throw new ClientError('ISOLATION');return rows[0];},
   async saveOriginal(w,storage){const row=await request('/rest/v1/rpc/bb_os_save',{method:'POST',body:{i:w.id,v:w.version,s:storage}});if(row?.id!==w.id||![w.version,w.version+1].includes(row.version))throw new ClientError('UNCONFIRMED');return row;},
   async financeCreateBill(p){return mutation('bb_finance_bill_create',{h:household,i:p.id,p:p.patch,effective:p.effective,confirmed:p.confirmed,reason:p.reason},p.id);},
